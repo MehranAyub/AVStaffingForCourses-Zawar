@@ -1,0 +1,45 @@
+﻿@model AVStaffing.Models.Entities.ContentPage
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_WebBaseLayout.cshtml";
+}
+
+
+<style>
+    .post-title {
+        color: #8B072F !important;
+        font-size: 17px !important;
+        text-transform: none !important;
+    }
+</style>
+
+<div class="container">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <h2 class="page-title">@Model.Title</h2>
+            </div> <!-- /.col-md-6 -->
+            <div class="col-md-6 col-sm-6 hidden-xs back-home">
+                <a href="@Url.Action("Index", "Home")">← Go back Home</a>
+            </div> <!-- /.col-md-6 -->
+        </div> <!-- /.row -->
+    </div> <!-- /.page-header -->
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="blog-single">
+                @Html.Raw(Model.Content)
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            @Html.Partial("~/Views/Shared/Rightnav.cshtml")
+        </div>
+    </div>
+
+</div>
+

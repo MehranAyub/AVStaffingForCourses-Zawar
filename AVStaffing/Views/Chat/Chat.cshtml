@@ -1,0 +1,1093 @@
+﻿@model AVStaffing.Controllers.ChatVm
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    .shadow {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc !important;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc !important;
+        box-shadow: 3px 3px 5px 6px #ccc !important;
+    }
+
+    .card-header, .direct-chat-primary .right > .direct-chat-text {
+        background: #3c8dbc;
+        border-color: #3c8dbc;
+        color: #fff;
+        text-align: right;
+    }
+
+    .font-small, .direct-chat-name, .direct-chat-timestamp, .direct-chat-text {
+        font-size: 12px !important;
+        text-align: right;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+    input {
+        direction: rtl !important;
+    }
+</style>
+
+<div class="content-wrapper">
+    <section class="content" id="directChat">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card direct-chat direct-chat-primary">
+                        <div class="card-header ui-sortable-handle" style="cursor: move;">
+                            <h3 class="card-title">{{Department.Name}}</h3>
+                        </div>
+                        <div class="card-body" style="height:500px" id="DepartmentChatBox">
+                            <div class="direct-chat-messages" style="height:auto">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <a href="#/" style="text-decoration:underline" @@click="LoadMoreMessages()">Load More</a>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-for="message in messages" style="padding:10px">
+                                <div class="direct-chat-msg" v-bind:class="{right : (message.UserID != user.ID)}">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name float-left">{{message.SenderName}}</span>
+                                        <span class="direct-chat-timestamp float-right">{{FormatDate(message.TimeStamp)}}</span>
+                                    </div>
+                                    <img class="direct-chat-img img-sm" :src="message.UserImage" @@error="DefaultMessageImage(message)" alt="message user image">
+                                    <div class="direct-chat-text" v-if="message.Type == 'File'">
+                                        {{message.Message}}
+                                        <div class="box-body">
+                                            <div class="attachment-block clearfix">
+                                                <a><img id="imgC" style="width:100px;" class="attachment-img" src="/Images/file-icon.png" alt="Attachment Image"></a>
+                                                <div class="attachment-pushed">
+                                                    <h4 class="attachment-heading"><i class="fa fa-file-o">{{message.FileDetails.FileName}} </i></h4>
+                                                    <br>
+                                                    <div id="at" class="attachment-text"> Type: {{message.FileDetails.ContentType}}</div>
+                                                </div>
+                                            </div>
+                                            <a id="btnDownload" :href="message.FileDetails.FilePath" class="btn btn-default btn-sm" download="k.docx"><i class="fa fa fa-download"></i> Download</a>
+                                            <a :href="message.FileDetails.FilePath" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-camera"></i> View</a>
+                                            <span class="pull-right text-muted">File Size : {{message.FileDetails.SizeKB}} KB</span>
+                                        </div>
+                                    </div>
+                                    <div class="direct-chat-text" v-else-if="message.Type == 'Image'">
+                                        {{message.Message}}
+                                        <div class="box-body">
+                                            <div class="attachment-block clearfix">
+                                                <a><img id="imgC" style="width:100px;" class="attachment-img" :src="message.FilePath" alt="Attachment Image"></a>
+                                                <div class="attachment-pushed">
+                                                    <h4 class="attachment-heading"><i class="fa fa-image">  {{message.FileDetails.FileName}} </i></h4>
+                                                    <br>
+                                                    <div id="at" class="attachment-text"> Dimensions : {{message.FileDetails.Height}}x{{message.FileDetails.Width}}, Type: {{message.FileDetails.ContentType}}</div>
+                                                </div>
+                                            </div>
+                                            <a id="btnDownload" :href="message.FileDetails.FilePath" class="btn btn-default btn-sm" download="Untitled.jpg"><i class="fa fa fa-download"></i> Download</a>
+                                            <button type="button" id="ShowModelImg" :value="message.FileDetails.FilePath" class="btn btn-default btn-sm"><i class="fa fa-camera"></i> View</button>
+                                            <span class="pull-right text-muted">File Size : {{message.FileDetails.SizeKB}} KB</span>
+                                        </div>
+                                    </div>
+                                    <div class="direct-chat-text" v-else>
+                                        {{message.Message}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="input-group">
+                                <input type="text" name="message" v-model="MessageToSend" @@keyup.enter="SendMessage()" placeholder="...اكتب الرسالة" class="form-control">
+                                <span class="input-group-append" style="z-index:0">
+
+                                    <button type="button" id="SendChatBtn" @@click="SendMessage()" class="btn btn-warning">Send</button>
+                                    <input type="file" id="file" ref="file" name="UploadFile" style="width:150px;display:none" class="form-control" v-on:change="handleFileUpload(this)" />
+                                    <button type="button" id="triggerClickBtn" class="btn btn-default" @@click="$refs.file.click()"><i class="fa fa-paperclip"></i></button>
+                                    <button type="button" id="triggerClickBtn2" class="btn btn-default" @@click="ShortMessage($event)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card direct-chat direct-chat-primary" style="height:600px">
+                        <div class="card-header">
+                            <h3 class="card-title">مستخدمين على الهواء <span id='UserCount'></span></h3>
+                        </div>
+                        <div class="card-body" id="divusers">
+                            <div class="box-comment" v-for="u in DepartmentUsers" style="height:30px;margin-left:10px;cursor:pointer">
+
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="comment-text" style="margin-left:40px">
+                                            <span class="username">
+                                                <span class="text-muted pull-left  font-small">{{FormatDate(u.LoginTime)}}</span>
+
+                                                <a @@click="OpenPrivateChat(user, u)" class="user font-small">
+                                                    {{u.DisplayName}}
+                                                </a>
+
+                                            </span>
+                                            <img src="/Images/Online.png" v-if="u.Online" style="height:10px" />
+                                            <img src="/Images/Offline.png" v-else style="height:10px" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="pull-right">
+                                            <center>
+                                                <a href="#/" @@click="OpenDetailModal(u)">
+                                                    <img class="img-circle img-sm" style="width:auto" :src="u.ImagePath" @@error="DefaultUserImage(u)" alt="User Image" />
+                                                </a>
+                                            </center>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br />
+
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <div v-for="(el, index) in chatboxes" class="col-md-4 flex-container">
+                    <component :is="el.type" v-bind:vmdata="el.vmdata" ref="chatm" :key="index" v-on:delete-row="deleteThisRow(index)"></component>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="UserDetailModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="pull-right">
+                        <div class="modal-header">
+                            <div class="pull-right">
+                                <h4 style="text-align:right">بيانات المستخدم</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-body" style="text-align:right">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>اسم العائله</label>
+                                    <div> {{ModalSelectedUser.LastName}}</div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الاسم الاول</label>
+                                    <div> {{ModalSelectedUser.FirstName}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="pull-left">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <img id="ProductImage" :src="ModalSelectedUser.ImagePath" style="width:150px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>:اسم المستخدم</label>
+                                    <div>{{ModalSelectedUser.DisplayName}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>:اسم الدخول</label>
+                                    <div>{{ModalSelectedUser.Username}}</div>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>البريد الإلكتروني</label>
+                                    <div>{{ModalSelectedUser.Email}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>رقم الهاتف المحمول</label>
+                                    <div>{{ModalSelectedUser.MobileNo}}</div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>تاريخ الولادة</label>
+                                    <div>{{ModalSelectedUser.DateOfBirth}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>جنس</label>
+                                    <div>{{ModalSelectedUser.Gender}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>الإدارة</label>
+                                    <div>{{ModalSelectedUser.Department}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>القسم</label>
+                                    <div>{{ModalSelectedUser.Section}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>وظيفة</label>
+                                    <div>{{ModalSelectedUser.Role}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-danger">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+@section Scripts{
+
+    <script>
+        var chat = $.connection.notificationHub;
+        var identifier = '@Model.Group.Name';
+        $.connection.hub.qs = { 'username': identifier };
+
+       var pchat =  Vue.component('pchat', {
+           data: function () {
+               return {
+                   CurrentUser: @Html.Raw(JsonConvert.SerializeObject(Session["User"])),
+                   ConnectedUser: {},
+                   NewMessageCount: 3,
+                   MessageToSend: "",
+                   PrivateMessages: [],
+                   UploadFile : '',
+                   Page: 0,
+               }
+           },
+           props : ["vmdata"],
+           created: function () {
+               this.LoadData();
+
+           },
+           methods: {
+          GetGeneratedHtml(list) {
+                    console.log("list" + list);
+                    var data = `
+                    <table class='table table-striped' id = 'PopoverTable'>
+                        <tbody>`;
+                    $.each(list, function (i, v) {
+                        data += `<tr>
+                                    <td data-id='${v.ID}'>
+                                       <a href="#/" class="MyTempBtn" >${v.Message}</a>
+                                    </td>
+                                    <td>
+
+                                        <a href="#/" style="color:red" role="button" data-id='${v.ID}'  class="trashBtn"><i class="fa fa-trash"></i></a>
+                                        </td>
+
+                                </tr>`;
+                    });
+                    data +=
+                        `</tbody>
+                    </table > `;
+
+                    console.log("data = " + data);
+                    return data;
+                },
+                CreatePopover(el, generatedHtml) {
+                    try {
+                        $("body").find(".popover").remove();
+                        $(el).popover("destroy");
+                    }
+                    catch (ex) {
+                    }
+                    $(el).popover({
+                        title: "Select Short Message",
+                        html: true,
+                        placement: 'top',
+                        template: `
+                                <div class="popover" role="tooltip">
+                                    <div class="arrow"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="button" class="close" data-dismiss="modal"  onclick="$(this).parents('.popover').remove()" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h3 class="popover-header"></h3>
+                                        </div>
+                                    </div>
+                                    <div class="popover-body" style="overflow-y:auto;max-height:500px;"></div>
+                                    <div class="popover-footer">
+                                        <div class="pull-right"  style="padding:10px">
+                                            <button id="CreateNewCustomMessage" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>`,
+                        content: generatedHtml
+                    });
+                    $(el).popover("show");
+                },
+                ShortMessage(e) {
+                    $("body").find("#CreateNewCustomMessage").unbind("click");
+                    $("body").find(".MyTempBtn").each(function () {
+                        $(this).unbind("click");
+                    });
+                    var vm = this;
+                    var el = e.target;
+                    $.post("@Url.Action("GetCustomMessages", "Chat")").then(function (resp) {
+                        vm.CreatePopover(el, vm.GetGeneratedHtml(JSON.parse(resp)));
+                    });
+                   $("body").on("click", ".MyTempBtn", function () {
+                       $(this).unbind("click");
+                       vm.MessageToSend = ($(this).html());
+                    });
+
+                   $("body").on("click", ".trashBtn", function () {
+                       var id = $(this).data("id");
+                       var el = $(this);
+                       $.post("/Chat/DeleteCustomMessage", { MessageID: id }).then(function () {
+                           $(el).parents("tr").remove();
+                       });
+                   });
+                   $("body").on("click", "#CreateNewCustomMessage", function () {
+
+                       var element = $(this);
+                       element.prop('disabled', true); //.attr("disabled", "disabled");
+                       console.log("captured Add Click");
+                       $(this).unbind("click");
+                       bootbox.prompt({
+                           closeButton: false,
+                           size: "small",
+                           title: "Enter the Message",
+                           callback: function (result) {
+                               console.log("result = " + result);
+
+                               element.removeAttr("disabled");
+                               if (result != null) {
+                                   $.post("/Chat/InserCustomMessage", { Message: result }).then(function (ID) {
+
+                                       var data = `<tr>
+                                    <td data-id='${ID}'>
+                                       <a href="#/" class="MyTempBtn" >${result}</a>
+                                    </td>
+                                    <td>
+
+                                        <a href="#/" style="color:red" role="button" data-id='${ID}' class="trashBtn"><i class="fa fa-trash"></i></a>
+                                        </td>
+
+                                </tr>`;
+                                       $("#PopoverTable tbody").append(data);
+                                       //vm.CreatePopover(el, vm.GetGeneratedHtml(JSON.parse(resp)));
+                                   });
+                               }
+                           }
+                       });
+                   });
+                },
+
+               SendPrivateMessage() {
+                   if (this.UploadFile == '' && this.MessageToSend.trim() == '') {
+                       return;
+                   }
+                   if (this.UploadFile) {
+                       this.ShareFile();
+                   } else {
+                       var vm = this;
+                       var reciever = vm.UserTo;
+                       var pchat = {
+                           UserFrom: vm.CurrentUser.ID,
+                           UserFromContextId: vm.CurrentUser.ConnectionId,
+                           SenderName: vm.CurrentUser.DisplayName,
+                           TimeStamp: '2018-11-01',
+                           UserImage: vm.CurrentUser.ImagePath,
+                           UserTo: reciever.ID,
+                           UserToContextId: reciever.ConnectionId,
+                           Message: vm.MessageToSend
+                       }
+                       chat.server.sendPrivateMessage(pchat);
+                       vm.MessageToSend = "";
+                   }
+               },
+               DefaultUserImage(m) {
+                   m.UserImage = '/Images/DefaultUser.png';
+               },
+               LoadData() {
+                   var vm = this;
+                   this.UserFrom = this.vmdata.UserFrom;
+                   this.UserTo = this.vmdata.UserTo;
+                   $.post("/Chat/GetPrivateChat/", { UserFrom: this.UserFrom.ID, UserTo: this.UserTo.ID, Page : this.Page }, function (resp) {
+                       vm.Page += 1;
+                       resp = JSON.parse(resp);
+                       $.each(resp, function (i, v) {
+                           if (v.FileDetails) {
+                               v.FileDetails = JSON.parse(v.FileDetails);
+                           }
+                           vm.PrivateMessages.push(v);
+                       });
+                       var container = vm.$el.querySelector("#messages");
+                       //console.log("container" + container);
+                       container.scrollTop = container.scrollHeight;
+                       $(container).animate({ scrollTop: $(container).prop("scrollHeight") }, 10);
+                   });
+
+                   var button = vm.$el.querySelector("#SendChatBtn");
+                   $(button).focus();
+
+                   $('.example-popover').popover({
+                       container: 'body'
+                   })
+               },
+               LoadMoreMessages() {
+                   var vm = this;
+                   $.post("/Chat/GetPrivateChat/", { UserFrom: this.UserFrom.ID, UserTo: this.UserTo.ID, Page: this.Page }, function (resp) {
+                       vm.Page += 1;
+                       resp = JSON.parse(resp);
+                       $.each(resp, function (i, v) {
+                           vm.PrivateMessages.unshift(v);
+                       });
+                   });
+               },
+               FormatDate(d) { return new Date(d).toLocaleString(); },
+               AddMessage(message) {
+                   this.PrivateMessages.push(message);
+                   var container = this.$el.querySelector("#messages");
+                   $(container).animate({ scrollTop: $(container).prop("scrollHeight") }, 100);
+               },
+               ShareFile: function () {
+                   var vm = this;
+                   var reciever = vm.UserTo;
+                   var pchat = {
+                       UserFrom: vm.CurrentUser.ID,
+                       UserFromContextId: vm.CurrentUser.ConnectionId,
+                       SenderName: vm.CurrentUser.DisplayName,
+                       TimeStamp: '2018-11-01',
+                       UserImage: vm.CurrentUser.ImagePath,
+                       UserTo: reciever.ID,
+                       UserToContextId: reciever.ConnectionId,
+                       Message: vm.MessageToSend
+                   }
+                   var d = new FormData();
+                   d.append("pchatstr", JSON.stringify(pchat));
+                   d.append("MyFile", vm.UploadFile);
+                   $.ajax({
+                       url: "/Chat/UploadFilePrivate",
+                       type: "POST",
+                       method: "POST",
+                       cache: false,
+                       contentType: false,
+                       processData: false,
+                       data: d,
+                   }).then(function (resp) {
+                       resp = JSON.parse(resp);
+                       chat.server.sendPrivateMessage(resp);
+                       vm.MessageToSend = "";
+                       vm.UploadFile = '';
+                   });
+               },
+               handleFileUpload(element) {
+                   var vm = this;
+                   vm.UploadFile = vm.$refs.file.files[0];
+                   var reader = new FileReader();
+                   reader.onload = function (e) {
+                       //vm.UploadFile = e.target.result;
+                   }
+                   reader.readAsDataURL(this.$refs.file.files[0]);
+               },
+               SendIfEnter()
+               {
+
+               }
+
+
+           },
+           template: `
+    <div class="card card-primary shadow card-outline direct-chat direct-chat-primary" style="position:fixed;min-width:400px;max-width:400px;  bottom:50px">
+                        <div class="card-header" style="color:white;">
+                            <h3 class="card-title" style="font-size:12px">{{UserTo.DisplayName}}</h3>
+                            <div class="card-tools" style="right:auto">
+                                <button type="button" class="btn btn-tool pull-left"  @@click="$emit('delete-row')">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="direct-chat-messages" id="messages" style="height:400px">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <a href="#/" style="text-decoration:underline;font-size:12px" @@click="LoadMoreMessages()">Load More</a>
+                                        </center>
+                                    </div>
+                                </div>
+                                <div v-for="message in PrivateMessages">
+
+                                    <div class="direct-chat-msg" :class="{'right' : message.UserFrom != CurrentUser.ID }">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name" :class="{'float-right' : message.UserFrom != CurrentUser.ID,'float-left' : message.UserFrom == CurrentUser.ID }">{{message.SenderName}}</span>
+                                            <span class="direct-chat-timestamp"  :class="{'float-left' : message.UserFrom != CurrentUser.ID, 'float-right' : message.UserFrom == CurrentUser.ID }" >{{FormatDate(message.TimeStamp)}}</span>
+                                        </div>
+                                        <img class="direct-chat-img img-sm" :src="message.UserImage" @@error="DefaultUserImage(message)" alt="">
+                                        <div class="direct-chat-text" v-if="message.Type == 'File'">
+                                            {{message.Message}}
+
+                                            <div class="box-body">
+                                                <div class="attachment-block clearfix">
+                                                    <a :href="message.FileDetails.FilePath" style="color:black">
+                                                        <img id="imgC" style="width:30px;" class="attachment-img" src="/Images/file-icon.png" alt="Attachment Image">
+
+                                                         <div class="">
+                                                            <p class="attachment-heading" style="margin-top:5px;margin-bottom:-5px;">&nbsp;&nbsp;<span style="text-decoration:underline">{{message.FileDetails.FileName}}</span></p>
+                                                        </div>
+                                                        <span class="pull-right text-muted">File Size : {{message.FileDetails.SizeKB}} KB</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="direct-chat-text" v-else-if="message.Type == 'Image'">
+                                            {{message.Message}}
+                                            <div class="box-body">
+                                                <div class="attachment-block clearfix">
+                                                    <a><img id="imgC" style="width:100px;" class="attachment-img" :src="message.FilePath" alt="Attachment Image"></a>
+                                                    <div class="attachment-pushed">
+                                                        <h4 class="attachment-heading"><i class="fa fa-image">  {{message.FileDetails.FileName}} </i></h4>
+                                                        <br>
+                                                        <div id="at" class="attachment-text"> Dimensions : {{message.FileDetails.Height}}x{{message.FileDetails.Width}}, Type: {{message.FileDetails.ContentType}}</div>
+                                                    </div>
+                                                </div>
+                                                <a id="btnDownload" :href="message.FileDetails.FilePath" class="btn btn-default btn-sm" download="Untitled.jpg"><i class="fa fa fa-download"></i> Download</a>
+                                                <button type="button" id="ShowModelImg" :value="message.FileDetails.FilePath" class="btn btn-default btn-sm"><i class="fa fa-camera"></i> View</button>
+                                                <span class="pull-right text-muted">File Size : {{message.FileDetails.SizeKB}} KB</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="direct-chat-text" v-else>
+                                            {{message.Message}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+
+                                <div class="input-group">
+                                    <input type="text" name="message" v-model="MessageToSend"  @@keyup.enter="SendPrivateMessage()" placeholder="...اكتب الرسالة" class="form-control">
+                                    <span class="input-group-append">
+                                        <button type="button" @@click="SendPrivateMessage()"  class="btn btn-primary">Send</button>
+                                        <input type="file" id="file" ref="file" name="UploadFile" style="width:150px;display:none" class="form-control"   v-on:change="handleFileUpload(this)" />
+                                        <button type="button" id="triggerClickBtn" class="btn btn-default" @@click="$refs.file.click()" ><i class="fa fa-paperclip"></i></button>
+                                            <button type="button" id="triggerClickBtn2" class="btn btn-default" @@click="ShortMessage($event)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+
+                        </div>
+                    </div>`
+        });
+
+
+
+
+
+
+        var chatbox = new Vue({
+            el: "#directChat",
+            data: {
+                user: @Html.Raw(Json.Encode(Model.User)),
+                Department: @Html.Raw(JsonConvert.SerializeObject(Model.Group)),
+                messages: @Html.Raw(JsonConvert.SerializeObject(Model.Messages)),
+                DepartmentUsers: @Html.Raw(JsonConvert.SerializeObject(Model.GroupChatUsers)),
+                chatboxes: [],
+                UploadFile: '',
+                Page: 1,
+                MessageToSend: '',
+                MessageCount: @Html.Raw(JsonConvert.SerializeObject(Model.MessagesCount)),
+                ModalSelectedUser: {},
+
+            },
+            mounted: function () {
+                $.each(this.messages, function (i, v) {
+                    if (v.FileDetails) {
+                        v.FileDetails = JSON.parse(v.FileDetails);
+                    }
+                });
+                var d = $('#DepartmentChatBox');
+                $(d).animate({ scrollTop: $(d).prop("scrollHeight") }, 1000);
+            },
+            components: {
+                pchat: pchat
+            },
+            methods: {
+                GetGeneratedHtml(list) {
+                    console.log("list" + list);
+                    var data = `
+                    <table class='table table-striped' id = 'PopoverTable'>
+                    <tbody>`;
+                    $.each(list, function (i, v) {
+                        data += `<tr>
+                                    <td data-id='${v.ID}'>
+                                       <a href="#/" class="MyTempBtn" >${v.Message}</a>
+                                    </td>
+                                    <td>
+
+                                        <a href="#/" style="color:red" role="button" data-id='${v.ID}'  class="trashBtn"><i class="fa fa-trash"></i></a>
+                                        </td>
+
+                                </tr>`;
+                    });
+                    data +=
+                        `</tbody>
+                    </table > `;
+
+                    console.log("data = " + data);
+                    return data;
+                },
+                CreatePopover(el, generatedHtml) {
+                    try {
+                        $("body").find(".popover").remove();
+                        $(el).popover("destroy");
+                    }
+                    catch (ex) {
+                    }
+                    $(el).popover({
+                        title: "Select Short Message",
+                        html: true,
+                        placement: 'top',
+                        template: `
+                                <div class="popover" role="tooltip">
+                                    <div class="arrow"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="button" class="close" data-dismiss="modal"  onclick="$(this).parents('.popover').remove()" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h3 class="popover-header"></h3>
+                                        </div>
+                                    </div>
+                                    <div class="popover-body" style="overflow-y:auto;max-height:500px;"></div>
+                                    <div class="popover-footer">
+                                        <div class="pull-right"  style="padding:10px">
+                                            <button id="CreateNewCustomMessage" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>`,
+                        content: generatedHtml
+                    });
+                    $(el).popover("show");
+                },
+                ShortMessage(e) {
+                    $("body").find("#CreateNewCustomMessage").unbind("click");
+                    $("body").find(".MyTempBtn").each(function () {
+                        $(this).unbind("click");
+                    });
+                    var vm = this;
+                    var el = e.target;
+                    $.post("@Url.Action("GetCustomMessages", "Chat")").then(function (resp) {
+                        vm.CreatePopover(el, vm.GetGeneratedHtml(JSON.parse(resp)));
+                    });
+                   $("body").on("click", ".MyTempBtn", function () {
+                       $(this).unbind("click");
+                       vm.MessageToSend = ($(this).html());
+                    });
+
+                   $("body").on("click", ".trashBtn", function () {
+                       var id = $(this).data("id");
+                       var el = $(this);
+                       $.post("/Chat/DeleteCustomMessage", { MessageID: id }).then(function () {
+                           $(el).parents("tr").remove();
+                       });
+                   });
+                   $("body").on("click", "#CreateNewCustomMessage", function () {
+
+                       var element = $(this);
+                       element.prop('disabled', true); //.attr("disabled", "disabled");
+                       console.log("captured Add Click");
+                       $(this).unbind("click");
+                       bootbox.prompt({
+                           closeButton: false,
+                           size: "small",
+                           title: "Enter the Message",
+                           callback: function (result) {
+                               console.log("result = " + result);
+
+                               element.removeAttr("disabled");
+                               if (result != null) {
+                                   $.post("/Chat/InserCustomMessage", { Message: result }).then(function (ID) {
+
+                                       var data = `<tr>
+                                    <td data-id='${ID}'>
+                                       <a href="#/" class="MyTempBtn" >${result}</a>
+                                    </td>
+                                    <td>
+
+                                        <a href="#/" style="color:red" role="button" data-id='${ID}' class="trashBtn"><i class="fa fa-trash"></i></a>
+                                        </td>
+
+                                </tr>`;
+                                       $("#PopoverTable tbody").append(data);
+                                       //vm.CreatePopover(el, vm.GetGeneratedHtml(JSON.parse(resp)));
+                                   });
+                               }
+                           }
+                       });
+                   });
+                },
+
+                ShowDetails: function () {
+
+                    console.log("called");
+                },
+                SendMessage: function () {
+                    if (this.UploadFile == '' && this.MessageToSend.trim() == '') {
+                        return;
+                    }
+                    if (this.UploadFile) {
+                        this.ShareFile();
+                    } else {
+                        var vm = this;
+                        GroupName = identifier;
+                        SenderName = this.user.Username;
+                        console.log(vm.MessageToSend);
+                        Message = {
+                            ID: 0,
+                            DepartmentID: identifier,
+                            UserID: vm.user.ID,
+                            Message: vm.MessageToSend,
+                            TimeStamp: Date.now,
+                            UserImage: vm.user.ImagePath,
+                            SenderName: vm.user.DisplayName,
+                        };
+                      
+
+                        vm.MessageToSend = vm.MessageToSend;
+
+                        console.log("Message: " + JSON.stringify(Message));
+                        chat.server.send(GroupName, Message);
+                        vm.MessageToSend = "";
+                    }
+                },
+                deleteThisRow: function (index) {
+                    this.chatboxes.splice(index, 1);
+                },
+                LoadMoreMessages() {
+                    var vm = this;
+                    $.post("/Chat/GetMoreMessages", { groupId: @Model.Group.Id, Page: vm.Page }, function (resp) {
+                        resp = JSON.parse(resp);
+                        vm.Page += 1;
+                        $.each(resp, function (i, v) {
+                            vm.messages.unshift(v);
+                        });
+                    });
+                },
+                OpenDetailModal(user) {
+                    this.ModalSelectedUser = user;
+                    $("#UserDetailModal").modal("show");
+
+                },
+                DefaultUserImage(u) {
+                    u.ImagePath = '/Images/DefaultUser.png';
+                },
+                DefaultMessageImage(m) {
+                    m.UserImage = '/Images/DefaultUser.png';
+                },
+                FormatDate(d) {
+                    return new Date(d).toLocaleString();
+                },
+                OpenPrivateChat: function (UserFrom, UserTo) {
+                    if (UserFrom.ID != UserTo.ID) {
+                        var vm = this;
+                        $.post("/Chat/GetUserData", { UserToID: UserTo.ID }, function (resp) {
+                            var chatbox_data = {
+                                UserFrom: UserFrom,
+                                NewMessageCount: 3,
+                                MessageToSend: "",
+                                UserTo: UserTo,
+                                PrivateMessages: []
+                            };
+
+                            if (vm.$refs.chatm) {
+                                if (vm.$refs.chatm.length == 0) {
+                                    var comp = { type: 'pchat', vmdata: chatbox_data };
+                                    vm.chatboxes.push(comp);
+                                } else {
+                                    var CreateBox = true;
+                                    $.each(vm.$refs.chatm, function (i, v) {
+                                        if (v.vmdata.UserTo.ID == UserTo.ID) {
+                                            CreateBox = false;
+                                        }
+                                    });
+                                    if (CreateBox) {
+                                        console.log("unmatched");
+                                        var comp = { type: 'pchat', vmdata: chatbox_data };
+                                        vm.chatboxes.push(comp);
+                                    }
+                                }
+                            } else {
+                                console.log("else part");
+                                var comp = { type: 'pchat', vmdata: chatbox_data };
+                                vm.chatboxes.push(comp);
+                            }
+                        });
+                    }
+                },
+                ShareFile: function () {
+                    //var d = new FormData();
+                    var vm = this;
+
+                    GroupName = identifier;
+                    SenderName = vm.user.Username;
+                    Message = {
+                        ID: 0,
+                        DepartmentID: identifier,
+                        UserID: vm.user.ID,
+                        Message: vm.MessageToSend,
+                        TimeStamp: Date.now,
+                        UserImage: vm.user.ImagePath,
+                        SenderName: vm.user.DisplayName,
+                    };
+
+                    var d = new FormData();
+                    d.append("dchatstr", JSON.stringify(Message));
+                    d.append("MyFile", vm.UploadFile);
+                        $.ajax({
+                            url: "/Chat/UploadFile",
+                            type: "POST",
+                            method: "POST",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: d,
+                        }).then(function (resp) {
+                            vm.MessageToSend = "";
+                            vm.UploadFile = '';
+                            resp = JSON.parse(resp);
+                            GroupName = identifier;
+                            SenderName = resp.SenderName;
+                            chat.server.send(GroupName, resp);
+                        });
+                },
+                handleFileUpload(element) {
+                    var vm = this;
+                    vm.UploadFile = vm.$refs.file.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        //vm.UploadFile = e.target.result;
+                    }
+                    reader.readAsDataURL(this.$refs.file.files[0]);
+                },
+            }
+        });
+
+
+
+
+
+        $.connection.hub.start().done(function () {
+            chat.server.connect(chatbox.user.ID, chatbox.Department.ID);
+        });
+
+        chat.client.addMessage = function (message) {
+            console.log("Add Message Called");
+            if (message.FileDetails) {
+                message.FileDetails = JSON.parse(message.FileDetails);
+            }
+            chatbox.messages.push(message);
+            var d = $('#DepartmentChatBox');
+            $(d).animate({ scrollTop: $(d).prop("scrollHeight") }, 1000);
+        }
+
+        chat.client.onConnected = function (ConnectedUsers) {
+            $.each(chatbox.DepartmentUsers, function (i, v) {
+                $.each(ConnectedUsers, function (i, user) {
+                    if (user.ID == v.ID) {
+                        v.ConnectionId = user.ConnectionId;
+                        v.Online = true;
+                    }
+                });
+            });
+        }
+
+        chat.client.onNewUserConnected = function (user, loginTime) {
+            $.each(chatbox.DepartmentUsers, function (i, v) {
+                if(user.ID == v.ID) {
+                    v.Online = true;
+                    v.ConnectionId = user.ConnectionId;
+                }
+            });
+        }
+
+        chat.client.onUserDisconnected = function (ConnectionId) {
+            $.each(chatbox.DepartmentUsers, function (i, v) {
+                if (v.ConnectionId == ConnectionId) {
+                    v.Online = false;
+                    v.ConnectionId = null;
+                }
+            });
+        }
+
+        chat.client.sendPrivateMessage = function (pchat) {
+            if (pchat.FileDetails) {
+                pchat.FileDetails = JSON.parse(pchat.FileDetails);
+            }
+            $.each(chatbox.$refs.chatm, function (i, v) {
+                if (v.vmdata.UserTo.ID == pchat.UserTo && v.vmdata.UserFrom.ID == pchat.UserFrom) {
+                    v.AddMessage(pchat);
+                }
+            });
+        }
+        chat.client.recievePrivateMessage = function (pchat) {
+            if (pchat.FileDetails) {
+                pchat.FileDetails = JSON.parse(pchat.FileDetails);
+            }
+            console.log("Message Recieved");
+            HandleMessage(pchat);
+        }
+
+        function HandleMessage(pchat) {
+            console.log(pchat);
+            console.log("UserFrom: " + pchat.UserFrom);
+            console.log("UserTo: " + pchat.UserTo);
+            if (pchat.UserTo != pchat.UserFrom) {
+                if (chatbox.$refs.chatm) {
+                    if (chatbox.$refs.chatm.length == 0) {
+                        OpenNewBox(pchat);
+                    } else {
+                        $.each(chatbox.$refs.chatm, function (i, v) {
+                            if (v.vmdata.UserTo.ID == pchat.UserFrom || v.vmdata.UserFrom.ID == pchat.UserFrom) {
+                                v.AddMessage(pchat);
+                            } else {
+                                OpenNewBox(pchat);
+                            }
+                        });
+                    }
+
+                } else {
+                    OpenNewBox(pchat);
+                }
+            }
+        }
+
+        function OpenNewBox(pchat) {
+                var vm = chatbox;
+                $.post("/Chat/GetUserData", { UserToID: pchat.UserFrom }, function (resp) {
+                    console.log("Opening Box" + resp);
+                    resp = JSON.parse(resp);
+                    var chatbox_data = {
+                        UserFrom: @Html.Raw(JsonConvert.SerializeObject(Session["User"])),
+                        UserTo: resp,
+                        NewMessageCount: 3,
+                        MessageToSend: "",
+                        UploadFile: '',
+                        Page: 0,
+                        PrivateMessages: [pchat]
+                    };
+
+
+
+
+                    var comp = { type: 'pchat', vmdata: chatbox_data };
+                    vm.chatboxes.push(comp);
+                    //HandleMessage(pchat);
+                });
+
+        }
+
+
+        //function OpenPrivateChatBox(chatHub, userId, ctrId, userName) {
+
+        //    var PWClass = $('#PWCount').val();
+
+        //    if ($('#PWCount').val() == 'info')
+        //        PWClass = 'danger';
+        //    else if ($('#PWCount').val() == 'danger')
+        //        PWClass = 'warning';
+        //    else
+        //        PWClass = 'info';
+
+        //    $('#PWCount').val(PWClass);
+        //    var div1 = ''
+
+
+
+        //    var $div = $(div1);
+
+        //    // Closing Private Chat Box
+        //    $div.find('#imgDelete').click(function () {
+        //        $('#' + ctrId).remove();
+        //    });
+
+        //    // Send Button event in Private Chat
+        //    $div.find("#btnSendMessage").click(function () {
+
+        //        $textBox = $div.find("#txtPrivateMessage");
+
+        //        var msg = $textBox.val();
+        //        if (msg.length > 0) {
+        //            chatHub.server.sendPrivateMessage(userId, msg);
+        //            $textBox.val('');
+        //        }
+        //    });
+
+        //    // Text Box event on Enter Button
+        //    $div.find("#txtPrivateMessage").keypress(function (e) {
+        //        if (e.which == 13) {
+        //            $div.find("#btnSendMessage").click();
+        //        }
+        //    });
+
+        //    // Clear Message Count on Mouse over
+        //    $div.find("#divMessage").mouseover(function () {
+
+        //        $("#MsgCountP").html('0');
+        //        $("#MsgCountP").attr("title", '0 New Messages');
+        //    });
+
+        //    // Append private chat div inside the main div
+        //    $('#PriChatDiv').append($div);
+        //    var msgTextbox = $div.find("#txtPrivateMessage");
+        //    $(msgTextbox).emojioneArea();
+        //}
+    </script>
+}

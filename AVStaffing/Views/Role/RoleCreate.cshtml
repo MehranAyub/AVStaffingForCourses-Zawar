@@ -1,0 +1,191 @@
+﻿@using AVStaffing.Infrastructure
+@model AVStaffing.Models.ViewModels.RoleViewModel
+@{
+    ViewBag.Title = "Create Role";
+    var permissions = ViewBag.Permissions as List<Permission>;
+    var users = ViewBag.Users as List<ApplicationUser>;
+
+    permissions = permissions.Where(x => x.Controller == "User" || x.Controller == "Role").ToList();
+
+}
+
+<style>
+    .select2-results__option .wrap:before {
+        font-family: fontAwesome;
+        color: #999;
+        content: "\f096";
+        width: 25px;
+        height: 25px;
+        padding-right: 10px;
+    }
+
+    .select2-results__option[aria-selected=true] .wrap:before {
+        content: "\f14a";
+    }
+
+    /* not required css */
+
+    .row {
+        padding: 10px;
+    }
+
+    .select2-multiple, .select2-multiple2 {
+        width: 50%
+    }
+
+    .select2-selection__rendered {
+        margin-top: -10px;
+    }
+</style>
+
+
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Role Management
+                </h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Create Role
+                        </a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+        <!--begin::Card-->
+
+        <div class="card card-custom justify-content-center">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon"><i class="fa fa-lock text-primary"></i></span>
+                    <h3 class="card-label">
+                        @if (Model.Id != 0)
+                        {
+                            @Html.Raw("Update Role")
+                        }
+                        else
+                        {
+                            @Html.Raw("Create Role")
+
+                        }
+                    </h3>
+                </div>
+                <div class="card-toolbar"></div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.ValidationSummary(true)
+
+                            <div class="form-group">
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.IsSysAdmin, new { @class = "form-control" })
+                                @Html.LabelFor(model => model.IsSysAdmin, "Is System Admin", new { @class = "control-label" })
+
+                                @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                            </div>
+                            <div class="form-group" style="margin-bottom: 200px">
+                                @Html.LabelFor(model => model.RoleDescription, new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.RoleDescription, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleDescription)
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PermissionIds, "Permissions", new { @class = "control-label" })
+                                <select multiple="multiple" class="select2-multiple" name="PermissionIds" id="PermissionIds" style="width: 100%">
+                                    @foreach (var item in permissions)
+                                    {
+                                        <option value="@item.Id" @(Model.PermissionIds.Contains(item.Id) ? "selected" : "")>@item.Description</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.PermissionIds)
+                            </div>
+
+                            @*<div class="form-group">
+                                @Html.LabelFor(model => model.UserIds, new { @class = "control-label" })
+                                <select multiple="multiple" class="select2-multiple" name="UserIds" id="UserIds" style="width: 100%">
+                                    @foreach (var item in users)
+                                    {
+                                        <option value="@item.Id" @(Model.UserIds.Contains(item.Id) ? "selected" : "")>@item.Email</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.UserIds)
+                            </div>*@
+
+
+                            <div class="form-group">
+                                <div class="float-right">
+                                    <input class="btn btn-primary" type="submit" value="@(Model.Id == 0 ? "Create" : "Update") Role" />
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+
+                    <div class="col-3"></div>
+                </div>
+
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+
+
+
+
+@section Scripts{
+
+    <script src="@Url.Content("~/Scripts/select2.multi-checkboxes.js")"></script>
+    <script>
+        jQuery(function ($) {
+            $('.select2-multiple').select2MultiCheckboxes({
+                placeholder: "Choose multiple elements",
+                width: "auto",
+                closeOnSelect: false
+            });
+            $(".select2-multiple").select2("open");
+        });
+    </script>
+}

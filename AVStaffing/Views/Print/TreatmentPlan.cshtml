@@ -1,0 +1,140 @@
+﻿@using AVStaffing.Infrastructure
+@using AVStaffing.Models.Entities
+@model AVStaffing.Controllers.TreatmentPlanPrintModel
+@{
+    var user = ViewBag.SessionUser as ApplicationUser;
+
+    Layout = null;
+    string controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+    ViewBag.Title = "HR System";
+}
+
+
+<div class="container" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2 style="text-align: center">COMMUNITY OUTREACH FAMILY SERVICES, INC.</h2>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="float-right"><h2>SERVICE NOTE</h2></div>
+        </div>
+        <div class="col-12">
+            <div class="pull-right"><h2>2148 Skippers Road, Emporia, Virginia, 23847</h2></div>
+        </div>
+        <div class="col-12">
+            <div class="pull-right"><h2>2148 Skippers Road, Emporia, Virginia, 23847</h2></div>
+        </div>
+    </div>
+
+
+    <div class="row" style="font-size: 18px; margin-top:30px">
+        <div class="col-6" style="border:1px solid black">
+            <div>
+                <label style="font-weight: 800">Client: &nbsp;</label><span>@Model.TreatmentPlan.Patient.FirstName @Model.TreatmentPlan.Patient.LastName</span>
+            </div>
+            <br />
+            <div>
+                <label style="font-weight: 800">Record# &nbsp;</label><span>@Model.TreatmentPlan.Patient.Id</span> <!--BON1929-->
+            </div>
+            <br />
+            <div>
+                <label style="font-weight: 800">Insurance ID# &nbsp;</label><span>@Model.TreatmentPlan.Patient.InsuranceId</span>
+            </div>
+        </div>
+        <div class="col-6" style="border:1px solid black">
+            @Html.Raw(Model.TreatmentPlan.Service)
+            @*<ul>
+                    <li>Date Of Service</li>
+                    <li>Identification of Client</li>
+                    <li>Purpose of Contact</li>
+                    <li>Description of Intervention/Activity</li>
+                    <li>Effectiveness of the intervention/Activity</li>
+                    <li>Duration of Services</li>
+                    <li>Signature and Credentials</li>
+                </ul>*@
+        </div>
+    </div>
+    <div class="row" style="font-size: 18px; border: 1px solid black">
+        <div class="col-3">
+            <label style="font-weight: 800">Date:&nbsp;</label><span>@Model.TreatmentPlan.Date.ToString("yyyy-MMM-dd")</span>
+        </div>
+        <div class="col-3">
+            <label style="font-weight: 800">Face to Face:</label>
+            <span>
+                <input type="checkbox" @Html.Raw(Model.TreatmentPlan.FaceToFace ? "checked" : "") />&nbsp;Yes
+                <input type="checkbox" @Html.Raw(Model.TreatmentPlan.FaceToFace ? "" : "checked") />&nbsp; No
+            </span>
+        </div>
+        <div class="col-3">
+            <label style="font-weight: 800">Shift:</label>
+
+            <span><input @Html.Raw(Model.TreatmentPlan.FirstShift ? "" : "checked") type="checkbox" /> 1<sup>st</sup></span>
+            <span><input @Html.Raw(Model.TreatmentPlan.SecondShift ? "" : "checked") type="checkbox" />2<sup>nd</sup></span>
+            <span><input @Html.Raw(Model.TreatmentPlan.ThirdShift ? "" : "checked") type="checkbox" /> 3<sup>rd</sup></span>
+        </div>
+        <div class="col-3">
+            <label style="font-weight: 800">Units:</label><span>81</span>
+        </div>
+
+        <div class="col-12">
+            <label style="font-weight: 800">Location:&nbsp;</label>
+            <span><input type="checkbox" @Html.Raw(Model.TreatmentPlan.Location == "Office" ? "checked" : "") /> Office </span>&nbsp;&nbsp;
+            <span><input type="checkbox" @Html.Raw(Model.TreatmentPlan.Location == "Work" ? "checked" : "") /> Work</span>&nbsp;&nbsp;
+            <span><input type="checkbox" @Html.Raw(Model.TreatmentPlan.Location == "Community" ? "checked" : "") /> Community </span>&nbsp;&nbsp;
+            <span><input type="checkbox" @Html.Raw(Model.TreatmentPlan.Location == "Crisis Stabilization" ? "checked" : "") /> Crisis Stabilization </span>&nbsp;&nbsp;
+
+            <span>
+                <input type="checkbox" @Html.Raw(Model.TreatmentPlan.Location != "Office" && Model.TreatmentPlan.Location != "Work" && Model.TreatmentPlan.Location != "Community" && Model.TreatmentPlan.Location != "Crisis Stabilization" ? "checked" : "") /> Other : @Html.Raw(Model.TreatmentPlan.Location)
+            </span>
+        </div>
+    </div>
+    <div class="row" style="font-size: 18px; border: 1px solid black">
+        <div class="col-12">
+            <label style="font-weight: 800">Purpose of Contact (Goal) : </label>
+            <ul>
+                @foreach (var goal in Model.TreatmentPlan.Goals)
+                {
+                    <li>
+                        <div>@Html.Raw(goal.GoalTitle)</div>
+                        <div>@Html.Raw(goal.GoalName)</div>
+                        <div>@Html.Raw(goal.Description)</div>
+                    </li>
+                }
+            </ul>
+
+        </div>
+        <div class="col-12">
+            <label style="font-weight: 800">Intervention/Activity:</label>
+            @Html.Raw(Model.TreatmentPlan.Intervention)
+        </div>
+        <div class="col-12">
+            <label style="font-weight: 800">Effectiveness of Intervention/Activity: </label>
+            @Html.Raw(Model.TreatmentPlan.Effectiveness)
+        </div>
+
+    </div>
+
+    <div class="row" style="font-size: 18px; border: 1px solid black">
+        <div class="col-12">
+            <label>Signature/Credentials/Date:</label>
+            @if (Model.TreatmentPlan.Staff != null)
+            {
+                <img style="height: 70px" src="@(!string.IsNullOrWhiteSpace(Model.TreatmentPlan.Staff.Signature) ? Url.Content(Model.TreatmentPlan.Staff.Signature) : "")" />
+
+            }
+        </div>
+        <div class="col-12">
+            <label>Staff Name and Title:</label>
+            <label>@Model.TreatmentPlan.Staff.FirstName @Model.TreatmentPlan.Staff.LastName</label>
+        </div>
+    </div>
+
+    <div class="footer" style="font-size: 18px">
+        <label>Community Outreach Family Services, Inc. - Service Note- @DateTime.Now.ToString("MMM-yyyy")</label>
+    </div>
+</div>

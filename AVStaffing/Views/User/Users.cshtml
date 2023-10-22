@@ -1,0 +1,210 @@
+﻿@model IEnumerable<AVStaffing.Infrastructure.ApplicationUser>
+@{
+    ViewBag.Title = "Users";
+
+    var editUserPermission = User.HasPermission("User-AddUser");
+    var deleteUserPermission = User.HasPermission("User-DeleteUser");
+}
+
+
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    User Management
+                </h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Users
+                        </a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                    <h3 class="card-label">User List</h3>
+                </div>
+                <div class="card-toolbar">
+                    <!--begin::Dropdown-->
+                    @*<div class="dropdown dropdown-inline mr-2">
+  
+                    </div>*@
+                    <!--end::Dropdown-->
+                    @if (editUserPermission)
+                    {
+                        <!--begin::Button-->
+                        <a href="@Url.Action("AddUser", "User")" class="btn btn-primary font-weight-bolder">
+                            <i class="la la-plus"></i>
+                            Create new User
+                        </a>
+                        <!--end::Button-->
+                    
+                    }
+                    
+
+                </div>
+            </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <!--end: Datatable-->
+
+                <table  class="table table-separate table-head-custom collapsed dataTable">
+
+                    <thead>
+                        <tr>
+                            <th>UserName</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Inactive</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    <thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.UserName</td>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@Html.CheckBoxFor(modelItem => item.Inactive, new { @class = "form-control toggleUserActivation", style = "width:15px;height:15px", data_id = item.Id })</td>
+                                    <td>@item.Email</td>
+                                    @if (item.Roles != null && item.Roles.Count > 0)
+                                    {
+
+                                        <td>@string.Join(", ", item.Roles.Select(x => x.Role.Name).ToList())</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>No role yet defined</td>
+                                    }
+                                    <td>
+
+                                        @if (editUserPermission)
+                                        {
+                                            <a style="cursor: pointer !important" href="@Url.Action("AddUser", "User", new {id = item.Id})" id=@item.Id>
+                                                <i class="fas fa-pencil-alt text-primary"></i>
+                                            </a>
+                                        }
+
+                                        @if (deleteUserPermission)
+                                        {
+                                            <a style="cursor: pointer !important" href="#/" class="deleteUser" data-id="@item.Id">
+                                                <i class="fas fa-trash text-danger"></i>
+                                            </a>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+
+
+
+@section Scripts{
+    <script>
+     
+
+        $(".deleteUser").click(function() {
+            var id = $(this).data("id");
+            var row = $(this).parents("tr");
+            bootbox.confirm("Are you sure you want to delete this user ?",
+                function(r) {
+                    if (r) {
+                        $.post("@Url.Action("DeleteUser", "User")",
+                                {
+                                    userId: id
+                                })
+                            .done(function() {
+                                $(row).remove();
+                            })
+                            .fail(function() {
+
+                            });
+                    }
+                });
+        });
+
+        $(".toggleUserActivation").click(function() {
+
+            var id = $(this).data("id");
+            var checkbox = $(this);
+            var status = "";
+
+            if ($(checkbox).prop("checked")) {
+                status = "deactivate";
+            } else {
+                status = "activate";
+            }
+            bootbox.confirm(`Are you sure you want to ${status} this user ?`,
+                function(r) {
+                    if (r) {
+                        $.post("@Url.Action("ToggleUserActivation", "User")",
+                                { userId: id, status: status === "deactivate" ? true : false })
+                            .done(function() {
+                                if (status == "deactivate") {
+                                    $(checkbox).prop("checked", true);
+                                } else {
+                                    $(checkbox).prop("checked", false);
+
+                                }
+                            })
+                            .fail(function() {
+
+                            });
+                    } else {
+                        if (status == "deactivate") {
+                            $(checkbox).prop("checked", false);
+                        } else {
+                            $(checkbox).prop("checked", true);
+
+                        }
+                    }
+                });
+        });
+
+    </script>
+}
+

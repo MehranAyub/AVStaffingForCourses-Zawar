@@ -1,0 +1,680 @@
+﻿@using AVStaffing.Models.Constants
+@using Newtonsoft.Json
+@model AVStaffing.Controllers.MedicalRecord_VM
+@{
+    ViewBag.Title = "Add Medical Administration Record";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5"> MAR Management </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted"> Medical Administration Records </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted"> Add Medical Administration Record </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-column-fluid" id="AddDocumentForm">
+    <div class="container">
+        @using (Html.BeginForm("AddDocument", "Document", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.MedicalRecord.Id)
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.MedicalRecord.Id != 0)
+                            {
+                                @Html.Raw("Medication Administration Record")
+                            }
+                            else
+                            {
+                                @Html.Raw("Medication Administration Record")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Patient</label>
+                                        <select2 :options="PatientList" class="form-control" v-model="MedicalRecord.PatientId"></select2>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="FacilityName">Facility Name</label>
+                                            <input Value="" class="form-control" v-model="MedicalRecord.FacilityName" id="FacilityName" name="FacilityName" type="text" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Record</label>
+                                            <input class="form-control" v-model="MedicalRecord.Record" type="text" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="AdmissionDate">Admission Date</label>
+                                            <datetimepicker class="form-control" id="AdmissionDate" name="AdmissionDate" v-model="MedicalRecord.AdmissionDate" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="StartStopDate">Start/Stop Date</label>
+                                            <datetimepicker class="form-control" id="StartStopDate" v-model="MedicalRecord.StartStopDate" name="StartStopDate" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div id="calendar"></div>
+                                </div>
+
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Diagnosis</label>
+                                            <textarea class="form-control" v-model="MedicalRecord.Diagnosis"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Allergies</label>
+                                            <textarea class="form-control" v-model="MedicalRecord.Allergies"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="Comments">Comments</label>
+                                            <textarea class="form-control" v-model="MedicalRecord.Comments"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Physician</label>
+                                            <select2 class="form-control" :options="PhysicianList" v-model="MedicalRecord.DoctorId">
+                                                <option disabled value="0">Select one</option>
+                                            </select2>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li>A. Put initials in appropriate box when medication is given.</li>
+                                            <li>B. Circle initials when not given.</li>
+                                            <li>C. State reason for refusal / omission on back of form.</li>
+                                            <li>D. PRN Medications: Reason given and results must be noted on back of form.</li>
+                                            <li>E. Legend: S = School; H = Home visit; W Phone Number: = Work; P = Program.</li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Staff Name &nbsp;</th>
+                                            <th>Staff Signature &nbsp;</th>
+                                            <th>Initials</th>
+                                            <th class="col-1">
+                                                <button type="button" @@click="OpenStaffModal()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="staff in MedicalRecordStaff">
+                                            <td>{{`${staff.FirstName} ${staff.LastName}`}}</td>
+                                            <td><img :src="staff.Signature" style="width:100px" /></td>
+                                            <td>{{`${staff.Initials}`}}</td>
+                                            <th class="col-1">
+                                                <a href="#/" role="button" @@click="RemoveStaffFromList(staff)"><i class="fa fa-trash text-danger"></i></a>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>PRN AND MEDICATIONS NOT ADMINISTERED</h4>
+                                    </div>
+                                </div>
+                                <br />
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Medication</th>
+                                            <th>Reason</th>
+                                            <th>Result</th>
+                                            <th>Initials</th>
+                                            <th>Staff Signature</th>
+                                            <th>
+                                                <button type="button" @@click="OpenMedicineModal()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="med in NotAdministeredMedications">
+                                            <td>{{med.Date}}</td>
+                                            <td>{{med.Medication.Name}}</td>
+                                            <td>{{med.Reason}}</td>
+                                            <td>{{med.Result}}</td>
+                                            <td>{{med.Staff.Initials}}</td>
+                                            <td><img :src="med.Staff.Signature" style="width:150px" /></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                </div>
+
+                            }
+
+                            <div class="form-group">
+                                <div class="float-right">
+                                    <a href="@Url.Action("DocumentList", "Document")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                        Back
+                                    </a>
+
+                                    <div class="btn-group ml-2">
+                                        <button type="button" @@click="SubmitDocument()" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                            @if (Model.MedicalRecord.Id == 0)
+                                            {
+                                                @Html.Raw("Add Document")
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw("Save Changes")
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="modal fade" id="StaffModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Staff List</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Staff</label>
+                            <select class="form-control" @@change="SetSelectedStaff($event)">
+                                <option v-for="st in StaffList" :value="st.id">{{st.text}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" @@click="addStaffToList()" data-dismiss="modal">Add</button>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addAdministeredMedicineForm">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Administered Medicine</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Medicine</label>
+                            <select class="form-control" v-model="CurrentEvent.MedicationId">
+                                <option v-for="med in Medication" :value="med.Id">{{med.Name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Staff</label>
+                            <select class="form-control" v-model="CurrentEvent.StaffId">
+                                <option v-for="st in Staff" :value="st.Id">{{  `${st.FirstName} ${st.LastName} (${st.Initials})`}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Start Time</label>
+                            <datetimepicker class="form-control" v-model="CurrentEvent.StartTime" :value="CurrentEvent.StartTime" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Stop Time</label>
+                            <datetimepicker class="form-control" v-model="CurrentEvent.EndTime" :value="CurrentEvent.StartTime"/>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" @@click="addEventToCalendar()" data-dismiss="modal">Add</button>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="NotAdministeredMedicineForm">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Not Administered Medicine</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Medicine</label>
+                                <select class="form-control" v-model="SelectedNMedication.MedicationId">
+                                    <option v-for="med in Medication" :value="med.Id">{{med.Name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Staff</label>
+                                <select class="form-control" v-model="SelectedNMedication.StaffId">
+                                    <option v-for="st in Staff" :value="st.Id">{{`${st.FirstName} ${st.LastName} (${st.Initials})`}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Date</label>
+                                <datetimepicker class="form-control" v-model="SelectedNMedication.Date" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Reason</label>
+                                    <textarea type="text" class="form-control" v-model="SelectedNMedication.Reason"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Result</label>
+                                    <textarea type="text" class="form-control" v-model="SelectedNMedication.Result"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" @@click="AddNMedication()" data-dismiss="modal">Add</button>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/x-template" id="select2-template">
+    <select>
+        <slot></slot>
+    </select>
+</script>
+
+<script type="text/x-template" id="datetimepicker-template">
+    <input />
+</script>
+
+@section scripts{
+
+    <script>
+        Vue.component("select2", {
+            props: ["options", "value"],
+            template: "#select2-template",
+            mounted: function () {
+                var vm = this;
+                console.log("select 2 val : ", this.value);
+                console.log(this.options);
+                $(this.$el)
+                    // init select2
+                    .select2({ data: this.options })
+                    .val(this.value)
+                    .trigger("change")
+                    // emit event on change.
+                    .on("change", function () {
+                        vm.$emit("input", this.value);
+                    });
+            },
+            watch: {
+                value: function (value) {
+                    console.log("called");
+                    // update value
+                    $(this.$el)
+                        .val(value)
+                        .trigger("change");
+                },
+                options: function (options) {
+                    // update options
+                    $(this.$el)
+                        .empty()
+                        .select2({ data: options });
+                }
+            },
+            destroyed: function () {
+                $(this.$el)
+                    .off()
+                    .select2("destroy");
+            }
+        });
+
+
+
+        Vue.component("datetimepicker", {
+            props: ["value"],
+            template: "#datetimepicker-template",
+            mounted: function () {
+                var vm = this;
+                $(vm.$el).datetimepicker({ format: 'YYYY-MM-DD hh:mm A' });
+                $(vm.$el).val(this.value);
+                $(vm.$el).on("dp.change", function () {
+                    var date = $(vm.$el).val();
+                    vm.$emit("input", date);
+                    vm.$emit("dp-change", date);
+                });
+            },
+            watch: {
+                value: function (value) {
+                    $(this.$el).val(value).trigger("dp.change");
+                    this.$emit("change", value);
+                }
+            },
+            destroyed: function () {
+                $(this.$el).off();
+                    //.select2("destroy");
+            }
+        });
+
+
+
+        var vuePage = new Vue({
+            el: "#AddDocumentForm",
+            data: {
+                eventId : 1,
+                calendar: calendar,
+                MedicalRecord: @Html.Raw(JsonConvert.SerializeObject(Model.MedicalRecord)),
+                MedicalRecordStaff : @Html.Raw(JsonConvert.SerializeObject(Model.Staff.Where(x=> Model.MedicalRecord.Staff.Select(y=>y.StaffId).ToList().Contains(x.Id) ).ToList())),
+                Medication: @Html.Raw(JsonConvert.SerializeObject(Model.Medications)),
+                Physicians: @Html.Raw(JsonConvert.SerializeObject(Model.Physicians)),
+                Patients: @Html.Raw(JsonConvert.SerializeObject(Model.Patients)),
+                Staff: @Html.Raw(JsonConvert.SerializeObject(Model.Staff)),
+                Gender: ["Male", "Female", "Other"],
+                PatientList: [],
+                MedicineList: [],
+                PhysicianList : [],
+                StaffList: [],
+                AdministeredMedications: @Html.Raw(JsonConvert.SerializeObject(Model.MedicalRecord.AdministeredMedications)) || [],
+                NotAdministeredMedications : @Html.Raw(JsonConvert.SerializeObject(Model.MedicalRecord.NotAdministeredMedicines)) || [],
+                CurrentEvent: {
+                    Id: "",
+                    MedicationId: "",
+                    MarId: "",
+                    StaffId: "",
+                    StartTime: "",
+                    EndTime : ""
+                },
+                //SelectedNonAdministeredMedication: {
+                //    Id: "",
+                //    MedicationId: "",
+                //    MarId: "",
+                //    StaffId: "",
+                //    StartTime: "",
+                //    EndTime: ""
+                //},
+                SelectedNMedication: {
+                    Id: 0,
+                    MarId: 0,
+                    MedicationId: 0,
+                    Medication : {},
+                    StaffId : 0,
+                    Staff: {},
+                    Date: "",
+                    Initials: "",
+                    Reason: "",
+                    Result: ""
+                },
+                SelectedStaff: "0"
+
+            },
+            beforeMount: function () {
+                var vm = this;
+                vm.PatientList = vm.Patients.map((x) => ({ id: x.Id.toString(), text: `${x.FirstName} ${x.LastName} ${x.Initials} (${x.PhoneNumber})` }));
+                vm.PatientList.unshift({ id: 0, text: "Select Patient" });
+
+                vm.PhysicianList = vm.Physicians.map((x) => ({ id: x.Id.toString(), text: `${x.FirstName} ${x.LastName} ${x.Initials} (${x.PhoneNumber})` }));
+                vm.PhysicianList.unshift({ id: 0, text: "Select Physician" });
+
+                vm.MedicineList = vm.Medication.map((x) => ({ id: x.Id.toString(), text: `${x.Name}` }));
+
+                vm.StaffList = vm.Staff.map((x) => ({ id: x.Id.toString(), text: `${x.FirstName} ${x.LastName} (${x.Initials})` }));
+                vm.StaffList.unshift({ id: 0, text: "Select Staff" });
+            },
+            mounted: function () {
+                var vm = this;
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl,
+                    {
+                        plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+                        header: {
+                            left: 'prev,next',
+                            center: 'title',
+                            right: ''
+                        },
+                        selectable: true,
+                        firstDay: 1,
+                        defaultView: 'dayGridMonth',
+                        navLinks: true,
+                        businessHours: false,
+                        editable: true,
+                        dateClick: function (info) {
+                            console.log("clicked");
+                            vm.CurrentEvent = {
+                                Id: "",
+                                MedicationId: "",
+                                MarId: "",
+                                StaffId: "",
+                                StartTime: "",
+                                EndTime: ""
+                            };
+                            vm.CurrentEvent.StartTime =  info.dateStr + " 00:00";
+                            vm.CurrentEvent.EndTime = info.dateStr + " 23:59";
+                            console.log(vm.CurrentEvent.StartTime);
+
+                            $("#addAdministeredMedicineForm").modal("show");
+                        },
+                        eventClick: function (info) {
+                            info.event.remove();
+                            //alert('Event: ' + info.event.title);
+                            //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                            //alert('View: ' + info.view.type);
+
+                            //// change the border color just for fun
+                            //info.el.style.borderColor = 'red';
+                        }
+                    });
+
+                $.each(vm.AdministeredMedications, function (i, e) {
+                    var selectedMed = vm.Medication.filter(x => x.Id == e.MedicationId)[0];
+                    var selectedStaff = vm.Staff.filter(x => x.Id == e.StaffId)[0];
+                    calendar.addEvent({
+                        id: ++vm.eventId,
+                        title: selectedMed.Name + " " + selectedStaff.Initials,
+                        start: e.StartTime,
+                        end: e.EndTime,
+                        extendedProps: {
+                            selectedMedId: selectedMed.Id,
+                            selectedStaffId: selectedStaff.Id
+                        }
+                    });
+                });
+
+                calendar.render();
+                vm.calendar = calendar;
+
+            },
+            methods: {
+                Test(e) {
+                    console.log(e);
+                },
+                OpenStaffModal() {
+                    $("#StaffModal").modal("show");
+                },
+                SetSelectedStaff(e) {
+                    console.log(e);
+                    this.SelectedStaff = e.target.value;
+                },
+                addStaffToList(e) {
+                    var vm = this;
+                    debugger;
+                    var staff = vm.Staff.filter((x) => x.Id == vm.SelectedStaff)[0];
+                    if (staff) {
+                        vm.MedicalRecordStaff.push(staff);
+                    }
+                },
+                OpenMedicineModal() {
+                    $("#NotAdministeredMedicineForm").modal("show");
+                },
+                SetSelectedMedicine(e) {
+                    console.log(e);
+                    this.SelectedMedicine = e.target.value;
+                },
+                AddNMedication(e) {
+                    var vm = this;
+                    var medication = vm.Medication.filter((x) => x.Id == vm.SelectedNMedication.MedicationId)[0];
+                    if (medication) {
+                        console.log(vm.SelectedNMedication);
+                        vm.SelectedNMedication.Medication = medication;
+                        vm.SelectedNMedication.MedicationId = medication.Id;
+                    }
+                    var staff = vm.Staff.filter((x) => x.Id == vm.SelectedNMedication.StaffId)[0];
+                    if (staff) {
+                        vm.SelectedNMedication.Staff = staff;
+                        vm.SelectedNMedication.StaffId = staff.Id;
+                    }
+                    console.log(vm.SelectedNMedication);
+                    console.log(vm.NotAdministeredMedications);
+
+                    vm.NotAdministeredMedications.push({ ...vm.SelectedNMedication});
+                },
+                SubmitDocument() {
+                    var vm = this;
+                    this.MedicalRecord.NotAdministeredMedicines = this.NotAdministeredMedications;
+                    var events = vm.calendar.getEvents();
+                    this.MedicalRecord.AdministeredMedications = events.map(function (e) {
+                        var props = e.extendedProps;
+                        return {
+                            MedicationId: props.selectedMedId,
+                            MarId: 0,
+                            StaffId: props.selectedStaffId,
+                            StartTime: e.start,
+                            EndTime : e.end
+                        };
+                    });
+
+                    console.log(this.MedicalRecord);
+                    
+                    this.MedicalRecord.Staff = this.MedicalRecordStaff;
+                    var medicalRecordReqeust = JSON.parse(JSON.stringify(vm.MedicalRecord));
+                    medicalRecordReqeust.Staff = this.MedicalRecordStaff.map(x => { return { StaffId: x.Id, MedicalRecordId: 0 } });
+                    console.log(medicalRecordReqeust);
+
+                    $.ajax({
+                        url: "@Url.Action("AddDocument","Document")",
+                        type: "POST",
+                        data: medicalRecordReqeust,
+                        success: function (resp) {
+                            console.log(resp);
+                        }
+                    });
+
+                },
+                addEventToCalendar() {
+                    debugger;
+                    var vm = this;
+                    var selectedMed = vm.Medication.filter(x => x.Id == vm.CurrentEvent.MedicationId)[0];
+                    var selectedStaff = vm.Staff.filter(x => x.Id == vm.CurrentEvent.StaffId)[0];
+                    var event = {
+                        //id: ++vm.eventId,
+                        title: selectedMed.Name + " " + selectedStaff.Initials,
+                        start: new Date( vm.CurrentEvent.StartTime),
+                        end: new Date( vm.CurrentEvent.EndTime),
+                        extendedProps: {
+                            selectedMedId: selectedMed.Id,
+                            selectedStaffId: selectedStaff.Id
+                        }
+                    }
+                    console.log(event);
+                    vm.calendar.addEvent(event);
+                },
+                removeEventFromCalendar() {
+
+                }
+
+            }
+
+        });
+
+
+
+
+    </script>
+}
+

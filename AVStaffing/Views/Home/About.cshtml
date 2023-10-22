@@ -1,0 +1,160 @@
+﻿@using AVStaffing.Infrastructure
+@using AVStaffing.Models
+@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_WebBaseLayout.cshtml";
+    var homePage = LoadedPermissions.Portfolios.First(x => x.Key == Session["CultureContent"].ToString()).Value;
+}
+
+
+<div class="container" style="margin-bottom:100px">
+    <div class="page-header">
+        <div class="row">
+            <!--<div class="col-md-6 col-sm-6">
+                <h2 class="page-title">How It works</h2>
+            </div>--> <!-- /.col-md-6 -->
+            <div class="col-md-6 col-sm-6 hidden-xs back-home">
+                <a href="index-2.html">← Go back Home</a>
+            </div> <!-- /.col-md-6 -->
+        </div> <!-- /.row -->
+    </div> <!-- /.page-header -->
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="blog-single">
+
+                <div class="post-content">
+                    <h3 class="post-title" style="text-align:center"><b>WHAT WE DO</b></h3>
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;margin-top:30px;">
+                            <b>
+                                <i>
+                                    AV STAFFING INC appreciates the opportunity to supply the key workers necessary to permit
+                                    your business to continue to successfully operate on an ongoing basis.<br /><br /> Our professional
+                                    services and great rates will establish our relationship for long term, and you’ll always be able
+                                    to count on us, especially when time is of the essence.
+                                </i>
+                            </b>
+                        </div>
+                        @*<div class="col-md-4" >
+                            <img src="../Assets/Images/jobDesc.png" style="margin-right: 5px;width:100%" />
+                        </div>*@
+                    </div>
+                    <p>
+                        <br />
+                        AV Staffing Inc is dedicated to providing essential personnel to ensure the smooth operation of your business. Our mission is to be a reliable partner, delivering professional services at competitive prices. We strive to establish long-lasting relationships with our clients and to always be there when time is of the essence. With our commitment to excellence, we are confident in our ability to help your business succeed.
+                    </p>
+                    <h3 class="post-title" style="text-align:center;margin-top:50px">
+                        <b>  OUR MISSION</b>
+                    </h3>
+                    <p style="font-size: 20px; text-align: center; margin-top: 30px">
+                        " Customer satisfaction is our number one priority and building an entrepreneurial
+                        recruitment business, Offering flexible services & solutions that we are proud of.
+                        Putting our employees, clients and candidates in a better place". <br /> <br />
+                        <br />
+                    </p>
+                    <div class="col-md-6" style="align-content:center">
+
+                        <img src="../Assets/Images/JobPlacement.jpg" width="100%">
+                    </div>
+                    <p>
+                        At AV Staffing Inc, we take customer satisfaction very seriously and it is at the forefront of everything we do. Our goal is to build a successful recruitment business that offers flexible and tailored solutions to meet the needs of our clients. We are committed to putting our employees, clients, and candidates in a better place by providing them with top-quality services that they can be proud of. Our commitment to excellence is evident in everything we do, and we are constantly striving to exceed our clients' expectations. With a focus on flexibility, professionalism, and customer satisfaction, AV Staffing Inc is the go-to choice for businesses in need of top-notch personnel solutions.
+
+
+
+                    </p>
+
+                    <h3 style="font-size:40px;text-align:left;margin-top:50px" class="post-title">
+                        <b>
+                            TEMP?
+                            <br />
+                            PERMANENT?
+                            <br />
+                            SORTED.
+                        </b>
+                    </h3>
+                    <p>
+                        AV STAFFING can source recruits for your company to suit any length of contract:
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-arrow-circle-right"></i>  Temporary Roles
+                                    </li>
+                                    <li style="margin-top:20px">
+                                        <i class="fas fa-arrow-circle-right"></i>   Permanent Roles
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="col col-md-6">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-arrow-circle-right"></i>Temp to Hire
+                                    </li>
+                                    <li style="margin-top:20px">
+                                        <i class="fas fa-arrow-circle-right"></i>   Seasonal Workers
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ul>
+                        </ul>
+                    </p>
+
+                    <h3 class="post-title" style="margin-top:50px">
+                        <b>
+                            BENEFITS OF JOINING WITH AV STAFFING INC.
+                        </b>
+                    </h3>
+                    <br />
+                    <div class="row">
+                        <div class="col col-md-12">
+                            <ul>
+                                <li>
+                                    <i class="fas fa-arrow-circle-right"></i>  Cost Effective
+                                </li>
+                                <li style="margin-top:20px">
+                                    <i class="fas fa-arrow-circle-right"></i>   Speedy Turnaround Time
+
+                                </li>
+                                <li style="margin-top:20px">
+                                    <i class="fas fa-arrow-circle-right"></i>   Complete Client Satisfaction
+
+                                </li>
+
+
+                                <li style="margin-top:20px">
+                                    <i class="fas fa-arrow-circle-right"></i>   24 X 7 Availability For Emergencies
+
+
+                                </li>
+                                <li style="margin-top:20px">
+                                    <i class="fas fa-arrow-circle-right"></i>   Performing Complete Recruitment Cycle Along
+
+
+                                </li>
+                                <li style="margin-top:20px">
+                                    <i class="fas fa-arrow-circle-right"></i>  Competent In Filling Staffing Needs In Diverse Range Of Requirements
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        @*<div class="col-md-3">
+            <img src="../Assets/Images/jobDesc.png" style="margin-right: 5px;width:100%" />
+        </div>*@
+        <div class="col-md-3">
+
+            @Html.Partial("~/Views/Shared/Rightnav.cshtml")
+        </div>
+    </div>
+
+</div>

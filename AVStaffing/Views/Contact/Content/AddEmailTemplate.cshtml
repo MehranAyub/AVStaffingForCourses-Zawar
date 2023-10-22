@@ -1,0 +1,202 @@
+﻿@model AVStaffing.Models.Entities.EmailTemplate
+@{
+    ViewBag.Title = "AddEmailTemplate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Company Portfolio
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Content
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Email Templates
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Update Email Template
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddEmailTemplate", "Content", FormMethod.Post))
+        {
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @Html.Raw("Update About Us Information")
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group row">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.HiddenFor(x => x.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailTemplateType, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.EmailTemplateType, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EmailTemplateType, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                    </div>
+                    
+                    
+
+                    <div class="form-group">
+                        <label class="alert alert-warning">Warning: these variables are required in this email template. Please don't leave them out when saving</label>
+                        @foreach (var item in Model.Variables)
+                        {
+                            <br />
+                            <a href="#/">{@item.Title}</a>
+                        }
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.HiddenFor(x=>x.Language)
+                    
+
+                    <div class="form-group">
+                        <div class="float-right">
+                            <a href="@Url.Action("Index", "Lead")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                Back
+                            </a>
+
+                            <div class="btn-group ml-2">
+                                <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                    @Html.Raw("Save Changes")
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+
+    <script src="https://cdn.tiny.cloud/1/bvop19e8cyzwod147lpbd1e77sd2gfgu7e2quc2jq80tl0lc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+
+
+        function initMCEexact(e, initialValue) {
+            tinymce.init({
+                content_css: "@Url.Content("~/Frontend/assets/css/theme.min.css"),@Url.Content("~/Content/font-awesome.css")",
+                initialValue: initialValue,
+                //language: "ar", (function(){})(),
+                directionality: 'ltr',
+                selector: e,
+                toolbar_mode: 'floating',
+                height: 900,
+                images_upload_url: "@Url.Action("AddMedia", "Content")",
+                image_list: "@Url.Action("GetMedia", "Content")",
+                paste_data_images: true,
+                automatic_uploads: true,
+                branding: false,
+                relative_urls : false,
+                remove_script_host : false,
+                convert_urls : true,
+                image_advtab: true,
+                images_upload_handler: function(blobInfo, success, failure, progress) {
+                    var formData;
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', `@Url.Action("AddMedia", "Content")`);
+                    xhr.upload.onprogress = function(e) {
+                        progress(e.loaded / e.total * 100);
+                    };
+
+                    xhr.onload = function() {
+                        var json;
+
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            failure('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+
+                        json = JSON.parse(xhr.responseText);
+
+                        if (!json || typeof json.MediaUrl != 'string') {
+                            failure('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        success(json.MediaUrl);
+                    };
+
+                    xhr.onerror = function() {
+                        failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    xhr.send(formData);
+                },
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace visualblocks code fullscreen',
+                    'image code',
+                    'image imagetools',
+                    'insertdatetime media table paste code help wordcount',
+                ],
+                toolbar:
+                    'undo redo | image code | formatselect | bold italic backcolor | \
+                                                                alignleft aligncenter alignright alignjustify | \
+                                                                bullist numlist outdent indent | removeformat',
+                menu: {
+                    file: { title: 'File', items: ' preview | print ' }
+                },
+                menubar: 'file edit view insert format tools table',
+                apply_source_formatting: true
+
+            });
+            var scriptLoader = new tinymce.dom.ScriptLoader();
+            scriptLoader.add('@Url.Content("~/Frontend/assets/js/jquery.min.js")');
+            scriptLoader.add("@Url.Content("~/Frontend/assets/js/flickity.pkgd.min.js")");
+        }
+
+        initMCEexact("#Body", `@Html.Raw(Model.Body)`);
+
+    </script>
+}
+

@@ -1,0 +1,528 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<style>
+    .flag-text {
+        margin-left: 10px;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+<div class="container" style="margin-top: 60px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="mr-4" style="font-size: 16px; color: grey">Community Outreach Family Services, Inc. </div>
+        <div style="margin-top: -50px">
+            <img style="width: 130px" src="@Url.Content("~/Theme/assets/media/logos/globe.png")" />
+        </div>
+        <div style="font-size: 16px; color: grey">2148 Skippers Rd, Emporia, VA  23847</div>
+        <div class="col-3"></div>
+    </div>
+</div>
+<div class="container" style="margin-top: 10px">
+    <div class="row">
+        <div class="col-4"></div>
+        <div style="font-size: 16px; color: grey" class="col-4">434-829-6635 (Office) 866-230-4856 (Fax)</div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+<div class="ml-5" style="margin-top: 120px">
+    <div class="row">
+        <div class="col-5"></div>
+        <h3>FALLS-RISK ASSESSMENT</h3>
+        <div class="col-3"></div>
+    </div>
+</div>
+<div class="ml-5 mt-5">
+    <div class="row mt-5">
+        <div class="col-6"></div>
+        <h3 class="col-6 row">MED ID # &ensp;<div style="background-color: #b2b2b2; width: 100px; height: 30px"></div></h3>
+    </div>
+</div>
+<div class="ml-5 mt-2">
+    <div class="row mt-1">
+        <h3 class="col-6 row">CLIENT NAME :  &ensp;<div style="background-color: #b2b2b2; width: 100px; height: 30px"></div></h3>
+        <h3 class="col-6 row">DOB  &ensp;<div style="background-color: #b2b2b2; width: 100px; height: 30px"></div></h3>
+    </div>
+</div>
+<div class="ml-5 mt-2 row justify-content-around">
+    <div class="row mt-1 col-3">
+        <input type="checkbox" />
+        <h3 class="ml-3">Admission</h3>
+    </div>
+    <div class="row mt-1 col-3">
+        <input type="checkbox" />
+        <h3 class="ml-4">Annual</h3>
+    </div>
+    <div class="row mt-1 col-3">
+        <input type="checkbox" />
+        <h3 class="ml-4">Post-Fall</h3>
+    </div>
+    <div class="row mt-1 col-3">
+        <input type="checkbox" />
+        <h3 class="ml-3">Other</h3>
+        <div style="border-bottom: 1px solid black; width: 200px"></div>
+    </div>
+</div>
+
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-4 p-2" style="border: 1px solid black"><h3>Parameters</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Score</h3></div>
+        <div class="col-5 p-2" style="border: 1px solid black"><h3>Client Status/Condition </h3></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>A.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Level of Consciousness/Mental Status</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> Alert and oriented X 3  <p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Disoriented X 3
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Intermittent confusion
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>B.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>History of Falls (past 3 months)</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> No falls <p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        1 - 2 falls
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        3 or more falls
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>C.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Ambulation/Elimination Status </h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> Ambulatory & continent<p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Chair bound & requires assistance with toileting
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Ambulatory & incontinent
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>D.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Vision Status</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> Adequate (with or without glasses) <p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Poor (with or without glasses)
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Legally blind
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>E.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Gait and Balance</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px; margin-top: 85px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row mt-1">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row mt-1">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px">
+                        <b>
+                            Have patient stand on both feet w/o any type of assist <br /> then have walk: forward, thru a doorway, then make a <br />turn. (Mark all that apply)
+
+                        </b>
+                    <p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Normal/safe gait and balance
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Balance problem while standing
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Balance problem while walking
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Decreased muscular coordination
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Change in gait pattern when walking through doorway
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Jerking or unstable when making turns
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Requires assistance (person, furniture/walls or device)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>F.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Orthostatic Changes</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px">
+                <div class="row mt-2">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row" style="margin-top: 24px">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row" style="margin-top: 24px">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> No noted drop in blood pressure between lying and <br />standing. No change to cardiac rhythm. <p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Drop <20 mm Hg in BP between lying and standing.<br/> Increase of cardiac rhythm>20.
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Drop >20mm Hg in BP between lying and standing. <br />Increase of cardiac rhythm >20.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>G.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Medications</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px; margin-top: 130px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row" style="margin-top: 25px">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row" style="margin-top: 25px">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+                <div class="row" style="margin-top: 25px">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> Based upon the following types of medications: <br />anesthetics, antihistamines, cathartics, diuretics, <br />antihypertensive, antiseizure, benzodiazepines,<br /> hypoglycemic, psychotropic, <br /> sedative/hypnotics.  <p>
+                </div>
+                <div class="row mt-1">
+                    <p style="font-size: 14px">None of these medications taken currently<br /> or w/in past 7 days.<p>
+                </div>
+                <div class="row mt-1">
+                    <p style="font-size: 14px">Take 1-2 of these medications currently or w/in <br />past 7 days.<p>
+                </div>
+                <div class="row mt-1">
+                    <p style="font-size: 14px">Take 3-4 of these medications currently or w/in <br />past 7 days. <p>
+                </div>
+                <div class="row mt-1">
+                    <p style="font-size: 14px">Mark additional point if patient has had a <br />change in these medications or doses in past 5<br /> days.  <p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 260px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="mr-4" style="font-size: 16px; color: grey">Community Outreach Family Services, Inc. </div>
+        <div style="margin-top: -50px">
+            <img style="width: 130px" src="@Url.Content("~/Theme/assets/media/logos/globe.png")" />
+        </div>
+        <div style="font-size: 16px; color: grey">2148 Skippers Rd, Emporia, VA  23847</div>
+        <div class="col-3"></div>
+    </div>
+</div>
+<div class="container" style="margin-top: 10px">
+    <div class="row">
+        <div class="col-4"></div>
+        <div style="font-size: 16px; color: grey" class="col-4">434-829-6635 (Office) 866-230-4856 (Fax)</div>
+        <div class="col-4"></div>
+    </div>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>H.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Predisposing Diseases</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px; margin-top: 100px">
+                <div class="row mt-3">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 2 </p>
+                </div>
+                <div class="row mt-1">
+                    <input type="checkbox" /> <p class="ml-1"> 4 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px">
+                        <b>
+                            Based upon the following conditions: <br />hypertension, vertigo, CVA, Parkinson’s Disease,<br /> loss of limb(s), seizures, arthritis, osteoporosis, <br />fractures.
+                        </b>
+                    <p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        None present
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        1-2 present
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        3 or more present
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2" style="border: 1px solid black"><h3>I.</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3>Equipment Issues</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black">
+            <div style="margin-left: 320px">
+                <div class="row mt-2">
+                    <input type="checkbox" /> <p class="ml-1"> 0 </p>
+                </div>
+                <div class="row">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row" style="margin-top: 5px">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+                <div class="row" style="margin-top: 2px">
+                    <input type="checkbox" /> <p class="ml-1"> 1 </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-1">
+                    <p style="font-size: 14px"> No risk factors noted<p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Oxygen tubing
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Inappropriate or client does not consistently use <br />assistive device.
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Equipment Needs
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 14px">
+                        Other
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-4 p-2" style="border: 1px solid black"><h1>TOTAL SCORE.</h1></div>
+        <div class="col-3 p-2" style="border: 1px solid black"><h3></h3></div>
+        <div class="col-5 p-2" style="border: 1px solid black">
+            <div style="margin-left: 20px">
+                <div class="row mt-2">
+                    <p class="ml-1" style="font-size: 16px">
+                        Score of 8 to 14 = Moderate risk for falls <br />
+                        Score of 15 or above = High risk for falls <br />
+                        If score is 8 or above, the back page of the <br />
+                        form must be completed.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <h2>Client has been informed about fall risk assessment results and/or safety/fall prevention <br />recommendations and education:</h2>
+            <div class="row justify-content-around mt-5">
+                <div class="row"> <input type="checkbox" style="outline: 2px solid black" /> <h4> &ensp; YES </h4> </div>
+                <div class="row"> <input type="checkbox" style="outline: 2px solid black" /> <h4> &ensp;NO </h4> </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <div class="row ml-5" style="height: 100px">
+                <p class="mr-3" style="font-size: 16px">Identified Falls Risks: </p>
+                <div style="background-color: #b2b2b2;  width: 200px; height: 30px"></div>
+            </div>
+            <div class="row ml-5" style="height: 100px">
+                <p class="mr-3" style="font-size: 16px">Identified Plan to reduce falls and ensure safety at home community and during treatment: </p>
+                <div style="background-color: #b2b2b2;  width: 100px; height: 30px"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height: 80px">
+        <div class="col-9 p-2" style="border: 1px solid black"><h3>Staff Signature</h3></div>
+        <div class="col-3 p-2" style="border: 1px solid black"> <h3>DATE (MONTH, DAY, YEAR)</h3></div>
+    </div>
+</div>

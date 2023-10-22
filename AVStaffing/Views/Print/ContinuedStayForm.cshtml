@@ -1,0 +1,731 @@
+﻿@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+
+
+}
+<div class="container" style="margin-top: 60px">
+    <div class="row">
+        <div class="col-2">
+            <img style="width: 200px" src="@Url.Content("~/Theme/assets/media/logos/tree.png")" />
+        </div>
+        <div class="row col-8 mt-5" style="align-items: center">
+            <div class="row p-2 mr-5" style="font-size: 24px">
+                Member’s Full Name:
+                <div class="ml-2" style="width: 200px; background-color: #c7d6db"></div>
+            </div>
+            <div class="row p-2 ml-5" style="font-size: 24px">
+                Medicaid #:
+                <div class="ml-2" style="width: 200px; background-color: #c7d6db"></div>
+            </div>
+        </div>
+        <div class="col-2" style="margin-top: 40px">
+            <img style="width: 300px" src="@Url.Content("~/Theme/assets/media/logos/stayformlogo.png")" />
+        </div>
+    </div>
+    <div style="margin-top: -20px">
+        <h1 class="col-12" style="text-align: center; font-size: 40px">
+            SERVICE AUTHORIZATION FORM
+        </h1>
+    </div>
+    <div class="column mt-5">
+        <div style="text-align: center; font-family: 'Times New Roman'"><h2><b>CMHRS & Behavioral Therapy Services <u>CONTINUED STAY</u> Service Authorization Request Form</b></h2></div>
+    </div>
+</div>
+<div class="column">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-6 p-2" style="text-align:center; border: 1px solid black"><h3>MEMBER INFORMATION</h3></div>
+        <div class="col-6 p-2" style="border: 1px solid black "><h3>PROVIDER INFORMATION</h3></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Member First Name:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b>Organization Name:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black"><b>Member Last Name</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b>Group NPI #:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Medicaid #:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; border-top: none; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Provider Tax ID #:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; border-top: none; background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Member Date of Birth:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none">
+            <b>
+                Servicing Licensed<br />
+                Professional NPI # <br />
+                (For Beh. Therapy <br />
+                only):
+            </b>
+        </div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Gender:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db">
+            <input type="checkbox" />Male
+            <input class="ml-5" type="checkbox" />Female
+            <input class="ml-5" type="checkbox" />Other
+        </div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Provider Phone:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Member Plan ID #:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Provider E-Mail:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Member Address:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Provider Address:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>City, State, ZIP:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>City, State, ZIP</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Parent/Guardian:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none"><b>Provider Fax:</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none">
+            <b>
+                Parent/Guardian<br />
+                Contact Information:
+            </b>
+        </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"></div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none">
+            <b>
+                Clinical Contact Name<br />
+                & Credentials*:
+            </b>
+        </div>
+        <div class="col-4 p-2" style="border: 1px solid black;  background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none">
+            <b>
+                Service Requested:
+            </b>
+        </div>
+        <div class="col-4 p-2" style="text-align: start; border: 1px solid black">
+            <div style="margin-left: 50px">
+                <input class="mr-5" type="checkbox" /> Crisis Stabilization (H2019- Cont. <br />
+                &emsp; &emsp; Stay Only) <br />
+                <input class="mr-5" type="checkbox" /> Crisis Intervention (H0036- Cont. <br />
+                &emsp; &emsp;Stay Only) <br />
+                <input class="mr-5" type="checkbox" /> PSR (H2017) <br />
+                <input class="mr-5" type="checkbox" /> MHSS (H0046) <br />
+                <input class="mr-5" type="checkbox" /> Day Tx/PHP — Adult <br />
+                &emsp; &emsp;(H0035 HB) <br />
+                <input class="mr-5" type="checkbox" /> IIH (H2012) <br />
+                <input class="mr-5" type="checkbox" /> TDT — Child (H0035 HA) <br />
+                <input class="mr-5" type="checkbox" /> Beh. Therapy (H2033) <br />
+                <input class="mr-5" type="checkbox" /> MH Peer [Individual] (H0025- <br />
+                &emsp; &emsp;Cont. Stay Only)<br />
+                <input class="mr-5" type="checkbox" /> MH Peer [Group] (H0024- Cont. <br />
+                &emsp; &emsp;Stay Only)<br />
+            </div>
+        </div>
+        <div class="col-2 p-2" style="border: 1px solid black; border-top: none; height: 50px">
+            <b>
+                Clinical Contact <br />
+                Phone:
+            </b>
+        </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db; height: 50px"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; margin-top: -235px">
+        <div class="col-2 p-2"></div>
+        <div class="col-4 p-2"></div>
+        <div class="col-6 p-2" style="border: 1px solid black">
+            <i>
+                * This is the individual to whom the MCO can reach out
+                to answer additional clinical questions.
+            </i>
+        </div>
+    </div>
+</div>
+<div class="column" style="margin-top: 250px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-12 p-2" style="text-align:start; border: 1px solid black">
+            <b>If requesting TDT services, check one of the following:</b>
+            <div class="row ml-5 mr-5 justify-content-between">
+                <div><input type="checkbox" />&ensp;H0035 – HA (school day)</div>
+                <div><input type="checkbox" />&ensp;H0035 – HA, UG (after-school)</div>
+                <div><input type="checkbox" />&ensp;H0035 – HA, U7 (summer)</div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-top: none; border-bottom: none">Provide the name of the school and/or setting where these services are being provided:</div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 50px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-top: none; background-color: #c7d6db"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2" style="border: 1px solid black; border-right: none"><b>Initial Admission Date to Services:</b> </div>
+        <div class="col-9 p-2" style="border: 1px solid black; border-left: none; background-color: #c7d6db"><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2" style="border: 1px solid black; border-right: none"><b>Average # of units provided per week:</b> </div>
+        <div class="col-9 p-2" style="border: 1px solid black; border-left: none; background-color: #c7d6db"><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <b>Request for approval of services:</b>
+            <br />
+            From <input class="mb-3 mt-5" style="border: none; border-bottom: 1px solid black; outline: none; background-color: #c7d6db" />(date), To <input style="border: none; border-bottom: 1px solid black; outline: none; background-color: #c7d6db" />(date), for a total of <input style="border: none; border-bottom: 1px solid black; outline: none; background-color: #c7d6db" />units of service.<br />
+            Plan to provide <input style="border: none; border-bottom: 1px solid black; outline: none; background-color: #c7d6db" /> hours of service per week.
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2" style="border: 1px solid black"><b>Primary ICD-10 Diagnosis</b> </div>
+        <div class="col-9 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2" style="border: 1px solid black"><b>Secondary Diagnosis</b> </div>
+        <div class="col-9 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+    </div>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2" style="border: 1px solid black; border-right: none"><b>Name of Medication</b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black"><b>Dosage</b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black"><b>Frequency</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-6 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-6 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-6 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-6 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-3 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black">If additional medications are prescribed, include listing of medications, dosage, and frequency in the Notes section </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 60px">
+    <div class="row mt-5">
+        <div style="text-align: start; font-family: 'Times New Roman'">
+            <h2>
+                <b>
+                    CMHRS Services <u>CONTINUED STAY</u> Service Authorization<br />
+                    Request Form
+                </b>
+            </h2>
+        </div>
+        <p class="mt-2">&ensp; AVAPEC-1617-17 December 2018</p>
+    </div>
+</div>
+<div class="row ml-5" style="margin-top: 100px">
+    <div class="row col-12 mt-5" style="align-items: center">
+        <div class="row p-2 mr-5" style="font-size: 24px">
+            Member’s Full Name:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+        <div class="row p-2 ml-5" style="font-size: 24px">
+            Medicaid #:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+    </div>
+</div>
+<div class="column" style="margin-top: 100px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black"><h4>SECTION I: CARE COORDINATION</h4> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <b>
+                Please indicate other current medical/behavioral services and additional community interventions/supports <br />
+                received
+            </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-3 p-2" style="border: 1px solid black; border-right: none"><b>Name of service/treatment</b> </div>
+        <div class="col-7 p-2" style="border: 1px solid black"><b>Provider/Contact Information</b> </div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b>Frequency</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-3 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-7 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-2 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-3 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-7 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-2 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-3 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-7 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-2 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none"><b>Describe Care Coordination activities with other services and providers since the last authorization:</b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+</div>
+<div class="column" style="margin-top:100px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black"><h4>SECTION II: TREATMENT PROGRESS</h4> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <h4>
+                <b>Treatment Goals/Progress:</b>
+            </h4>
+            <ul style="font-size: 18px">
+                <li>
+                    Describe person-centered, recovery-oriented, trauma-informed mental health treatment goals as they relate to
+                    requested treatment. These should be written in the words of the individual or in a manner that is understood by the
+                    individual seeking treatment, include their individual strengths/barriers to/and gaps in service. If individual has
+                    identified a history of trauma, please include trauma-informed care interventions in the treatment plan
+                </li>
+                <li>
+                    Services are intended to include goal directed training/interventions that will enable individuals to learn the skills
+                    necessary to achieve or maintain stability in the least restrictive environment. Providers should demonstrate efforts
+                    to assist the individual in progressing toward goals to achieve their maximum potential
+                </li>
+                <li>
+                    Please demonstrate that the individual is benefiting from the service as evidenced by objective progress toward
+                    goals or modifications and updates that are being made to the treatment plan to address areas with lack of
+                    progress. Include any appointments and medication adherence issues and plan to address this if applicable
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 60px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b> Resources and Strengths:</b> &ensp;Document individual’s strengths, preferences, extracurricular/community/social activities <br />
+            and people the individual identifies as supports.
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Please describe any barriers to treatment:</b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:80px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Goal/Objective</b>  &ensp; (Please provide objective measures to demonstrate evidence of progress. Measurable objectives ,<br />
+            should have meaningful tracking values; avoid percentages unless able to track and measure percent completion i.e. if <br />
+            80%, state 8 of 10 as a more trackable value):
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>How many days per week will be spent addressing this goal on average? </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>What specific training and interventions will be provided to address this goal?</b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+
+</div>
+<div class="container" style="margin-top: 60px">
+    <div class="row mt-5">
+        <div style="text-align: start; font-family: 'Times New Roman'">
+            <h2>
+                <b>
+                    CMHRS Services <u>CONTINUED STAY</u> Service Authorization Request Form
+                </b>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="row ml-5" style="margin-top: 200px">
+    <div class="row col-12 mt-5" style="align-items: center">
+        <div class="row p-2 mr-5" style="font-size: 24px">
+            Member’s Full Name:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+        <div class="row p-2 ml-5" style="font-size: 24px">
+            Medicaid #:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+    </div>
+</div>
+<div class="column" style="margin-top:100px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>How will you measure progress on the interventions provided? </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Progress toward Goal/Objective: </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Lack of Progress and Changes made to ISP to address this:     </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:80px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>  Goal/Objective </b> &ensp;  (Please provide objective measures to demonstrate evidence of progress. Measurable objectives <br />
+            should have meaningful tracking values; avoid percentages unless able to track and measure percent completion i.e. if <br />
+            80%, state 8 of 10 as a more trackable value):
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>How many days per week will be spent addressing this goal on average? </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>What specific training and interventions will be provided to address this goal?  </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>How will you measure progress on the interventions provided?  </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Progress toward Goal/Objective:</b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Lack of Progress and Changes made to ISP to address this:</b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:80px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>  Goal/Objective </b> &ensp;  (Please provide objective measures to demonstrate evidence of progress. Measurable objectives <br />
+            should have meaningful tracking values; avoid percentages unless able to track and measure percent completion i.e. if <br />
+            80%, state 8 of 10 as a more trackable value):
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 150px">
+    <div class="row mt-5">
+        <div style="text-align: start; font-family: 'Times New Roman'">
+            <h2>
+                <b>
+                    CMHRS Services <u>CONTINUED STAY</u> Service Authorization Request Form
+                </b>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="row ml-5" style="margin-top: 110px">
+    <div class="row col-12 mt-5" style="align-items: center">
+        <div class="row p-2 mr-5" style="font-size: 24px">
+            Member’s Full Name:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+        <div class="row p-2 ml-5" style="font-size: 24px">
+            Medicaid #:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+    </div>
+</div>
+<div class="column" style="margin-top:100px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b> How many days per week will be spent addressing this goal on average?</b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>What specific training and interventions will be provided to address this goal? </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>How will you measure progress on the interventions provided? </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Progress toward Goal/Objective: </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>Lack of Progress and Changes made to ISP to address this:  </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align:  center ; width: 1400px; height:80px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>For IIH, TDT, and BEHAVIORAL THERAPY </b><br />&ensp;
+            <b>
+                Overview of family involvement during service period with regards to the individual’s ISP to include who has
+                been involved and progress made/continuing needs of family goals/training:
+            </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align:  center ; width: 1400px; height:80px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none; font-size: 16px">
+            <b>For MHSS members under 21 years of age</b>  <br />
+            &ensp; <b>
+                If member is not currently living in an independent living situation and has been actively transitioning into
+                independent living at the initiation of services, please describe progress toward this transition within 6 months
+                of receiving services:
+
+            </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 650px">
+    <div class="row mt-5">
+        <div style="text-align: start; font-family: 'Times New Roman'">
+            <h2>
+                <b>
+                    CMHRS Services <u>CONTINUED STAY</u> Service Authorization Request Form
+                </b>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="row ml-5" style="margin-top: 110px">
+    <div class="row col-12 mt-5" style="align-items: center">
+        <div class="row p-2 mr-5" style="font-size: 24px">
+            Member’s Full Name:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+        <div class="row p-2 ml-5" style="font-size: 24px">
+            Medicaid #:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+    </div>
+</div>
+<div class="column" style="margin-top: 100px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black"><h4>SECTION III: DISCHARGE PLANNING </h4> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <b>
+                DISCHARGE PLAN
+            </b>&ensp;
+            (Identify lower levels of care, natural supports, warm-hand off, care coordination needs)
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-4 p-2" style="border: 1px solid black; border-right: none"><b>Step Down Service/Supports </b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black"><b>Identified Provider/Supports  </b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black"><b>Plan to assist in transition  </b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-4 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-4 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-4 p-2" style="border: 1px solid black; border-right: none; background-color: #c7d6db"><b></b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b> </div>
+        <div class="col-4 p-2" style="border: 1px solid black; background-color: #c7d6db"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-2 p-2" style="border: 1px solid black; border-right: none"><b>Estimated Date of Discharge:   </b> </div>
+        <div class="col-10 p-2" style="border: 1px solid black; border-left: none; background-color: #c7d6db"><b></b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 40px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none"><b>Recommended level of care at discharge </b> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 100px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+</div>
+<div class="row">
+    <p class="p-5" style="font-size: 28px; margin-top: 100px">
+        The appropriate assessment or addendum has been completed by an LMHP, LMHP-R, LMHP-S, <br />
+        or LMHP-RP and the individual's psychiatric history information reviewed. By my signature <br />
+        (below) I am attesting that the individual meets the medical necessity criteria for the identified <br />
+        service. The date of the most recent assessment or applicable addendum for this service was <br />
+        completed on <input style="background-color: darkgray; width: 300px; outline: none; border: none" />
+    </p>
+</div>
+<div class="row">
+    <p class="p-5" style="font-size: 24px; margin-top: 25px">
+        Signature (actual or electronic) of LMHP (Or R/S/RP)/LBA:
+        <input style=" width: 500px; outline: none; border: none; border-bottom: 1px solid black" />
+    </p>
+</div>
+<div class="row">
+    <p class="p-5" style="font-size: 24px">
+        Printed Name of LMHP (Or R/S/RP)/LBA:
+        <input style=" width: 725px; outline: none; border: none; border-bottom: 1px solid black" />
+    </p>
+</div>
+<div class="row">
+    <p class="p-5" style="font-size: 24px">
+        Credentials and NPI:
+        <input style=" width: 950px; outline: none; border: none; border-bottom: 1px solid black" /> <br />
+        (NPI needed for Behavior Therapy only)
+    </p>
+</div>
+<div class="row">
+    <p class="p-5" style="font-size: 24px">
+        Date
+        <input style=" width: 300px; outline: none; border: none; border-bottom: 1px solid black" />
+    </p>
+</div>
+<div style="margin-top: 20px">
+    <p class="p-5" style="font-size: 18px">
+        If any additional CMHRS services were recommended by WKe assessment or addendum referenced above, please identify <br />
+        the services here:
+    </p>
+    <div style="background-color: #c7d6db; height: 100px"></div>
+</div>
+<div class="container" style="margin-top: 450px">
+    <div class="row mt-5">
+        <div style="text-align: start; font-family: 'Times New Roman'">
+            <h2>
+                <b>
+                    CMHRS Services <u>CONTINUED STAY</u> Service Authorization Request Form
+                </b>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="row ml-5" style="margin-top: 110px">
+    <div class="row col-12 mt-5" style="align-items: center">
+        <div class="row p-2 mr-5" style="font-size: 24px">
+            Member’s Full Name:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+        <div class="row p-2 ml-5" style="font-size: 24px">
+            Medicaid #:
+            <div class="ml-2" style="width: 300px; background-color: #c7d6db"></div>
+        </div>
+    </div>
+</div>
+<div class="column" style="margin-top: 100px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black"><h4>NOTES SECTION </h4> </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height: 50px">
+        <div class="col-12 p-2" style="border: 1px solid black; border-bottom: none">
+            <b>
+                If needed, use this page for any answer too long to fit within the form’s provided spaces. Please note which <br />
+                section you are continuing before each answer
+            </b>
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:1300px">
+        <div class="col-12 p-2" style="border: 1px solid black;  background-color: #c7d6db; border-top: none "><b></b> </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 250px">
+    <div class="row mt-5">
+        <div style="text-align: start; font-family: 'Times New Roman'">
+            <h2>
+                <b>
+                    CMHRS Services <u>CONTINUED STAY</u> Service Authorization Request Form
+                </b>
+            </h2>
+        </div>
+    </div>
+</div>
+

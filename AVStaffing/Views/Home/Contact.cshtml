@@ -1,0 +1,115 @@
+﻿@using AVStaffing.Infrastructure
+@using AVStaffing.Models
+@using AVStaffing.LocalResource.Home.Contact
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_WebBaseLayout.cshtml";
+    var k = Session["CultureContent"].ToString();
+    var homePageContent = LoadedPermissions.Portfolios.First(x => x.Key == Session["CultureContent"].ToString()).Value;
+}
+<!-- ================ contact section start ================= -->
+<section class="contact-section">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">
+                    Let’s Talk
+                </h2>
+                <h4>If you’re curious about what we do or just want to get in touch with us, don’t hesitate to do it. Grab a coffee with us!</h4>
+            </div>
+            <div class="col-lg-12">
+                <form class="form-contact contact_form" action="@Url.Action("Contact", "Home")" method="post" id="contactForm" novalidate="novalidate">
+                    <div class="row">
+                      
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control valid" name="Name" id="Name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder="Enter your name">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control valid" name="Email" id="Email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control valid" name="Phone" id="Phone" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter phone number'" placeholder="Phone">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control valid" name="City" id="City" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter City'" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control valid" name="Company" id="Company" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Company'" placeholder="Company">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="candidates">Enter how many candiates are required</label>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <select class="form-control" style="width:100%" name="Candidates" id="Candidates">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>10+</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="button button-contactForm boxed-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 offset-lg-1">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>Toronto, On M9V 3Y7.</h3>
+                        <p>23 Westmore Dr. Unit # 215</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>+1 416-300-4535</h3>
+                        <p>Mon to Fri 9am to 6pm</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3>www.avstaffing.ca</h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ contact section end ================= -->
+
+@section Scripts
+{
+
+    <script>
+        
+        </script>
+    }

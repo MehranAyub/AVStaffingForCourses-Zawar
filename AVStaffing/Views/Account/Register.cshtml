@@ -1,0 +1,180 @@
+﻿@model AVStaffing.Models.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_WebBaseLayout.cshtml";
+    var packages = ViewBag.Packages as List<SelectListItem>;
+}
+
+<style>
+    .validation-summary-errors {
+        color: red;
+    }
+    label.error {
+        color: red;
+    }
+</style>
+<script src="https://www.paypal.com/sdk/js?client-id=AWicCkwZ_aad-TXGhqGHCOLeRWHjsXir47eTSHdPn5J3HDkQs9N4Eddw2kM3iwSyPOLI1YiemZ4Z-vcl&vault=true">
+</script>
+<section class="row no-gutters p-0 bg-light min-vh-100">
+    <div class="col-lg-6 d-none d-lg-block order-lg-2">
+        <img class="flex-fill" src="@Url.Content("~/Frontend/assets/img/sign-up.jpg")" alt="Image">
+    </div>
+    <div class="col-lg-6">
+        <section class="p-0 bg-gradient text-white" style="height: 100%">
+            <div class="container min-vh-lg-100 d-flex flex-column justify-content-between text-center py-4 py-md-5">
+                <div class="row justify-content-center my-5">
+                    <div class="col-xl-7 col-lg-8">
+                        <h1 class="h2 text-center mb-lg-5">Create Account</h1>
+                        <div class="card card-body shadow text-left text-dark">
+
+
+                            <form id="RegisterForm" action="@Url.Action("Register", "Account")" method="post" class="form-horizontal">
+                                @Html.ValidationSummary(true)
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
+                                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+
+
+                                <input type="hidden" name="PaypalSubscriptionId" id="PaypalSubscriptionId" />
+
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox text-small">
+                                        <input type="checkbox" class="custom-control-input" id="sign-up-agree">
+                                        <label class="custom-control-label" for="sign-up-agree">
+                                            I agree to the <a target="_blank" href="@Url.Action("TermsAndConditions","Home")">Terms &amp; Conditions</a>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                @*<div id="paypalBtns" class="paypalPackage"></div>*@
+
+                                <button class="btn btn-primary btn-block" disabled id="registerBtn" type="submit">Register</button>
+
+                            </form>
+                            @*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", Id = "RegisterForm" }))
+                                {
+
+
+                                }*@
+
+
+                        </div>
+                        <div class="text-center text-small mt-3">
+                            Already registered? <a class="text-white" href="@Url.RouteUrl("Login")">Login here</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a href="@Url.RouteUrl("Home")" class="btn btn-sm btn-light fade-page">Back to Home</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+
+    <script>
+
+        $("#RegisterForm").validate({
+            rules: {
+                Username: {
+                    required: true,
+                    maxlength:
+                        50
+                },
+                FirstName: {
+                    required: true,
+                    maxlength:
+                        50
+                },
+                LastName: {
+                    maxlength: 50
+                },
+                Email: {
+                    required: true,
+                    email: true,
+                    remote : "@Url.Action("IsAlreadySigned", "Account")"
+                },
+                Password: {
+                    required: true,
+                    maxlength: 100
+                },
+                ConfirmPassword: {
+                    required: true,
+                    maxlength: 100,
+                    equalTo: "#Password"
+                }
+            },
+            messages: {
+                Username: {
+                    required: "Username is required",
+                    maxlength: "Firstname must be less than 50 characters"
+
+                },
+                FirstName: {
+                    required: "Firstname is required",
+                    maxlength: "Firstname must be less than 50 characters"
+
+                },
+                LastName: {
+                    maxlength: "Lastname must be less than 50 characters"
+                },
+                Email: {
+                    required: "Email is required",
+                    email: "please provide a valid email",
+                    remote : "This email is already registered"
+                },
+                Password: {
+                    required: "Password is required",
+                    maxlength: "Password must be less than 100 characters"
+                },
+                ConfirmPassword: {
+                    required: "Confirm Password is required",
+                    maxlength: "Password must be less than 100 characters",
+                    equalTo: "#Password"
+                }
+            }
+
+        });
+
+        $("#sign-up-agree").click(function() {
+            if ($(this).prop("checked")) {
+                $("#registerBtn").prop("disabled", false);
+            } else {
+                $("#registerBtn").prop("disabled", true);
+            }
+        });
+
+      
+
+    </script>
+}

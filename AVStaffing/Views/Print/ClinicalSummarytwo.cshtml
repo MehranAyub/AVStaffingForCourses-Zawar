@@ -1,0 +1,312 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+    var ClinicalSummary = new
+    {
+        Name = "jane Doe",
+        Dob = "1/jan/2000",
+        Cc = "I got lower back issues and anxiety.",
+        Hpi = "Patient is a 46-year-old male with a history of bipolar disorder.  “It’s mainly depression.”  Describes how he has had manic episodes.  Describes how he was using – Ativan and Hydrocodone and Oxycodone.  “I need something for my back.” He describes he is in chronic pain. “Trigger for anxiety- death, money.”  “I’ve had 5 people to die in five years.”  -my partner, mother, stepfather, and friend.  Living in transitional housing with 11 people.  Describes how he was taking care of his stepfather.  Describes how he was a manager at one time.  Last manic one year.  – “I beat someone up.” Physical aggression towards others- one incident.  Reports 2008, 2010- suicide attempts- 2008 attempted suicide by overdose and in 2010 attempted suicide.  History of cutting- with the last incident 6 months ago.  Describes how he feels as alcohol is the main factor.  Describes that he has been in detox for 15 times.  He describes how he has been in several detox programs.  “Within two hours I was back drinking again after I was discharged.”  Denies SI/HI.  Denies AVH. — “Sometimes I hear stuff, but I try to ignore it.”    Describes how he hears the voices more when he is drinking alcohol.  Describes how he has seen different things when he has been drinking- “People walking out of the walls.”  Describes how the voices are in his head.",
+        Pmh = "Hypertension, Alcohol induced seizures.",
+        Psh = "Calcium deposit removed, GI endoscopy, Eye surgery- vision 20/50 left eye",
+        ObpregHx = "abc",
+        Alcohol = "2 weeks ago",
+        Marijuana = "Denies",
+        Cocaine = "20 years ago",
+        Heroin = "Denies use",
+        Nicotin = "Half a pack per day",
+        drug = "Paracetamol",
+        Lastused = "alcohol two weeks ago",
+        Caffeine = "Denies",
+        Mother = "2017- Cancer COPD born in 1940-Mother died at the age of 77 --- History of alcoholism",
+        Father = "died – History of Alcoholism.",
+        Grandmother = "died – History of Alcoholism.",
+        Jobhistory = "Engineer",
+        Medications = "Latuda 40mg one tablet by mouth every evening with food, Vistaril 50mg three times a day as needed for anxiety",
+        Allergies = "NKDA",
+        Appearance = "disheveled",
+        Behavior = "calm and cooperative",
+        Motorresponse = "No abnormal movements",
+        Eyecontact = "good",
+        Speech = "RRR",
+        Affect = "labile",
+        Mood = "Labile",
+        ThoughtContent = "Concerned about housing and plans after treatment. Denies SI/HI",
+        ThoughtProcess = "logical and goal directed",
+        Perceeptualdisturbance = "History of AVH",
+        Orientation = "alert and oriented",
+        Memory = "fair",
+        Insight = "poor",
+        Judgement = "poor",
+        Focus = "Poor",
+        PsychImpression = "Patient is a 46-year-old male with a history of Bipolar I Disorder, most recent incident depress and Alcohol Dependence uncomplicated.",
+        Assesment = "Alcohol Dependence uncomplicated, Bipolar I Disorder Most recent incident Depress.",
+        Plan = "Continue current medication of Divalproex ER 1500mg once a day, Gabapentin 300mg three times a day, Latuda 40mg one tablet by mouth every evening with food, and Vistaril 50mg take one tablet three times a day.  "
+    };
+
+
+
+}
+
+
+<div class="container" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-12 p-2" style="border: 1px solid black">
+            <h1 style="text-align: left">CLINICAL SUMMARY</h1>
+        </div>
+        <div class="col-2"></div>
+    </div>
+
+    <div class="p-5">
+        <div class="column" style="font-size: 20px; margin-top:50px">
+            <div class="m-2">
+                <b>Clinical Summary :</b> @ClinicalSummary.Pmh
+            </div>
+        </div>
+        <div class="column" style="font-size: 18px">
+            <div class="m-2">
+                <b>Gender </b>  <br /> female
+            </div>
+            <div class="m-2">
+                <b>Date of Birth </b> <br /> 01/01/2021
+            </div>
+            <div class="m-2">
+                <b>Race </b> <br /> something
+            </div>
+            <div class="m-2">
+                <b>Ethnicity </b> <br /> something
+            </div>
+            <div class="m-2">
+                <b>Preferred Language </b> <br /> English
+            </div>
+            <div class="m-2">
+                <b>Care Team </b> <br /> team 01
+            </div>
+            <div class="mt-3 m-2">
+                <b>Allergies </b>
+                <div class="row">
+                    <div class="m-2 col-2">
+                        <b>Allergy </b> <br />
+                        care team
+                    </div>
+                    <div class="m-2 col-2">
+                        <b>Onset Date</b> <br />
+                        onset date
+                    </div>
+                    <div class="m-2 col-2">
+                        <b>Reaction</b> <br />
+                        onset date
+                    </div>
+                    <div class="m-2 col-2">
+                        <b>Severity</b> <br />
+                        onset date
+                    </div>
+                    <div class="m-2 col-2">
+                        <b>Status</b> <br />
+                        onset date
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-bottom: 40px">
+            <div class="column" style="font-size: 20px; margin-top:10px">
+                <div class="m-2">
+                    <b>ASSESSMENT AND PLAN :</b>
+                </div>
+            </div>
+            <div class="m-2" style="font-size: 18px">
+                Date of Encounter
+            </div>
+            <div class="m-2" style="font-size: 18px">
+                Plan
+            </div>
+            <div class="m-2" style="font-size: 18px">
+                Recommend Therapy -
+            </div>
+            <div class="m-2" style="font-size: 18px">
+                Follow up -
+            </div>
+            <div class="m-2" style="font-size: 18px">
+                Recommendations -
+            </div>
+        </div>
+        <div class="m-2" style="font-size: 22px">
+            MEDICATIONS :
+        </div>
+        <div style="margin-top: 60px">
+            <div class="m-2" style="font-size: 18px">
+                <b>ENCOUNTERS</b>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="m-2" style="font-size: 16px">
+                        <b>Encounter Diagnosis</b> <br />
+                        sdsdsadsad
+                    </div>
+                    <div class="m-2" style="font-size: 16px">
+                        <b>FUNTIONAL STATUS</b> <br /> sdsadsd
+                    </div>
+                    <div class="m-2" style="font-size: 16px">
+                        <b>MENTAL STATUS</b> <br /> sdsaads
+                    </div>
+                    <div class="m-2" style="font-size: 16px">
+                        <b>IMMUNIZATION HISTORY</b> <br /> dsadsa
+                    </div>
+                    <div class="m-2" style="font-size: 16px">
+                        <b>MEDICATIONS</b>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="m-2" style="font-size: 16px">
+                        <b>Location</b> <br /> sdsadsa
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="m-2" style="font-size: 16px">
+                        <b>Date</b> <br /> sdsadsa
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="m-2 row">
+            <div class="col-2">
+                <div class="m-2" style="font-size: 16px">
+                    <b>Material</b> <br /> sdsadsa<br /> sdsadsa<br /> sdsadsa
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="m-2" style="font-size: 16px">
+                    <b>RXnormCode</b> <br /> sdsadsa
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="m-2" style="font-size: 16px">
+                    <b>GenericName</b> <br /> sdsadsa
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="m-2" style="font-size: 16px">
+                    <b>ProductStrength</b> <br /> sdsadsa
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="m-2" style="font-size: 16px">
+                    <b>StartDate</b> <br /> sdsadsa
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="m-2" style="font-size: 16px">
+                    <b>StopDate</b> <br /> sdsadsa
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="m-2" style="font-size: 16px">
+                    <b>SIG</b> <br /> sdsadsa
+                </div>
+            </div>
+        </div>
+        <div style="margin-bottom: 100px">
+            <div style="margin-top: 10px">
+                <div class="m-2" style="font-size: 16px">
+                    <b>PROBLEM LIST</b>
+                </div>
+                <div class="m-2 row">
+                    <div class="col-4">
+                        <div class="m-2" style="font-size: 16px">
+                            <b>Problem Description</b>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="m-2" style="font-size: 16px">
+                            <b>Problem StartDate</b>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="m-2" style="font-size: 16px">
+                            <b>Status</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="pt-5">
+                <div class="m-2 row">
+                    <div class="col-4">
+                        <div class="m-2" style="font-size: 16px">
+                            <b>Problem Description</b> <br /> hello
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="m-2" style="font-size: 16px">
+                            <b>Problem StartDate</b> <br /> hello
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="m-2" style="font-size: 16px">
+                            <b>Status</b> <br /> hello
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            <b>MEDICAL EQUIPMENT</b> <br /> mdical equipment
+        </div>
+        <div class="m-2" style="font-size: 18px">
+            <b>PROCEDURES</b>
+        </div>
+        <div class="m-2 row" style="font-size: 16px">
+            <div class="col-8">
+                <b>Procedure</b> <br />
+                Documentation of current medications (procedure) <br />  <br />
+                Depression screening using PHQ-9 (Patient Health Questionnaire 9) score
+            </div>
+            <div class="col-4">
+                <b>Date</b> <br />
+                Performed: <br /> Date <br />
+                Performed: <br /> Date
+            </div>
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            <b>REASON FOR REFERRAL</b> <br /> mdical equipment
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            <b>RESULTS</b> <br /> mdical equipment
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            <b>SOCIAL HISTORY</b>
+        </div>
+        <div class="m-2 row">
+            <div class="col-6" style="font-size: 15px">
+                <b>Social History</b> <br />
+                <br /> Birth Sex:
+            </div>
+            <div class="col-6" style="font-size: 15px">
+                <b>Effective Date</b>
+            </div>
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            <b>VITAL SIGNS</b>
+        </div>
+        <div class="m-2 row">
+            <div class="col-4" style="font-size: 15px">
+                <b>Vital Name </b> <br />
+                Height <br />
+                Weight <br />
+                BMI (Body Mass Index)
+            </div>
+            <div class="col-8" style="font-size: 15px">
+                <b>Measurement Date	Value</b>
+            </div>
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            <b>Goals</b>
+        </div>
+        <div class="m-2" style="font-size: 16px">
+            (healthconcerns) <b>Health Concerns</b>
+        </div>
+    </div>
+</div>

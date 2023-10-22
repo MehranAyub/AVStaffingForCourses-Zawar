@@ -1,0 +1,9 @@
+[Bb]in
+[Oo]bj
+packages
+.vs
+*.zip
+*.7z
+/LeadMonitorWeb/Win64-706915/chrome-win
+/LeadMonitorWeb/Theme.7z
+node_modules

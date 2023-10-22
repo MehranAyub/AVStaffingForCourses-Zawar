@@ -1,0 +1,126 @@
+﻿@using AVStaffing.Models.Entities
+@model ClinicalSummary
+@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml"; 
+}
+
+<div class="container" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-12 p-2" style="background-color: #6b5ac2 ">
+            <h1 style="text-align: center">CLINICAL SUMMARY- Community Outreach Family services, Inc.</h1>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="column" style="font-size: 18px; margin-top:90px">
+        <div class="m-2">
+            NAME :  @Model.Patient.FirstName @Model.Patient.LastName
+        </div>
+        <div class="m-2">
+            DOB : @Model.Patient.DateOfBirth.ToString("yyyy-MM-dd")
+        </div>
+        <div class="m-2">
+            CC : @Model.CC
+        </div>
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:50px">
+        <div class="m-2">
+            HPI : <br /> @Model.HPI
+        </div>
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:50px">
+        <div class="m-2">
+            <u> <b>PMH :</b></u> @Model.PMH
+        </div>
+        <div class="m-2">
+            <u> <b>PSH :</b></u> @Model.PSH
+        </div>
+        <div class="m-2">
+            <u> <b>Ob Preg Hx :</b></u> <br /> @Model.OBPregHx
+        </div>
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:50px">
+        <div class="m-2">
+            <u> <b>Social History:</b></u>
+        </div>
+        @Html.Raw(Model.SocialHistory)
+
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:70px">
+        <div class="m-2">
+            <u> <b>Family Medical History:</b></u>
+        </div>
+        @Html.Raw(Model.FamilyMedicalHistory)
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:70px; margin-bottom: 250px">
+        <div class="m-2">
+            <u> <b>Job History:</b></u> <br />
+            @Html.Raw(Model.JobHistory)
+        </div>
+    </div>
+
+
+    <div class="column" style="font-size: 18px; margin-top:300px">
+        <div class="m-2 mt-5">
+            <u> <b>Medications:</b></u>
+        </div>
+        <div class="m-2 mt-5">
+            <u> <b>Current medications -</b></u>
+            @foreach (var med in Model.Medicines)
+            {
+                @Html.Raw(med.Medication.Name + ", " + med.Detail + ". ")
+            }
+
+        </div>
+        <div class="m-2 mt-5">
+            <u> <b>Allergies :</b></u> @Model.Allergies
+        </div>
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:70px">
+        <div class="m-2 mt-5">
+            <u> <b>MSE:</b></u>
+        </div>
+        @Html.Raw(Model.MSE)
+    </div>
+
+    <div class="column" style="font-size: 18px">
+        <div class="m-2 mt-5">
+            <u> <b>Psych Impression:</b></u> <br />
+            @Model.PsychImpression
+        </div>
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:70px">
+        <div class="m-2 mt-5">
+            <u> <b>Assessment:</b></u> <br />
+            @Model.Assessment
+        </div>
+    </div>
+
+    <div class="column" style="font-size: 18px; margin-top:70px">
+        <div class="m-2 mt-5">
+            <u> <b>Plan:</b></u> <br />
+            @Model.Plan
+        </div>
+    </div>
+
+    <div class="row" style="font-size: 18px; margin-top:100px; margin-bottom: 200px">
+        <div class="m-2 mt-5">
+            Signature/Date : <img style="height:100px" src="@(string.IsNullOrWhiteSpace(Model.Staff.Signature)? "": Url.Content(Model.Staff.Signature))" />
+        </div>
+        <div class="m-2 mt-5" style="border-bottom: 1px solid black; width: 500px">
+            @DateTime.Now.ToString("yyyy-MM-dd")
+        </div>
+    </div>
+
+
+    <div style="font-size: 18px">
+        <label style="text-align: start">Marshall Wigfall, DNP, FNP, PMH-NP/CNS-B.C.</label>
+    </div>
+</div>

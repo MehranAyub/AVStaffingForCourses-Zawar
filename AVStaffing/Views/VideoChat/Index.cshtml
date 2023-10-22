@@ -1,0 +1,1135 @@
+﻿@using Newtonsoft.Json
+@using AVStaffing.Infrastructure
+@using AVStaffing.Models.Entities
+@{
+    ViewBag.Title = "AddTreatmentPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Appointment room = ViewBag.Room;
+    dynamic user = ViewBag.User;
+}
+
+<style>
+
+    .voice-call-avatar {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 2;
+    }
+
+        .voice-call-avatar .call-avatar {
+            margin: 15px;
+            width: 150px;
+            height: 150px;
+            border-radius: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 3px;
+            background-color: #fff;
+        }
+
+    .call-duration {
+        display: inline-block;
+        font-size: 30px;
+        margin-top: 4px;
+        position: absolute;
+        left: 0;
+    }
+
+    .voice-call-avatar .call-timing-count {
+        padding: 5px;
+    }
+
+    .voice-call-avatar .username {
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .call-icons {
+        text-align: center;
+        position: relative;
+    }
+
+        .call-icons .call-items {
+            border-radius: 5px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: inline-block;
+        }
+
+            .call-icons .call-items .call-item {
+                display: inline-block;
+                text-align: center;
+                margin-right: 5px;
+            }
+
+                .call-icons .call-items .call-item:last-child {
+                    margin-right: 0;
+                }
+
+                .call-icons .call-items .call-item a {
+                    color: #777;
+                    border: 1px solid #ddd;
+                    width: 50px;
+                    height: 50px;
+                    line-height: 50px;
+                    border-radius: 50px;
+                    display: inline-block;
+                    font-size: 20px;
+                }
+
+                    .call-icons .call-items .call-item a i {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+    .user-video {
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
+
+        .user-video img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .user-video video {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+    .my-video {
+        position: absolute;
+        z-index: 99;
+        bottom: 20px;
+        right: 20px;
+    }
+
+        .my-video ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+            .my-video ul li {
+                float: left;
+                width: 120px;
+                margin-right: 10px;
+            }
+
+                .my-video ul li img {
+                    border: 3px solid #fff;
+                    border-radius: 6px;
+                }
+
+    .end-call {
+        position: absolute;
+        top: 7px;
+        right: 0;
+    }
+
+        .end-call a {
+            color: #fff;
+            border-radius: 50px;
+            display: inline-block;
+            background-color: #f06060;
+            padding: 8px 25px;
+            text-transform: uppercase;
+        }
+
+    .call-users {
+        position: absolute;
+        z-index: 99;
+        bottom: 20px;
+        right: 20px;
+    }
+
+        .call-users ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+            .call-users ul li {
+                float: left;
+                width: 80px;
+                margin-left: 10px;
+            }
+
+                .call-users ul li img {
+                    border-radius: 6px;
+                    padding: 2px;
+                    background-color: #fff;
+                    border: 1px solid rgba(0, 0, 0, 0.1);
+                }
+
+    .call-mute {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        line-height: 80px;
+        border-radius: 6px;
+        font-size: 30px;
+        color: #fff;
+        display: none;
+        top: 0;
+        border: 3px solid transparent;
+    }
+
+    .call-users ul li a:hover .call-mute {
+        display: block;
+    }
+
+    .call-details {
+        margin: 10px 0 0px;
+        display: flex;
+    }
+
+    .call-info {
+        margin-left: 10px;
+        width: 100%;
+    }
+
+    .call-user-details,
+    .call-timing {
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .call-description {
+        white-space: nowrap;
+        vertical-align: bottom;
+    }
+
+    .call-timing {
+        color: #a0a0a2;
+        display: flex;
+        font-size: 14px;
+        margin-top: 1px;
+        overflow: hidden;
+        white-space: pre;
+    }
+
+    /*-----------------
+	37. Video Call
+-----------------------*/
+
+    .content-full {
+        height: 100%;
+        position: relative;
+        width: 100%;
+    }
+
+    .video-window .fixed-header {
+        padding: 0;
+        border: 0;
+    }
+
+        .video-window .fixed-header .nav > li > a {
+            padding: 19px 15px;
+        }
+
+</style>
+
+
+<style>
+
+
+
+    .shadow {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc !important;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc !important;
+        box-shadow: 3px 3px 5px 6px #ccc !important;
+    }
+
+    .card-header, .direct-chat-primary .right > .direct-chat-text {
+        background: #3c8dbc;
+        border-color: #3c8dbc;
+        color: #fff;
+        text-align: right;
+    }
+
+    .font-small, .direct-chat-name, .direct-chat-timestamp, .direct-chat-text {
+        font-size: 12px !important;
+        text-align: right;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+
+    :host {
+        display: block;
+    }
+
+    #picture-in-picture {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hidden {
+        display: none;
+        visibility: hidden;
+    }
+
+    /*#remote-media {
+            position: relative;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }*/
+
+    #remote-media video,
+    #local-media video {
+        width: 100%;
+    }
+
+    #remote-media {
+        margin-left:auto;
+        margin-right:auto;
+        background-color:black !important;
+        width: 100%;
+    }
+        #remote-media video {
+        width:80%;
+        margin-left:10%;
+        }
+
+
+        #local-media .col {
+            background-color:black !important;
+            background-clip: content-box !important;
+            color:white !important;
+        }
+
+    #inputZoom {
+        position: absolute;
+        width: 35%;
+        top: 40%;
+        right: -15%;
+    }
+
+    .gly-spin {
+        -webkit-animation: spin 2s infinite linear;
+        -moz-animation: spin 2s infinite linear;
+        -o-animation: spin 2s infinite linear;
+        animation: spin 2s infinite linear;
+    }
+
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        border: none;
+        margin-bottom: 50px;
+    }
+
+    .screenshot {
+        width: 100px;
+        height: 100px;
+    }
+
+    .red-box {
+        background: red;
+    }
+
+    input[type=range][orient=vertical] {
+        writing-mode: bt-lr; /* IE */
+        -webkit-appearance: slider-vertical; /* WebKit */
+        width: 8px;
+        height: 175px;
+        padding: 0 5px;
+    }
+
+    #ex4a .slider-track-high, #slider12c .slider-track-high {
+        background: green;
+    }
+
+    #inverted-contain .panzoom {
+        width: 100%;
+    }
+
+
+    .nopadding {
+        padding: 2px !important;
+        margin: 0 !important;
+        outline: 2px solid #333;
+        background: #333;
+    }
+</style>
+
+
+<div class="d-flex flex-column-fluid">
+    <div class="container" style="max-width:100%">
+
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="card" style="height:100%">
+                    <div class="card-body" style="padding:0.5em">
+                        <div class="row" id="local-media"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="call-icons">
+                            <ul class="call-items">
+                                <li class="call-item">
+                                    <a href="#/" title="Enable Video" id="VideoToggleBtn" data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-video-camera"></i>
+                                    </a>
+                                </li>
+                                <li class="call-item">
+                                    <a href="#/" title="Mute Audio" id="AudioToggleBtn" data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-microphone"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="end-call">
+                                <a href="#/" onclick="close_window();return false;">
+                                    End Call
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="flex-row-fluid" id="kt_chat_content" style="height:100%">
+                    <!--begin::Card-->
+                    <div class="card card-custom" id="directChat"  style="height:100%">
+                        <!--begin::Header-->
+                        <div class="card-header align-items-center px-4 py-3">
+                            <div class="text-left flex-grow-1">
+                                {{Department.Name}}
+                            </div>
+                            <div class="text-center text-center">
+                                <div class="symbol-group symbol-hover justify-content-center">
+                                    <div class="symbol symbol-35 symbol-circle tooltipt" v-for="u in DepartmentUsers" :title="u.Name" :data-original-title="u.Name">
+                                        <img alt="Pic" :src="defaultUrl(u.ImagePath)" @@click="OpenPrivateChat(user, u)" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="text-right flex-grow-1"></div>
+                        </div>
+
+                        <div class="card-body">
+                            <div style="height: 400px; overflow-y: auto" id="DepartmentChatBox">
+                                <div class="messages">
+                                    <div v-for="message in messages" class="d-flex flex-column mb-5 " v-bind:class="{'align-items-start' : (message.UserID != user.ID )}">
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-circle symbol-35 mr-3">
+                                                <img alt="Pic" v-bind:src="defaultUrl(message.ImagePath)" />
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">{{message.SenderName}}</a>
+                                                <span class="text-muted font-size-sm">{{FormatDate(message.TimeStamp)}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 rounded p-5  text-dark-50 font-weight-bold font-size-lg max-w-400px" v-bind:class="{ 'bg-light-primary text-right' : (message.UserID != user.Id ), 'bg-light-success text-left' : (message.UserID == user.Id ) }">
+                                            {{message.Message}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer align-items-center">
+                            <!--begin::Compose-->
+                            <textarea name="message" v-model="MessageToSend" @@keyup.enter="SendMessage()" class="form-control border-0 p-0" rows="2" placeholder="Type a message"></textarea>
+                            <div class="d-flex align-items-center justify-content-between mt-5">
+                                <div class="mr-3">
+                                    <input type="file" id="file" ref="file" name="UploadFile" style="width:150px;display:none" class="form-control" v-on:change="handleFileUpload(this)" />
+                                    <a href="#" id="triggerClickBtn" class="btn btn-clean btn-icon btn-md mr-1" @@click="$refs.file.click()"><i class="fa fa-paperclip"></i></a>
+                                </div>
+                                <div>
+                                    <button type="button" id="SendChatBtn" @@click="SendMessage()" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Send</button>
+                                </div>
+                            </div>
+                            <!--begin::Compose-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+    <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.15.2/twilio-video.js"></script>
+
+    <script>
+        function close_window() {
+            if (confirm("Close Window?")) {
+                close();
+            }
+        }
+        var chat = $.connection.notificationHub;
+        var department = @Html.Raw(JsonConvert.SerializeObject(new {  room.Name, room.Id }));
+        var user =  @Html.Raw(JsonConvert.SerializeObject(user));
+        var defaultUrl = "@Url.Content("~/Backend/assets/media/users/blank.png")";
+        var identifier = department.Name ;
+        $.connection.hub.qs = { 'groupName': identifier };
+
+        //$("#kt_header").hide();
+        //$("#kt_wrapper").css("padding-top", "0px");
+        var pchat = Vue.component('pchat', {
+           data: function () {
+               return {
+                   CurrentUser: user,
+                   ConnectedUser: {},
+                   NewMessageCount: 3,
+                   MessageToSend: "",
+                   PrivateMessages: [],
+                   UploadFile : '',
+                   Page: 0,
+               }
+           },
+           props : ["vmdata"],
+           created: function () {
+               this.LoadData();
+
+           },
+           methods: {
+               SendPrivateMessage() {
+                   if (this.UploadFile == '' && this.MessageToSend.trim() == '') {
+                       return;
+                   }
+                   if (this.UploadFile) {
+                       this.ShareFile();
+                   } else {
+                       var vm = this;
+                       var reciever = vm.UserTo;
+                       console.log("vm.UserTo", vm.UserTo);
+                       console.log("vm.UserTo", vm.CurrentUser);
+
+                       var pchat = {
+                           UserFrom: vm.CurrentUser.ID,
+                           UserFromContextId: vm.CurrentUser.ConnectionId,
+                          // UserFromType: vm.CurrentUser.Type,
+                           SenderName: vm.CurrentUser.Name,
+                           TimeStamp: '2018-11-01',
+                           UserImage: '', //vm.CurrentUser.ImagePath,
+                           UserTo: reciever.ID,
+                           UserToContextId: reciever.ConnectionId,
+                           Message: vm.MessageToSend
+                       }
+                       chat.server.sendPrivateMessage(pchat);
+                       vm.MessageToSend = "";
+                   }
+               },
+               DefaultUserImage(m) {
+                   vm.UserImage = defaultUrl;
+               },
+               LoadData() {
+                   var vm = this;
+                   this.UserFrom = this.vmdata.UserFrom;
+                   this.UserTo = this.vmdata.UserTo;
+                   this.PrivateMessages = this.vmdata.PrivateMessages;
+                   //$.post("/Chat/GetPrivateChat/", { UserFrom: this.UserFrom.ID, UserTo: this.UserTo.ID, Page : this.Page }, function (resp) {
+                   //    vm.Page += 1;
+                   //    resp = JSON.parse(resp);
+                   //    $.each(resp, function (i, v) {
+                   //        if (v.FileDetails) {
+                   //            v.FileDetails = JSON.parse(v.FileDetails);
+                   //        }
+                   //        vm.PrivateMessages.push(v);
+                   //    });
+                   //    var container = vm.$el.querySelector("#messages");
+                   //    //console.log("container" + container);
+                   //    container.scrollTop = container.scrollHeight;
+                   //    $(container).animate({ scrollTop: $(container).prop("scrollHeight") }, 10);
+                   //});
+
+                   //console.log("SendChatBtn");
+
+                   //var button = vm.$el.querySelector("#SendChatBtn");
+                   //$(button).focus();
+
+                   //$('.example-popover').popover({
+                   //    container: 'body'
+                   //});
+               },
+               LoadMoreMessages() {
+                   var vm = this;
+                   $.post("/Chat/GetPrivateChat/", { UserFrom: this.UserFrom.ID, UserTo: this.UserTo.ID, Page: this.Page }, function (resp) {
+                       vm.Page += 1;
+                       resp = JSON.parse(resp);
+                       $.each(resp, function (i, v) {
+                           vm.PrivateMessages.unshift(v);
+                       });
+                   });
+               },
+               FormatDate(d) { return new Date(d).toLocaleString(); },
+               AddMessage(message) {
+                   this.PrivateMessages.push(message);
+                   console.log("AddMessage function");
+                   var container = this.$el.querySelector("#messages");
+                   $(container).animate({ scrollTop: $(container).prop("scrollHeight") }, 100);
+               },
+               ShareFile: function () {
+                   var vm = this;
+                   var reciever = vm.UserTo;
+                   var pchat = {
+                       UserFrom: vm.CurrentUser.ID,
+                       UserFromContextId: vm.CurrentUser.ConnectionId,
+                       SenderName: vm.CurrentUser.DisplayName,
+                       TimeStamp: '2018-11-01',
+                       UserImage: vm.CurrentUser.ImagePath,
+                       UserTo: reciever.ID,
+                       UserToContextId: reciever.ConnectionId,
+                       Message: vm.MessageToSend
+                   }
+                   var d = new FormData();
+                   d.append("pchatstr", JSON.stringify(pchat));
+                   d.append("MyFile", vm.UploadFile);
+                   $.ajax({
+                       url: "/Chat/UploadFilePrivate",
+                       type: "POST",
+                       method: "POST",
+                       cache: false,
+                       contentType: false,
+                       processData: false,
+                       data: d,
+                   }).then(function (resp) {
+                       resp = JSON.parse(resp);
+                       chat.server.sendPrivateMessage(resp);
+                       vm.MessageToSend = "";
+                       vm.UploadFile = '';
+                   });
+               },
+               handleFileUpload(element) {
+                   var vm = this;
+                   vm.UploadFile = vm.$refs.file.files[0];
+                   var reader = new FileReader();
+                   reader.onload = function (e) {
+                       //vm.UploadFile = e.target.result;
+                   }
+                   reader.readAsDataURL(this.$refs.file.files[0]);
+               },
+               SendIfEnter()
+               {
+
+               }
+
+
+           },
+           template: `
+    <div class="card card-primary shadow card-outline direct-chat direct-chat-primary" style="position:fixed;min-width:350px;max-width:350px;max-height:400px; bottom:-20px">
+                        <div class="card-header" style="color:white;">
+                              <div style="display: flex; justify-content: space-between;">
+                                <h3 class="card-title" style="font-size:12px">{{UserTo.DisplayName}}</h3>
+                                <button type="button" class="btn btn-tool pull-left"  @@click="$emit('delete-row')">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                               </div>
+                        </div>
+                        <div class="card-body" style="padding:0px !important">
+
+                            <div class="direct-chat-messages" id="messages" style="height:300px;margin-bottom:-25px;overflow-y:auto">
+
+                                <div v-for="message in PrivateMessages">
+                                    <div class="direct-chat-msg" :class="{'left' : message.UserFrom != CurrentUser.ID }">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="direct-chat-name float-left" v-if="message.UserFrom != CurrentUser.ID">{{message.SenderName}}</div>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                       <div class="col-12">
+                                          <div :class="{'alert alert-primary float-right' : message.UserFrom == CurrentUser.ID,'alert alert-secondary float-left' : message.UserFrom != CurrentUser.ID }" style="margin-bottom:0px;margin-right:5px;margin-left:5px">{{message.Message}}</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div :class="{'float-right' : message.UserFrom == CurrentUser.ID,'float-left' : message.UserFrom != CurrentUser.ID }" style="font-size:8px;margin-bottom:5px;margin-right:5px;margin-left:5px">{{FormatDate(message.TimeStamp)}}</div>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+
+                                <div class="input-group">
+                                    <input type="text" name="message" v-model="MessageToSend"  @@keyup.enter="SendPrivateMessage()" placeholder="...اكتب الرسالة" class="form-control">
+                                    <span class="input-group-append">
+                                        <button type="button" @@click="SendPrivateMessage()" id="SendChatBtn" class="btn btn-primary">Send</button>
+
+                                    </span>
+                                </div>
+
+                        </div>
+                    </div>`
+        });
+        var vmUser = {
+            Name: user.FirstName + ' ' + user.LastName,
+            Id: user.Id,
+            ImagePath: user.ImagePath
+        }
+
+
+        var vmDepartment = { ID: department.Id, Name : department.Name };
+
+
+        var chatbox = new Vue({
+            el: "#directChat",
+            data: {
+                user: vmUser,
+                Department: vmDepartment,
+                messages: [],
+                DepartmentUsers: @Html.Raw(JsonConvert.SerializeObject(room.Members.Select(x=> new { x.Id, x.ImagePath, x.Inactive, Name =  x.LastName +' '+  x.FirstName, x.UserName }))),
+                chatboxes: [],
+                UploadFile: '',
+                Page: 1,
+                MessageToSend: '',
+                MessageCount: 1,
+                ModalSelectedUser: {},
+
+            },
+            mounted: function () {
+                $.each(this.messages, function (i, v) {
+                    if (v.FileDetails) {
+                        v.FileDetails = JSON.parse(v.FileDetails);
+                    }
+                });
+                var d = $('#DepartmentChatBox');
+                $(d).animate({ scrollTop: $(d).prop("scrollHeight") }, 1000);
+
+                $(".tooltipt").tooltip();
+            },
+            components: {
+                pchat: pchat
+            },
+            methods: {
+                SendMessage: function () {
+                    if (this.UploadFile == '' && this.MessageToSend.trim() == '') {
+                        return;
+                    }
+                    if (this.UploadFile) {
+                        this.ShareFile();
+                    } else {
+                        var vm = this;
+                        GroupName = identifier;
+                        SenderName = this.user.UserName;
+                        console.log(vm.MessageToSend);
+                        var date = moment(new Date()).format('DD MMM YYYY hh:mm A');
+                        Message = {
+                            ID: 0,
+                            DepartmentID: vm.Department.ID,
+                            UserID: vm.user.Id,
+                            Message: vm.MessageToSend,
+                            TimeStamp: date,
+                            UserImage: vm.user.ImagePath,
+                            SenderName: vm.user.Name,
+                        };
+
+
+                        vm.MessageToSend = vm.MessageToSend;
+
+                        console.log("Message " + vm.MessageToSend);
+                        chat.server.send(GroupName, Message).fail(function (error) {
+                            console.log('Invocation of NewContosoChatMessage failed. Error: ' + error);
+                        });
+                        vm.MessageToSend = "";
+
+                    }
+                },
+                deleteThisRow: function (index) {
+                    this.chatboxes.splice(index, 1);
+                },
+                defaultUrl: function (url) {
+                    if (url) {
+                        return url;
+                    } else {
+                        return defaultUrl;
+                    }
+                },
+                DefaultUserImage(u) {
+                    u.ImagePath = defaultUrl;
+                },
+                DefaultMessageImage(m) {
+                    m.UserImage = defaultUrl;
+                },
+                FormatDate(d) {
+                    return new Date(d).toLocaleString();
+                },
+                OpenPrivateChat: function (UserFrom, UserTo) {
+                    if (UserFrom.ID != UserTo.ID) {
+                        var vm = this;
+                        var chatbox_data = {
+                            UserFrom: UserFrom,
+                            NewMessageCount: 3,
+                            MessageToSend: "",
+                            UserTo: UserTo,
+                            PrivateMessages: []
+                        };
+
+                        if (vm.$refs.chatm) {
+                            if (vm.$refs.chatm.length == 0) {
+                                var comp = { type: 'pchat', vmdata: chatbox_data };
+                                vm.chatboxes.push(comp);
+                            } else {
+                                var CreateBox = true;
+                                $.each(vm.$refs.chatm, function (i, v) {
+                                    if (v.vmdata.UserTo.ID == UserTo.ID) {
+                                        CreateBox = false;
+                                    }
+                                });
+                                if (CreateBox) {
+                                    console.log("unmatched");
+                                    var comp = { type: 'pchat', vmdata: chatbox_data };
+                                    vm.chatboxes.push(comp);
+                                }
+                            }
+                        } else {
+                            console.log("else part");
+                            var comp = { type: 'pchat', vmdata: chatbox_data };
+                            vm.chatboxes.push(comp);
+                        }
+
+                    }
+                },
+
+            }
+        });
+
+
+        $.connection.hub.start().done(function () {
+            console.log("connected");
+            var connectedObject = { ID: chatbox.user.Id, Name: user.FirstName +' '+  user.LastName, EventID: chatbox.Department.Id };
+               chat.server.connect(connectedObject);
+           });
+
+           chat.client.AddMessage = function (message) {
+               console.log("called");
+               console.log("message received" + JSON.stringify(message));
+               if (message.FileDetails) {
+                   message.FileDetails = JSON.parse(message.FileDetails);
+               }
+               chatbox.messages.push(message);
+               var d = $('#DepartmentChatBox');
+               $(d).animate({ scrollTop: $(d).prop("scrollHeight") }, 200);
+           }
+
+        chat.client.onConnected = function (user, userList) {
+            console.log("signalR Connection made");
+            user.ConnectionId = user.ConnectionId;
+            chatbox.user.ConnectionId = user.ConnectionId;
+            $.each(chatbox.DepartmentUsers, function (i, v) {
+                if (user.ID == v.ID) {
+                    v.ConnectionId = user.ConnectionId;
+                    v.Online = true;
+                }
+            });
+        }
+
+        chat.client.onNewUserConnected = function (user, loginTime) {
+            console.log("new user connected");
+            $.each(chatbox.DepartmentUsers, function (i, v) {
+                console.log(v);
+                console.log(user);
+                if (user.ID == v.ID) {
+                    console.log("condition fulfilled");
+                    v.ConnectionId = user.ConnectionId;
+                    v.Online = true;
+                    console.log(v);
+                    console.log(chatbox.DepartmentUsers);
+                }
+               });
+           }
+
+        chat.client.onUserDisconnected = function (ConnectionId) {
+            console.log("user disconnected");
+               $.each(chatbox.DepartmentUsers, function (i, v) {
+                   if (v.ConnectionId == ConnectionId) {
+                       v.Online = false;
+                       v.ConnectionId = null;
+                   }
+               });
+           }
+
+
+
+
+        chat.client.sendPrivateMessage = function (pchat) {
+            console.log("send Private Message");
+            if (pchat.FileDetails) {
+                pchat.FileDetails = JSON.parse(pchat.FileDetails);
+            }
+            $.each(chatbox.$refs.chatm, function (i, v) {
+                console.log(v);
+                console.log(pchat);
+                if (v.vmdata.UserTo.ID == pchat.UserTo && v.vmdata.UserFrom.ID == pchat.UserFrom) {
+                    console.log("condition satisfied");
+                    v.AddMessage(pchat);
+                }
+            });
+        }
+        chat.client.recievePrivateMessage = function (pchat) {
+            if (pchat.FileDetails) {
+                pchat.FileDetails = JSON.parse(pchat.FileDetails);
+            }
+            console.log("Message Recieved");
+            HandleMessage(pchat);
+        }
+
+        function HandleMessage(pchat) {
+            console.log(pchat);
+            console.log("UserFrom: " + pchat.UserFrom);
+            console.log("UserTo: " + pchat.UserTo);
+            if (pchat.UserTo != pchat.UserFrom) {
+                if (chatbox.$refs.chatm) {
+                    if (chatbox.$refs.chatm.length == 0) {
+                        OpenNewBox(pchat);
+                    } else {
+                        $.each(chatbox.$refs.chatm, function (i, v) {
+                            if (v.vmdata.UserTo.ID == pchat.UserFrom || v.vmdata.UserFrom.ID == pchat.UserFrom) {
+                                v.AddMessage(pchat);
+                            } else {
+                                OpenNewBox(pchat);
+                            }
+                        });
+                    }
+
+                } else {
+                    OpenNewBox(pchat);
+                }
+            }
+        }
+
+        function OpenNewBox(pchat) {
+            var vm = chatbox;
+            var chatbox_data = {
+                UserFrom: @Html.Raw(JsonConvert.SerializeObject(Session["User"])),
+                UserTo: {
+                    ID: pchat.UserFrom,
+                    Type: pchat.UserFromType,
+                    Name: pchat.SenderName,
+                    ConnectionId : pchat.UserFromContextId
+                },
+                NewMessageCount: 3,
+                MessageToSend: "",
+                UploadFile: '',
+                Page: 0,
+                PrivateMessages: [pchat]
+            };
+            var comp = { type: 'pchat', vmdata: chatbox_data };
+
+            vm.chatboxes.push(comp);
+            //HandleMessage(pchat);
+        }
+
+
+
+
+
+
+        $(function() {
+            var AccessToken = '@ViewBag.Token';
+            console.log(AccessToken);
+            var video = Twilio.Video;
+            console.log(video);
+            var user =  @Html.Raw(JsonConvert.SerializeObject(ViewBag.User));
+            //ar userType = user.Type;
+
+            //video.createLocalTracks().then(function (localTracks) {
+            //    console.log(localTracks);
+            //    var id = "";
+            //    var div = document.createElement('div');
+            //    var nameDiv = document.createElement("div");
+            //    nameDiv.innerText = user.FirstName + ' ' + user.LastName;
+            //    $(nameDiv).css("position", "absolute");
+            //    $(nameDiv).css("color", "white");
+            //    $(div).addClass("col");
+            //    div.appendChild(nameDiv);
+            //    var item = document.getElementById("local-media");
+            //    localTracks.forEach(function (track) {
+            //        div.appendChild(track.attach());
+            //    });
+            //    item.appendChild(div);
+            //  //  }
+
+            //});
+
+
+
+
+            video.createLocalTracks().then(function (localTracks) {
+                var div = document.createElement('div');
+                $(div).html(`<div style="position:absolute;color:white">${user.FirstName} ${user.LastName}</div>`);
+                $(div).addClass("col");
+
+                var item = document.getElementById("local-media");
+                localTracks.forEach(function (track) {
+                    var center = document.createElement("center");
+                    center.appendChild(track.attach());
+                    div.appendChild(center);
+                    console.log(track);
+                    if (track.kind === "audio") {
+                        audioTrack = track;
+                        $("#AudioToggleBtn").click(function () {
+                            console.log("clicked audio btn");
+                            console.log(audioTrack);
+                            var id = $(this);
+                            if (audioTrack && audioTrack.isEnabled) {
+                                console.log("track enabled");
+                                audioTrack.disable();
+                                $(id).html("<i class='fa fa-microphone-slash'></i>");
+                            } else {
+                                console.log("track disabled");
+                                audioTrack.enable();
+                                $(id).html("<i class='fa fa-microphone'></i>");
+                            }
+                        });
+                    }
+                    if (track.kind === "video") {
+                        videoTrack = track;
+                        $("#VideoToggleBtn").click(function () {
+                            var id = $(this);
+                            console.log("clicked video btn");
+                            console.log(videoTrack);
+                            if (videoTrack && videoTrack.isEnabled) {
+                                console.log("track enabled");
+                                videoTrack.disable();
+                                $(id).html('<i class="fas fa-video-slash"></i>');
+                            } else {
+                                console.log("track disabled");
+                                videoTrack.enable();
+                                $(id).html('<i class="fas fa-video"></i>');
+                            }
+                        });
+                    }
+                });
+                item.appendChild(div);
+
+            });
+
+
+            video.connect(AccessToken, { audio: true, video: { width: 640 }}).then(room => {
+                console.log('Connected to Room "%s"', room.name);
+                room.participants.forEach(participantConnected);
+                room.on('participantConnected', participantConnected);
+                room.on('participantDisconnected', participantDisconnected);
+                room.once('disconnected', error => {
+                    console.log(error);
+                    room.participants.forEach(participantDisconnected);
+                });
+            });
+
+
+
+            function participantConnected(participant) {
+                console.log('Participant "%s" connected', participant.identity);
+                var obj = JSON.parse(participant.identity);
+                var div = document.createElement('div');
+                div.id = participant.sid;
+                div.innerText = obj.username;
+                $(div).addClass("col");
+                participant.on('trackSubscribed', track => trackSubscribed(div, track, obj.type));
+                participant.on('trackUnsubscribed', trackUnsubscribed);
+
+                participant.tracks.forEach(publication => {
+                    if (publication.isSubscribed) {
+                        trackSubscribed(div, publication.track);
+                    }
+                });
+
+            }
+
+            function participantDisconnected(participant) {
+                console.log('Participant "%s" disconnected', participant.identity);
+                var obj = JSON.parse(participant.identity);
+                document.getElementById(participant.sid).remove();
+            }
+
+            //function trackSubscribed(div, track, type) {
+            //    var item = document.getElementById("local-media");
+            //    div.appendChild(track.attach());
+            //    item.appendChild(div);
+            //}
+
+            function trackSubscribed(div, track, type) {
+                var item = document.getElementById("local-media");
+                var center = document.createElement("center");
+                center.appendChild(track.attach());
+                div.appendChild(center);
+                item.appendChild(div);
+
+            }
+
+            function trackUnsubscribed(track) {
+                track.detach().forEach(element => element.remove());
+            }
+        });
+
+    </script>
+}

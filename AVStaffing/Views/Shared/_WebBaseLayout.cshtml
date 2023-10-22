@@ -1,0 +1,631 @@
+﻿
+@using AVStaffing.Infrastructure
+@using AVStaffing.Models.Entities
+@{
+    Layout = null;
+    ViewBag.Title = "healthcare Information Tracking System";
+    var pages = Session["Pages"] as List<ContentPage>;
+    var headerPages = pages.OrderBy(x => x.PageOrder).Where(x => x.PageId == null).ToList();
+    var portfolio = new ApplicationDbContext().Portfolios.FirstOrDefault();
+}
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AV Staffing Portal </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="@Url.Content("~/Theme/site.webmanifest")">
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/Theme/assets/img/favicon.ico")">
+
+
+    <style>
+        .btn-round {
+            background: #CD6D19;
+            height: 50px;
+            width: 50px;
+            right: 31px;
+            bottom: 18px;
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            border-radius: 50%;
+            line-height: 48px;
+            border: 2px solid transparent;
+        }
+    </style>
+
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/owl.carousel.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/flaticon.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/price_rangs.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/slicknav.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/animate.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/magnific-popup.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/fontawesome-all.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/themify-icons.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/slick.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/nice-select.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Theme/assets/css/style.css")">
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="@Url.Content("~/Theme/logo.jpg")" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area header-transparrent">
+            <section style="background-color:black;color:white;padding:12px">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fa fa-map-marker"></i>
+                                    23 Westmore Toronto
+                                </div>
+                                <div class="col-4">
+                                    <i class="fa fa-phone"></i>
+                                    416-300-4535
+                                </div>
+                                <div class="col-4">
+                                    <i class="fa fa-envelope"></i>
+                                    info@avstaffing.ca
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">
+                                <i class="fa fa-facebook-f"></i>
+                                <i class="fa fa-instagram"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <div class="headder-top header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-2">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="@Url.Action("index", "Home")"><img src="@Url.Content("~/Theme/logo.jpg")" style="height:80px" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                                            <li><a href="@Url.Action("About", "Home")">About Us </a></li>
+                                            <li><a href=@Url.Action("Services", "Home")>Services </a></li>
+                                            <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <!-- Header-btn -->
+                                <div class="header-btn d-none f-right d-lg-block">
+                                    <a href="#" id="LoginBtn" class="btn head-btn2">Login</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+        @RenderBody()
+
+    </main>
+
+
+    <div class="modal fade" id="LoginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <form action="/Account/Login" method="post">
+                    <div class="modal-header">Login</div>
+                    <div class="modal-body">
+                        <fieldset>
+                            <input id="Email" class="form-control" name="Email" type="email" value="" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." />
+                        </fieldset>
+                        <fieldset>
+                            <input id="Password" class="form-control" name="Password" type="password" value="" data-val="true" data-val-required="The Password field is required." />
+                        </fieldset>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="send-button" class="btn main-btn" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="jobForm">
+        <div class="modal-dialog modal-lg">
+
+            <form method="post" action="@Url.Action("AddPersonRequest", "Home")">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        23 Westmore Dr. Unit # 215, Toronto, On M9V 3Y7 PH: 416-300-4535
+                        info@avstaffing.ca
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">First Name</label>
+                                    <input type="text" name="FirstName" id="FirstName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Last Name</label>
+                                    <input type="text" name="LastName" id="LastName" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">SIN</label>
+                                    <input type="text" name="SIN" id="SIN" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Date Of Birth</label>
+                                    <input type="date" name="DateOfBirth" id="DateOfBith" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Email</label>
+                                    <input type="email" name="Email" id="Email" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Address</label>
+                                    <input type="text" name="Address" id="Address" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">City</label>
+                                    <input type="text" name="City" id="City" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Postal Code</label>
+                                    <input type="text" name="PostalCode" id="PostalCode" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Home Phone</label>
+                                    <input type="tel" name="HomePhone" id="HomePhone" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Gender</label>
+                                    <select name="Gender" id="Gender" style="width:100%" class="form-control">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Cell Phone</label>
+                                    <input type="tel" name="CellPhone" id="CellPhone" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label">Are you a full time student ?</label>
+                                <select name="FulltimeStudent" id="FulltimeStudent" style="width:100%" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Do you have a work Permit ?</label>
+                                    <select name="WorkPermit" id="WorkPermit" style="width:100%" class="form-control">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label">Do you have a driver's Licence ?</label>
+                                <select name="DriverLicence" id="DriverLicence" style="width:100%" class="form-control">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Do you have a permanent residence? ?</label>
+                                    <select name="PermanentResidence" style="width:100%" id="PermanentResidence" class="form-control">
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label">CAN Citizen ?</label>
+                                <select name="CANCitizen" style="width:100%" id="CANCitizen" class="form-control">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">
+                                        Have you been convicted of a criminal offense for which you have not been pardoned?
+                                        If yes, describe the nature of the offense:
+                                    </label>
+                                    <textarea type="tel" name="CriminalOffense" id="CriminalOffense" rows="4" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="col-form-label">TYPE OF POSITION APPLYING FOR ?</label>
+                                <select name="PositionType" style="width:100%" id="PositionType" class="form-control">
+                                    <option value="General Labour">General Labour</option>
+                                    <option value="Carpentry">Carpentry</option>
+                                    <option value="Cabinet Maker">Cabinet Maker</option>
+                                    <option value="AZ">AZ</option>
+                                    <option value="DZ">DZ</option>
+                                    <option value="Crane Operator">Crane Operator</option>
+                                    <option value="Flatbed Truck Driver">Flatbed Truck Driver</option>
+                                    <option value="Forklift Operator">Forklift Operator</option>
+                                    <option value="Construction">Construction</option>
+                                    <option value="Machine Operator">Machine Operator</option>
+                                    <option value="Receptionist">Receptionist</option>
+                                    <option value="Customer Service">Customer Service</option>
+                                    <option value="Data Processing">Data Processing</option>
+                                    <option value="Cook / Chef">Cook / Chef</option>
+                                    <option value="Housekeeping">Housekeeping</option>
+                                    <option value="Seamstress / Taylor">Seamstress / Taylor</option>
+                                    <option value="PSW ( Personal Support Worker )">PSW ( Personal Support Worker )</option>
+                                    <option value="ECA ( Early Child Assistant )">ECA ( Early Child Assistant )</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="col-form-label">ARE YOU EMPLOYED NOW?</label>
+                                <select name="EmploymentStatus" style="width:100%" id="EmploymentStatus" class="form-control">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label">Available Date</label>
+                                <input type="date" class="form-control" id="AvailableDate" name="AvailableDate" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="col-form-label">Type Of Job</label>
+                                <select name="JobType" style="width:100%" id="JobType" class="form-control">
+                                    <option value="Part Time">Part Time</option>
+                                    <option value="Full Time">Full Time</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label">Education</label>
+                                <select name="Education" style="width:100%" id="Education" class="form-control">
+                                    <option value="High School">High School</option>
+                                    <option value="College">College</option>
+                                    <option value="University">University</option>
+                                    <option value="Specialized Training">Specialized Training</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="col-form-label">Are you legally allowed to work in Canada?</label>
+                                <select name="IsLegallyAllowedInCanada" style="width:100%" id="IsLegallyAllowedInCanada" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" style="width: 100%">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <footer>
+        <!-- Footer Start-->
+        <div class="footer-area footer-bg footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <div class="footer-tittle">
+                                    <h4>About Us</h4>
+                                    <div class="footer-pera">
+                                        <p>
+                                            Not everybody wants a permanent, full-time position. And not all our clients need them. Sometimes, they need the right person at just the right time and it’s our job to help them find you. What are you waiting for.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Contact Info</h4>
+                                <ul>
+                                    <li>
+                                        <p>
+                                            Address :23 Westmore Dr. Unit # 215, Toronto, On M9V 3Y7
+                                        </p>
+                                    </li>
+                                    <li><a href="#">Phone : 416-300-4535</a></li>
+                                    <li><a href="#">Email : info@avstaffing.ca</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Follow Us</h4>
+                                <div class="footer-pera footer-pera2">
+                                    <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
+                                </div>
+                                <!-- Form -->
+                                <div class="footer-form row">
+                                    <a href="#/" class="btn-round"><i class="fa fa-facebook-f"></i></a>
+                                    <a href="#/" class="btn-round"><i class="fa fa-instagram"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+
+            </div>
+        </div>
+        <!-- footer-bottom area -->
+        <div class="footer-bottom-area footer-bg">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-10 col-lg-10 ">
+                            <div class="footer-copy-right">
+                                <p>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |<a href="#/" target="_blank">AV Staffing</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="footer-social f-right">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+
+    <!-- JS here -->
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="@Url.Content("~/Theme/assets/js/vendor/modernizr-3.5.0.min.js")"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="@Url.Content("~/Theme/assets/js/vendor/jquery-1.12.4.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/popper.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/bootstrap.min.js")"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="@Url.Content("~/Theme/assets/js/jquery.slicknav.min.js")"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="@Url.Content("~/Theme/assets/js/owl.carousel.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/slick.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/price_rangs.js")"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="@Url.Content("~/Theme/assets/js/wow.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/animated.headline.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/jquery.magnific-popup.js")"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="@Url.Content("~/Theme/assets/js/jquery.scrollUp.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/jquery.nice-select.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/jquery.sticky.js")"></script>
+
+    <!-- contact js -->
+    <script src="@Url.Content("~/Theme/assets/js/contact.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/jquery.form.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/mail-script.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/jquery.ajaxchimp.min.js")"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="@Url.Content("~/Theme/assets/js/plugins.js")"></script>
+    <script src="@Url.Content("~/Theme/assets/js/main.js")"></script>
+
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <script src="@Url.Content("~/ICare/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/ICare/js/min/plugins.min.js")"></script>
+    <script src="@Url.Content("~/ICare/js/min/custom.min.js")"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,400i,600,700&amp;display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/webBaseLayoutCss")
+
+    @Scripts.Render("~/bundles/webBaseLayoutJs")
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    <script src="@Url.Content("~/Scripts/owl.carousel.js")"></script>
+    <script type="text/javascript">
+        (($) => {
+            var now = new Date;
+            var day = 864e5;
+            var weeksToAdd = 2;
+            var tenWeeksFromNow = new Date(+now + day * 7 * weeksToAdd).toISOString().slice(0, 10).replace(/\-/g, 'index-2.html');
+            $('[data-countdown-date].add-countdown-time').attr('data-countdown-date', tenWeeksFromNow);
+        })(jQuery);
+        jQuery("form:not([action])").on('submit', function () { return false; });
+        window.addEventListener("load", function () { document.querySelector('body').classList.add('loaded'); });
+
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+
+        function isNullOrEmpty(s) {
+            return (s == null || s === "");
+        }
+
+        function Notify(message) {
+            Swal.fire({
+                icon: message.Type.toLowerCase(),
+                title: message.Title,
+                html: message.Message
+            })
+        }
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                var delayedImages = document.querySelectorAll('[data-delay-src]');
+                theme.mrUtil.forEach(delayedImages, (index, elem) => {
+                    var source = elem.getAttribute('data-delay-src');
+                    elem.removeAttribute('data-delay-src');
+                    elem.setAttribute('src', source);
+                });
+            }, 500);
+        });
+
+        function readURL(input) {
+            console.log("called");
+            var id = $(input).attr("data-src");
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(id).css("background", e.target.result);
+                    //$(id).attr("src", e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+
+
+    @if (ViewBag.NotificationMessage != null)
+    {
+        <script>
+        $(function () {
+            var message = @(Html.Raw(Json.Encode(ViewBag.NotificationMessage)));
+            if (message.IsViewMessage) {
+                Notify(message);
+            }
+        });
+        </script>
+    }
+    @if (TempData["NotificationMessage"] != null)
+    {
+        <script>
+        $(function () {
+            var message = @(Html.Raw(Json.Encode(TempData["NotificationMessage"])));
+            if (message.IsRedirectMessage) {
+                Notify(message);
+            }
+        });
+        </script>
+    }
+
+    @RenderSection("Scripts", false)
+
+    <script>
+        $("#LoginBtn").click(function () {
+            $("#LoginModal").modal("show");
+        });
+    </script>
+
+</body>
+</html>
+
+
+

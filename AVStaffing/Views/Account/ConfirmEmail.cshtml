@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_WebBaseLayout.cshtml";
+}
+
+<div class="kt-grid kt-grid--hor kt-grid--root kt-login kt-login--v5 kt-login--signin" id="kt_login">
+    <div class="kt-grid__item kt-align-center kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile" style="background-image: url(@Url.Content("~/Theme/assets/media//bg/bg-3.jpg)"); justify-content: center;align-items: center">
+
+        <div class="kt-login__forgot" style="display: block">
+
+
+            Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+
+        </div>
+    </div>
+</div>
+
+

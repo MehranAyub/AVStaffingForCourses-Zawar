@@ -1,0 +1,140 @@
+﻿@using AVStaffing.Infrastructure
+@using AVStaffing.Models
+@model AVStaffing.Models.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    var homePage = LoadedPermissions.Portfolios.First(x => x.Key == Session["CultureContent"].ToString()).Value;
+}
+
+<div class="d-flex flex-column flex-root">
+    <div class="login login-3 login-signin-on d-flex flex-row-fluid" id="kt_login">
+        <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid" style="background-image: url(@Url.Content("~/Public/accountBackground.png"));">
+            <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
+
+                <div class="d-flex flex-center mb-15">
+                    <a href="#">
+                        <a href="@Url.RouteUrl("Home")" class="fade-page">
+                            <img src="@Url.Content(string.IsNullOrWhiteSpace(homePage.WhiteLogo) ? "~/Theme/demo-logo.png" : homePage.WhiteLogo )" alt="HR System" style="max-height: 200px">
+                        </a>
+                    </a>
+                </div>
+                <div class="login-signin">
+                    <div class="mb-20">
+                        <h3>Sign In To Admin</h3>
+                        <p class="opacity-60 font-weight-bold">Enter your details to login to your account:</p>
+                    </div>
+
+                    @if (ViewBag.ForgotPasswordConfirmation != null)
+                    {
+                        @Html.Raw("<p class='alert alert-success'>Please check your email to reset your password.<p>");
+                    }
+                    <div id="loginForm">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal kt-form", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-last h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group d-flex flex-wrap justify-content-between align-items-center px-8">
+                                <div class="checkbox-inline">
+                                    <label class="checkbox checkbox-outline checkbox-white text-white m-0">
+                                        @Html.CheckBoxFor(m => m.RememberMe, new { @class = "custom-control-input" })
+                                        <span></span>
+                                        Remember me
+                                    </label>
+                                </div>
+                             @*   <a href="#/" id="kt_login_forgot" class="text-white font-weight-bold">Forget Password ?</a>*@
+                            </div>
+                            <div class="form-group text-center mt-10">
+                                <button type="submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3">Sign In</button>
+                            </div>
+                        }
+                    </div>
+
+
+                    <div id="forgotPasswordForm" style="display: none">
+
+                        <div class="login-forgot">
+                            <div class="mb-20">
+                                <h3>Forgotten Password ?</h3>
+                                <p class="opacity-60">Enter your email to reset your password</p>
+                            </div>
+                            <form class="form" id="kt_login_forgot_form">
+                                <div class="form-group mb-10">
+                                    <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder="Email" name="email" autocomplete="off" />
+                                </div>
+                                <div class="form-group">
+                                    <button id="kt_login_forgot_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3 m-2">Request</button>
+                                    <button id="kt_login_forgot_cancel" class="btn btn-pill btn-outline-white font-weight-bold opacity-70 px-15 py-3 m-2">Cancel</button>
+                                </div>
+                            </form>
+
+                            @using (Html.BeginForm("ForgotPassword", "Account", FormMethod.Post, new { @class = "form-horizontal kt-form", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8", id = "kt_email", autocomplete = "off", placeholder = "Email" })
+
+                                </div>
+
+                                <div class="form-group">
+                                    <button id="kt_login_forgot_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3 m-2" type="submit">Send Request</button>
+                                    <button id="kt_login_forgot_cancel" class="btn btn-pill btn-outline-white font-weight-bold opacity-70 px-15 py-3 m-2" type="button">Cancel</button>
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @section Scripts{
+
+        <script>
+
+            $("#kt_login_forgot").click(function (e) {
+                $("#forgotPasswordForm").show();
+                $("#loginForm").hide();
+            });
+
+
+            $("#kt_login_forgot_cancel").click(function (e) {
+                $("#forgotPasswordForm").hide();
+                $("#loginForm").show();
+            });
+
+
+        </script>
+
+
+        @if (ViewBag.ForgotPassword != null)
+        {
+            <script>
+                $("#kt_login_forgot").trigger("click");
+            </script>
+
+        }
+    }
+
+
+

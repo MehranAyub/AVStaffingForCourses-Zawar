@@ -1,0 +1,250 @@
+﻿@using AVStaffing.Models.Entities
+@model AVStaffing.Models.Entities.ContentPage
+@{
+    ViewBag.Title = "AddContentPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var contentPages = ViewBag.ContentPages as List<ContentPage>;
+    var selectListItem = contentPages.Select(x => new SelectListItem {Text = x.Title, Value = x.Id.ToString()}).ToList();
+
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+
+
+
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    ContentPage Management
+                </h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add ContentPage
+                        </a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+        <!--begin::Card-->
+        @using (Html.BeginForm("AddContentPage", "ContentPage", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.Id != 0)
+                            {
+
+                                @Html.Raw("Update ContentPage")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create ContentPage")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-12 my-2">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.HiddenFor(x => x.Id)
+                                        @Html.LabelFor(x => x.Title)
+                                        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", placeholder = "Title" })
+                                        @Html.ValidationMessageFor(x => x.Title)
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.NavTitle)
+                                        @Html.TextBoxFor(x => x.NavTitle, new { @class = "form-control", placeholder = "Name" })
+                                        @Html.ValidationMessageFor(x => x.NavTitle)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.Route)
+                                        @Html.TextBoxFor(x => x.Route, new { @class = "form-control", placeholder = "Route" })
+                                        @Html.ValidationMessageFor(x => x.Route)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.PageId, "Parent Page")
+                                        @Html.DropDownListFor(x => x.PageId, selectListItem,  "--Select Page--",new {@class="form-control"})
+                                        @Html.ValidationMessageFor(x => x.PageId)
+                                    </div>
+                                </div>
+                            </div>
+                      
+
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Content)
+                                @Html.TextAreaFor(x => x.Content, new { @class = "form-control", placeholder = "Content" })
+                                @Html.ValidationMessageFor(x => x.Content)
+                            </div>
+
+                            <div class="form-group">
+                                <div class="float-right">
+                                    <a href="@Url.Action("ContentPages", "ContentPage")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                        Back
+                                    </a>
+
+                                    <div class="btn-group ml-2">
+                                        <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                            @if (Model.Id == 0)
+                                            {
+                                                @Html.Raw("Add Page")
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw("Save Changes")
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+
+@section Scripts
+{
+    <script src="https://cdn.tiny.cloud/1/bvop19e8cyzwod147lpbd1e77sd2gfgu7e2quc2jq80tl0lc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+
+        function initMCEexact(e, initialValue) {
+            tinymce.init({
+                content_css: "@Url.Content("~/Theme/assets/css/bootstrap.min.css"),@Url.Content("~/Theme/assets/css/owl.carousel.min.css"),@Url.Content("~/Theme/assets/css/flaticon.css"),@Url.Content("~/Theme/assets/css/price_rangs.css"),@Url.Content("~/Theme/assets/css/slicknav.css"),@Url.Content("~/Theme/assets/css/animate.min.css"),@Url.Content("~/Theme/assets/css/magnific-popup.css"),@Url.Content("~/Theme/assets/css/fontawesome-all.min.css"),@Url.Content("~/Theme/assets/css/themify-icons.css"),@Url.Content("~/Theme/assets/css/slick.css"),@Url.Content("~/Theme/assets/css/nice-select.css"),@Url.Content("~/Theme/assets/css/style.css")",
+                initialValue: initialValue,
+                //language: "ar", (function(){})(),
+                directionality: 'ltr',
+                selector: e,
+                toolbar_mode: 'floating',
+                height: 900,
+                images_upload_url: "@Url.Action("AddMedia", "Content")",
+                image_list: "@Url.Action("GetMedia", "Content")",
+                paste_data_images: true,
+                automatic_uploads: true,
+                branding: false,
+                image_advtab: true,
+                apply_source_formatting: true,
+                images_upload_handler: function(blobInfo, success, failure, progress) {
+                    var formData;
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', `@Url.Action("AddMedia", "Content")`);
+                    xhr.upload.onprogress = function(e) {
+                        progress(e.loaded / e.total * 100);
+                    };
+                    xhr.onload = function() {
+                        var json;
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            failure('HTTP Error: ' + xhr.status);
+                            return; }
+
+                        json = JSON.parse(xhr.responseText);
+
+                        if (!json || typeof json.MediaUrl != 'string') {
+                            failure('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        success(json.MediaUrl);
+                    };
+
+                    xhr.onerror = function() {
+                        failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    xhr.send(formData);
+                },
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace visualblocks code fullscreen',
+                    'image code',
+                    'image imagetools',
+                    'insertdatetime media table paste code help wordcount',
+                ],
+                toolbar:
+                    'undo redo | image code | formatselect | bold italic backcolor | \
+                                                                alignleft aligncenter alignright alignjustify | \
+                                                                bullist numlist outdent indent | removeformat',
+                menu: {
+                    file: { title: 'File', items: ' preview | print ' }
+                },
+                menubar: 'file edit view insert format tools table',
+                apply_source_formatting: true
+
+            });
+            var scriptLoader = new tinymce.dom.ScriptLoader();
+            scriptLoader.add('@Url.Content("~/Frontend/assets/js/jquery.min.js")');
+            scriptLoader.add("@Url.Content("~/Frontend/assets/js/flickity.pkgd.min.js")");
+
+        }
+
+        initMCEexact("#Content", `@Html.Raw(Model.Content)`);
+
+    </script>
+}

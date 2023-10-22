@@ -1,0 +1,433 @@
+﻿@using AVStaffing.Models
+@using AVStaffing.Models.Constants
+@model AVStaffing.Models.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string pageMode = string.Empty;
+
+    if (Model.Id != 0)
+    {
+        var currentUserId = User.Identity.GetUserId();
+        if (Model.Id == currentUserId)
+        {
+            pageMode = "Profile";
+        }
+        else
+        {
+            pageMode = "Edit";
+        }
+    }
+    else
+    {
+        pageMode = "Add";
+    }
+
+
+
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+
+
+
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    User Management
+                </h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add User
+                        </a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+        <!--begin::Card-->
+        @using (Html.BeginForm(pageMode == "Profile" ? "UserProfile" : "AddUser", "User", FormMethod.Post, new { id = "userForm", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="card card-custom">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.Id != 0)
+                            {
+                                if (pageMode == "Profile")
+                                {
+                                    @Html.Raw("Profile")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Update User")
+                                }
+                            }
+                            else
+                            {
+                                @Html.Raw("Create User")
+
+                            }
+                        </h3>
+                    </div>
+                    <div class="card-toolbar">
+                        <div class="d-flex align-items-center">
+                            @*<a href="@Url.Action("Users", "User")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                    Back
+                                </a>*@
+
+                            @*<div class="btn-group ml-2">
+                                    <button type="submit" class="btn btn-primedicalRecordy font-weight-bold btn-sm px-3 font-size-base">
+                                        @if (pageMode == "Add")
+                                        {
+                                            @Html.Raw("Add User")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Save Changes")
+                                        }
+                                    </button>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body px-0">
+                    <div class="row">
+                        <div class="col-xl-2"></div>
+                        <div class="col-xl-7 my-2">
+                            <div class="row">
+                                <label class="col-3"></label>
+                                <div class="col-9">
+                                    <h6 class=" text-dark font-weight-bold mb-10">User Information:</h6>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-top:10px">
+                                <div class="col-4">
+                                    <div class="image-input image-input-empty image-input-outline" id="kt_user_edit_avatar" style="background-image: url(@Url.Content(string.IsNullOrWhiteSpace(Model.ImagePath) ? "~/Backend/assets/media/users/blank.png" : Model.ImagePath))">
+                                        <div class="image-input-wrapper"></div>
+                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primedicalRecordy btn-shadow"
+                                               data-action="change"
+                                               data-toggle="tooltip"
+                                               title=""
+                                               data-original-title="Change avatar">
+
+                                            <i class="fa fa-pencil icon-sm text-muted"></i>
+                                            <input type="file" name="ImageFile" onchange="readURL2(this)" data-src="#kt_user_edit_avatar" accept=".png, .jpg, .jpeg">
+                                            @Html.HiddenFor(x => x.ImagePath)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-8">
+                                    @if (!string.IsNullOrWhiteSpace(Model.SignaturePath))
+                                    {
+                                        <label>Current Signature</label>
+                                        <img src="@Url.Content(Model.SignaturePath)" />
+                                    }
+                                    <label>Signature Pad</label>
+                                    <div id="SignaturePad">
+                                        <div style="border: 1px solid black" id="signature"></div>
+                                    </div>
+                                    <button type="button" class="btn btn-default" onclick="$('#signature').jSignature('clear')">Clear</button>
+                                    <input type="text" name="SignatureFile" id="SignatureFile" style="display: none" />
+                                </div>
+                                @Html.HiddenFor(x => x.SignaturePath)
+
+                            </div>
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.UserName, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control form-control-lg form-control-solid" })
+                                    @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.Firstname, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.TextBoxFor(x => x.Firstname, new { @class = "form-control form-control-lg form-control-solid" })
+                                    @Html.ValidationMessageFor(x => x.Firstname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.Lastname, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.TextBoxFor(x => x.Lastname, new { @class = "form-control form-control-lg form-control-solid" })
+                                    @Html.ValidationMessageFor(x => x.Lastname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.Initials, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.TextBoxFor(x => x.Initials, new { @class = "form-control form-control-lg form-control-solid" })
+                                    @Html.ValidationMessageFor(x => x.Initials, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="display:none">
+                                @Html.LabelFor(x => x.Language, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.DropDownListFor(x => x.Language, new[] {
+                                        new SelectListItem() {Text = "English",Selected= true, Value = SupportedLanguages.English},
+                                        new SelectListItem() {Text = "Dutch", Value = SupportedLanguages.Dutch}
+                                    }, "Choose a language", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Language, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.DateOfBirth, "Date Of Birth", new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.TextBoxFor(x => x.DateOfBirth, new { @class = "form-control datepicker", style="width:100%", placeholder = "Date Of Birth", type = "datetime" })
+                                    @Html.ValidationMessageFor(x => x.DateOfBirth)
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.Email, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control form-control-lg form-control-solid" })
+                                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.PhoneNumber, "Phone", new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number" })
+                                    @Html.ValidationMessageFor(x => x.PhoneNumber)
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                @Html.LabelFor(x => x.Gender, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                <div class="col-9">
+                                    @Html.DropDownListFor(x => x.Gender, new[] {
+                                        new SelectListItem() {Text = "Male", Value = "Male"},
+                                        new SelectListItem() {Text = "Female", Value = "Female"},
+                                        new SelectListItem() {Text = "Other", Value = "Other"}
+                                    }, "Choose a language", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Gender, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @if (pageMode != "Profile")
+                            {
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.SelectedRoles, "Role", new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                    <div class="col-9">
+                                        <select name="SelectedRoles" id="SelectedRoles" class="form-control">
+                                            @foreach (var item in Model.Roles)
+                                            {
+                                                <option value="@item.Id" @(Model.SelectedRoles.Contains(item.Id) ? "selected" : "")>@item.Name</option>
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.SelectedRoles)
+                                    </div>
+                                </div>
+                            }
+
+                            @if (pageMode == "Add")
+                            {
+                                <div class="form-group row">
+                                    @Html.LabelFor(x => x.Password, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                    <div class="col-9">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            @Html.PasswordFor(x => x.Password, new { @class = "form-control form-control-lg form-control-solid" })
+                                            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(x => x.ConfirmPassword, new { @class = "col-form-label col-3 text-lg-right text-left" })
+                                    <div class="col-9">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control form-control-lg form-control-solid" })
+                                            @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                            <div class="form-group">
+                                <div class="float-right">
+                                    <a href="@Url.Action("Users", "User")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                        Back
+                                    </a>
+
+                                    <div class="btn-group ml-2">
+                                        <button type="submit" id="userFormBtn" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                            @if (pageMode == "Add")
+                                            {
+                                                @Html.Raw("Add User")
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw("Save Changes")
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        }
+
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+
+
+@section scripts{
+    <script src="~/plugins/jsignature/jSignature.min.js"></script>
+    <script>
+
+
+        $("#Firstname").change(function() {
+            Initials();
+        });
+
+        $("#Lastname").change(function() {
+            Initials();
+        });
+
+        function Initials() {
+            var firstName = $("#Firstname").val();
+            var lastName = $("#Lastname").val();
+            var fullName = firstName + " " + lastName;
+            var initial = getInitials(fullName);
+            $("#Initials").val(initial);
+        }
+
+        function getInitials(fullName) {
+            var allNames = fullName.trim().split(' ');
+            var initials = allNames.reduce((acc, curr, index) => {
+                    if (index === 0 || index === allNames.length - 1) {
+                        acc = `${acc}${curr.charAt(0).toUpperCase()}`;
+                    }
+                    return acc;
+                },
+                '');
+            return initials;
+        }
+        $("#signature").jSignature({
+            'background-color': 'transparent',
+            'decor-color': 'transparent'
+        });
+
+        if ('@Model.SignaturePath' != '') {
+            toDataURL('@Model.SignaturePath',
+                function(dataUrl) {
+                    var i = new Image();
+                    var signature = dataUrl;
+                    i.src = signature;
+                    var canvas = document.getElementById("oldSignature");
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(i, 0, 0);
+                    //$(i).appendTo('#signature');
+
+                }
+            );
+        } else {
+            //$("#signature").jSignature({
+            //    'background-color': 'transparent',
+            //    'decor-color': 'transparent'
+            //});
+        }
+
+
+        $("#userForm").submit(function(e) {
+            var sigData = $('#signature').jSignature('getData', 'default');
+            $('#SignatureFile').val(sigData);
+        });
+
+        //$("#userFormBtn").click(function() {
+        //    var sigData = $('#signature').jSignature('getData', 'default');
+        //    console.log(sigData);
+        //    $('#SignatureFile').val(sigData);
+        //    $("#userForm").submit();
+
+        //});
+
+        function toDataURL(src, callback, outputFormat) {
+            var img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function() {
+                var canvas = document.createElement('CANVAS');
+                var ctx = canvas.getContext('2d');
+                var dataURL;
+                canvas.height = this.naturalHeight;
+                canvas.width = this.naturalWidth;
+                ctx.drawImage(this, 0, 0);
+                dataURL = canvas.toDataURL(outputFormat);
+                callback(dataURL);
+            };
+            img.src = src;
+            if (img.complete || img.complete === undefined) {
+                img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                img.src = src;
+            }
+        }
+
+
+    </script>
+
+}

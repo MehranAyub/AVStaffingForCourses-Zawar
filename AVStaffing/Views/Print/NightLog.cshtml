@@ -1,0 +1,56 @@
+﻿
+@model AVStaffing.Models.Entities.NightLog
+@{
+    ViewBag.Title = "HR System";
+}
+
+
+<div class="container" style="margin-top: 100px">
+    <div class="row">
+        <div class="col-12 p-2">
+            <p style="text-align: center; font-size: 20px">COMMUNITY OUTREACH FAMILY SERVICES, INC.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-2">
+            <p style="text-align: center; font-size: 20px">Night Log</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6" style="font-size: 16px">
+            Name : @Model.Patient.FirstName @Model.Patient.LastName
+        </div>
+        <div class="col-6" style="font-size: 16px">
+            Date of Admission : @Model.DateOfAdmission.ToString("yyyy-MM-dd hh:mm tt")
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6" style="font-size: 16px">
+            A : Awake
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6" style="font-size: 16px">
+            S : Sleep
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <div class="row" style="height: 30px; border: 1px solid black">
+            <div class="col-1 pt-1" style="border-right: 1px solid black">Time </div>
+            <div class="col-1 pt-1" style="border-right: 1px solid black">A/S</div>
+            <div class="col-1 pt-1" style="border-right: 1px solid black">INITIALS</div>
+            <div class="col-9 pt-1">COMMENTS:</div>
+        </div>
+        @foreach (var item in Model.NightLogTimes)
+        {
+            <div class="row" style="height: 30px; border: 1px solid black; border-top: none">
+                <div class="col-1 pt-1" style="border-right: 1px solid black">@item.TimeStamp.ToString("hh:mm tt")</div>
+                <div class="col-1 pt-1" style="border-right: 1px solid black">@item.SleepStatus</div>
+                <div class="col-1 pt-1" style="border-right: 1px solid black">@item.Staff.Initials</div>
+                <div class="col-9 pt-1">@item.Comments</div>
+            </div>
+
+        }
+    </div>
+</div>

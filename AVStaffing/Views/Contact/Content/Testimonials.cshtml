@@ -1,0 +1,114 @@
+﻿@model IEnumerable<AVStaffing.Models.Testimonial>
+
+@{
+    ViewBag.Title = "View2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Content Management</h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Content
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Portfolio
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-column-fluid">
+    <div class=" container ">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                    <h3 class="card-label">Content By Language</h3>
+                </div>
+                <div class="card-toolbar">
+                    <a href="@Url.Action("AddTestimonial", "Content", new {portfolioId = ViewBag.portfolioId})" class="btn btn-primary font-weight-bolder">
+                        <i class="la la-plus"></i>
+                        Create new Testimonial
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-separate table-head-custom collapsed dataTable">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ImagePath)</th>
+                            <th>@Html.DisplayNameFor(model => model.ClientName)</th>
+                            <th>@Html.DisplayNameFor(model => model.ClientOccupation)</th>
+                            <th>@Html.DisplayNameFor(model => model.Text)</th>
+    
+                            <th>Actions</th>
+                        </tr>
+                    <thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><img src="@(string.IsNullOrWhiteSpace(item.ImagePath) ?  "" :Url.Content(item.ImagePath))" style="height:50px" /></td>
+                                <td>@Html.DisplayFor(modelItem => item.ClientName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ClientOccupation)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Text)</td>
+
+                                <td>
+                                    <a style="cursor: pointer !important" href="@Url.Action("AddTestimonial", "Content", new {id = item.Id, portfolioId=ViewBag.portfolioId})" id=@item.Id>
+                                        <i class="fas fa-pencil-alt text-primary"></i>
+                                    </a>
+
+                                    <a style="cursor: pointer !important" href="#/" class="deleteTestimonial" data-id="@item.Id">
+                                        <i class="fas fa-trash text-danger"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        $(".deleteTestimonial").click(function() {
+            var id = $(this).data("id");
+            var row = $(this).parents("tr");
+            bootbox.confirm("Are you sure you want to delete this user ?",
+                function(r) {
+                    if (r) {
+                        $.post("@Url.Action("DeleteTestimonial", "Content")",
+                                {
+                                    id: id
+                                })
+                            .done(function() {
+                                $(row).remove();
+                            })
+                            .fail(function() {
+
+                            });
+                    }
+                });
+        });
+
+    </script>
+}

@@ -1,0 +1,259 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+
+    ViewBag.Title = "HR System";
+    var ClinicalSummary = new
+    {
+        Name = "jane Doe",
+        Dob = "1/jan/2000",
+        Cc = "I got lower back issues and anxiety.",
+        Hpi = "Patient is a 46-year-old male with a history of bipolar disorder.  “It’s mainly depression.”  Describes how he has had manic episodes.  Describes how he was using – Ativan and Hydrocodone and Oxycodone.  “I need something for my back.” He describes he is in chronic pain. “Trigger for anxiety- death, money.”  “I’ve had 5 people to die in five years.”  -my partner, mother, stepfather, and friend.  Living in transitional housing with 11 people.  Describes how he was taking care of his stepfather.  Describes how he was a manager at one time.  Last manic one year.  – “I beat someone up.” Physical aggression towards others- one incident.  Reports 2008, 2010- suicide attempts- 2008 attempted suicide by overdose and in 2010 attempted suicide.  History of cutting- with the last incident 6 months ago.  Describes how he feels as alcohol is the main factor.  Describes that he has been in detox for 15 times.  He describes how he has been in several detox programs.  “Within two hours I was back drinking again after I was discharged.”  Denies SI/HI.  Denies AVH. — “Sometimes I hear stuff, but I try to ignore it.”    Describes how he hears the voices more when he is drinking alcohol.  Describes how he has seen different things when he has been drinking- “People walking out of the walls.”  Describes how the voices are in his head.",
+        Pmh = "Hypertension, Alcohol induced seizures.",
+        Psh = "Calcium deposit removed, GI endoscopy, Eye surgery- vision 20/50 left eye",
+        ObpregHx = "abc",
+        Alcohol = "2 weeks ago",
+        Marijuana = "Denies",
+        Cocaine = "20 years ago",
+        Heroin = "Denies use",
+        Nicotin = "Half a pack per day",
+        drug = "Paracetamol",
+        Lastused = "alcohol two weeks ago",
+        Caffeine = "Denies",
+        Mother = "2017- Cancer COPD born in 1940-Mother died at the age of 77 --- History of alcoholism",
+        Father = "died – History of Alcoholism.",
+        Grandmother = "died – History of Alcoholism.",
+        Jobhistory = "Engineer",
+        Medications = "Latuda 40mg one tablet by mouth every evening with food, Vistaril 50mg three times a day as needed for anxiety",
+        Allergies = "NKDA",
+        Appearance = "disheveled",
+        Behavior = "calm and cooperative",
+        Motorresponse = "No abnormal movements",
+        Eyecontact = "good",
+        Speech = "RRR",
+        Affect = "labile",
+        Mood = "Labile",
+        ThoughtContent = "Concerned about housing and plans after treatment. Denies SI/HI",
+        ThoughtProcess = "logical and goal directed",
+        Perceeptualdisturbance = "History of AVH",
+        Orientation = "alert and oriented",
+        Memory = "fair",
+        Insight = "poor",
+        Judgement = "poor",
+        Focus = "Poor",
+        PsychImpression = "Patient is a 46-year-old male with a history of Bipolar I Disorder, most recent incident depress and Alcohol Dependence uncomplicated.",
+        Assesment = "Alcohol Dependence uncomplicated, Bipolar I Disorder Most recent incident Depress.",
+        Plan = "Continue current medication of Divalproex ER 1500mg once a day, Gabapentin 300mg three times a day, Latuda 40mg one tablet by mouth every evening with food, and Vistaril 50mg take one tablet three times a day.  "
+    };
+
+
+
+}
+
+
+
+<div class="container" style="margin-top: 20px">
+    <div>
+        <div class="col-12" style="line-height: 12px">
+            <p style="text-align: center; font-size: 20px;  font-weight: 500">Community Outreach Family Services, INC.</p>
+            <p style="text-align: center; font-size: 20px;  font-weight: 500">2148 Skippers Rd, Emporia, Virginia, 23847</p>
+            <p style="text-align: center; font-size: 20px;  font-weight: 500">434- 829-6635- Office 866-230-4856 - Fax</p>
+        </div>
+    </div>
+    <div>
+        <div class="col-12" style="margin-top: 50px">
+            <p style="text-align: center; font-size: 20px;  font-weight: 800">Incident Report Form </p>
+        </div>
+    </div>
+    <div>
+        <div class="col-12" style="margin-top: 30px">
+            <p style="text-align: start; font-size: 20px">
+                Use this form to report Level I serious incident, If possible the report should be completed within 24
+                hours. Submit completed form to administration office.
+            </p>
+        </div>
+    </div>
+    <div class="column" style="margin-top: 100px">
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px; background-color: #c7d6db; font-weight: 800"><h5>INFORMATION ABOUT PERSON INVOLVED IN THE INCIDENT</h5></div>
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px">
+            <b>Name</b>
+        </div>
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px">
+            <b>Home Address</b>
+        </div>
+        <div class="ml-1 row justify-content-around" style="text-align: center; width: 1389px">
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <input class="mr-2" type="checkbox" />
+                <b>Employee</b>
+            </div>
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <input class="mr-2" type="checkbox" />
+                <b>Client</b>
+            </div>
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <input class="mr-2" type="checkbox" />
+                <b>Visitor</b>
+            </div>
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <input class="mr-2" type="checkbox" />
+                <b>Other</b>
+            </div>
+        </div>
+        <div class="ml-1 row justify-content-around" style="text-align: start; width: 1389px">
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <b>Phone Numbers</b>
+            </div>
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <b>Home</b>
+            </div>
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <b>Cell</b>
+            </div>
+            <div class="col-3 p-2" style="border: 1px solid black; border-top: none">
+                <b>Other</b>
+            </div>
+        </div>
+
+    </div>
+    <div class="column" style="margin-top: 100px">
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px; background-color: #c7d6db; font-weight: 800 "><h5>INFORMATION ABOUT THE INCIDENT</h5></div>
+        <div class="ml-1 row justify-content-around" style="text-align: start; width: 1389px; height: 70px">
+            <div class="col-4 p-2" style="border: 1px solid black; border-top: none">
+                <b>Date of Incident</b>
+            </div>
+            <div class="col-4 p-2" style="border: 1px solid black; border-top: none">
+                <b>Time</b>
+            </div>
+            <div class="col-4 p-2" style="border: 1px solid black; border-top: none">
+                <b class="mr-3">police Contacted</b>
+                <input type="checkbox" /> Yes
+                <input class="ml-3" type="checkbox" /> No
+            </div>
+        </div>
+        <div class="ml-1 row justify-content-around" style="text-align: start; width: 1389px; height: 100px">
+            <div class="col-12 p-2" style="border: 1px solid black; border-top: none">
+                <h3>Location of Incident</h3>
+            </div>
+        </div>
+        <div class="ml-1 row justify-content-around" style="text-align: start; width: 1389px; height: 200px">
+            <div class="col-12 p-2" style="border: 1px solid black; border-top: none">
+                <h3>
+                    Description of Incident (what happened, how it happened, factors leading to the event, etc.) Be as specific as possible <br />
+                    (attached additional sheets if necessary)
+                </h3>
+            </div>
+        </div>
+        <div class="ml-1 justify-content-around" style="text-align: start; width: 1389px; height: 100px ;border: 1px solid black; border-top: none">
+            <div class=" row col-12 p-2">
+                <h3 class="mr-5 ml-3">
+                    Were there any witnesses to the incident?
+                </h3>
+                <input type="checkbox" />  &nbsp;<h6>Yes</h6> &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" /> &nbsp; <h6>No</h6>
+            </div>
+            <div class="col-12 p-2">
+                <h3>
+                    If yes, attach separate sheet with names, addresses, and phone numbers
+                </h3>
+
+            </div>
+        </div>
+
+        <div class="ml-1 row justify-content-around" style="text-align: start; width: 1389px; height: 170px">
+            <div class="col-12 p-2" style="border: 1px solid black; border-top: none">
+                <h3>
+                    Was anyone injured ? If so, describe the injury (laceration, sprain, etc.), the part of body injured, and any other <br />
+                    information known about the resulting injury.
+                </h3>
+            </div>
+        </div>
+        <div class="ml-1 justify-content-around" style="text-align: start; width: 1389px; height: 100px ;border: 1px solid black; border-top: none">
+            <div class=" row col-12 p-2">
+                <h3 class="mr-5 ml-3">
+                    Was medical treatment provided?
+                </h3>
+                <input type="checkbox" />  &nbsp;<h6>Yes</h6> &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" />  &nbsp;<h6>No</h6> &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" /> &nbsp; <h6>Refused</h6>
+            </div>
+            <div class=" row col-12 p-2">
+                <h3 class="mr-5 ml-3">
+                    If yes, where was treatment provided:
+                </h3>
+                <input type="checkbox" />  &nbsp;<h6>on site</h6> &ensp; &ensp; &ensp; &ensp;
+                <input type="checkbox" />  &nbsp;<h6>Urgent Care</h6> &ensp; &ensp; &ensp; &ensp;
+                <input type="checkbox" />  &nbsp;<h6>Emergency Room</h6> &ensp; &ensp; &ensp; &ensp;
+                <input type="checkbox" /> &nbsp; <h6>Other</h6>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="column" style="margin-top: 100px">
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px; background-color: #c7d6db; font-weight: 800"><h5>REPORTER INFORMATION</h5></div>
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px">
+            <b>Individual Submitting Report (print name)</b>
+        </div>
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px">
+            <b>Signature</b>
+        </div>
+        <div class="p-2" style="text-align: start; border: 1px solid black; height: 40px; width: 1389px">
+            <b>Date Report Complete</b>
+        </div>
+    </div>
+    <div class="column" style="margin-top: 50px">
+        <div class="row" style="margin-top: 250px">
+            <div class="col-2">Report Received by</div>
+            <div class="col-3" style="width: 500px; border-bottom: 1px solid black"></div>
+            <div class="col-3"></div>
+            <div class="col-1">Date</div>
+            <div class="col-3" style="width: 500px; border-bottom: 1px solid black"></div>
+        </div>
+    </div>
+    <div class="column" style="margin-top: 250px">
+        <div class="p-2" style="text-align: center; border: 1px solid black; height: 40px; width: 1389px; background-color: #c7d6db; font-weight: 800"><h5>FOR OFFICE USE ONLY</h5></div>
+    </div>
+    <div class="column" style="margin-top: 50px">
+        <h4>
+            Document any follow-up action taken after receipt of the incident report.
+
+        </h4>
+    </div>
+    <div class="row" style="margin-top: 50px; background-color: #c7d6db; border: 1px solid black; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"><h5>Date</h5></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"><h5>Action Taken</h5></div>
+        <div class="col-2 p-2"><h5>By Whom</h5></div>
+    </div>
+    <div class="row" style="border: 1px solid black; border-top:none; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-2 p-2"></div>
+    </div>
+    <div class="row" style="border: 1px solid black; border-top:none; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-2 p-2"></div>
+    </div>
+    <div class="row" style="border: 1px solid black; border-top:none; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-2 p-2"></div>
+    </div>
+    <div class="row" style="border: 1px solid black; border-top:none; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-2 p-2"></div>
+    </div>
+    <div class="row" style="border: 1px solid black; border-top:none; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-2 p-2"></div>
+    </div>
+    <div class="row" style="border: 1px solid black; border-top:none; width: 1389px; text-align: center; height: 40px; font-weight: 800 ">
+        <div class="col-2 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-8 p-2" style="border-right: 1px solid black"></div>
+        <div class="col-2 p-2"></div>
+    </div>
+</div>
+

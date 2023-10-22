@@ -1,0 +1,157 @@
+﻿@model IEnumerable<AVStaffing.Models.Entities.Skill>
+@{
+    ViewBag.Title = "Skills";
+
+    var editSkillPermission = User.HasPermission("Skill-AddSkill");
+    var deleteSkillPermission = User.HasPermission("Skill-DeleteSkill");
+}
+
+
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Job Skills Management
+                </h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Skills
+                        </a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                    <h3 class="card-label">Job Skills List</h3>
+                </div>
+                <div class="card-toolbar">
+                    <!--begin::Dropdown-->
+                    @*<div class="dropdown dropdown-inline mr-2">
+  
+                    </div>*@
+                    <!--end::Dropdown-->
+                    @if (editSkillPermission)
+                    {
+                        <!--begin::Button-->
+                        <a href="@Url.Action("AddSkill", "Skill")" class="btn btn-primary font-weight-bolder">
+                            <i class="la la-plus"></i>
+                            Create new Skill
+                        </a>
+                        <!--end::Button-->
+                    
+                    }
+                    
+
+                </div>
+            </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <!--end: Datatable-->
+
+                <table  class="table table-separate table-head-custom collapsed dataTable">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Current Workers</th>
+                            <th>Salary</th>
+                        </tr>
+                    <thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Title </td>
+                                <td>@item.Skills.Count</td>
+                                <td> @(item.Skills.Count > 0 ? item.Skills.Select(x=>x.Worker).Min(x=>x.MinSalary).ToString() + "-" + item.Skills.Select(x => x.Worker).Max(x => x.MaxSalary).ToString() : "N/A")</td>
+
+                                <td>
+
+                                    @if (editSkillPermission)
+                                    {
+                                        <a style="cursor: pointer !important" href="@Url.Action("AddSkill", "Skill", new {id = item.Id})" id=@item.Id>
+                                            <i class="fas fa-pencil-alt text-primary"></i>
+                                        </a>
+                                    }
+
+                                    @if (deleteSkillPermission)
+                                    {
+                                        <a style="cursor: pointer !important" href="#/" class="deleteSkill" data-id="@item.Id">
+                                            <i class="fas fa-trash text-danger"></i>
+                                        </a>
+                                    }
+
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+
+
+
+@section Scripts{
+    <script>
+     
+
+        $(".deleteSkill").click(function() {
+            var id = $(this).data("id");
+            var row = $(this).parents("tr");
+            bootbox.confirm("Are you sure you want to delete this Skill ?",
+                function(r) {
+                    if (r) {
+                        $.post("@Url.Action("DeleteSkill", "Skill")",
+                                {
+                                    WorkerId: id
+                                })
+                            .done(function() {
+                                $(row).remove();
+                            })
+                            .fail(function() {
+
+                            });
+                    }
+                });
+        });
+
+    </script>
+}
+

@@ -1,0 +1,540 @@
+﻿@using AVStaffing.Models.Entities
+@model AVStaffing.Controllers.ClinicalSummary_VM
+@{
+    ViewBag.Title = "AddClinicalSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var patientList = Model.Patients.Select(x => new SelectListItem
+    {
+        Text = $"{x.FirstName + " " + x.LastName} ({x.PhoneNumber})",
+        Value = x.Id.ToString()
+    }).ToList();
+
+    var staffList = Model.Staff.Select(x => new SelectListItem
+    {
+        Text = $"{x.FirstName} ({x.Initials})",
+        Value = x.Id.ToString()
+    }).ToList();
+    int i = 0;
+}
+
+@{
+
+    if (string.IsNullOrWhiteSpace(Model.ClinicalSummary.SocialHistory))
+    {
+        Model.ClinicalSummary.SocialHistory = @"
+                    <div class=""m-2"">
+                                Alcohol:
+                            </div>
+                            <div class=""m-2"">
+                                Marijuana :
+                            </div>
+                            <div class=""m-2"">
+                                Cocaine :
+                            </div>
+                            <div class=""m-2"">
+                                Heroin :
+                            </div>
+                            <div class=""m-2"">
+                                Nicotine :
+                            </div>
+                            <div class=""m-2"">
+                                Drug of choice :
+                            </div>
+                            <div class=""m-2"">
+                                Last used :
+                            </div>
+                            <div class=""m-2"">
+                                Caffeine  :
+                            </div>
+                    ";
+    }
+
+    if (string.IsNullOrWhiteSpace(Model.ClinicalSummary.FamilyMedicalHistory))
+    {
+        Model.ClinicalSummary.FamilyMedicalHistory = @"
+<div class=""m-2"">
+    Mother:
+</div>
+<div class=""m-2"">
+    Father :
+</div>
+<div class=""m-2"">
+    Grandmother :
+</div>
+";
+    }
+
+    if (string.IsNullOrWhiteSpace(Model.ClinicalSummary.MSE))
+    {
+        Model.ClinicalSummary.MSE = @"
+                    <div class=""m-2 mt-5"">
+                                Appearance :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Behavior :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Motor Response :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Eye Contact :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Speech :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Affect :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Mood :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Thought Content :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Thought Process :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Perceptual disturbances :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Orientation :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Memory :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Insight :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Judgment :
+                            </div>
+                            <div class=""m-2 mt-5"">
+                                Focus/Concentration :
+                            </div>";
+    }
+
+}
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+
+    .select2-results__option .wrap:before {
+        font-family: fontAwesome;
+        color: #999;
+        content: "\f096";
+        width: 25px;
+        height: 25px;
+        padding-right: 10px;
+    }
+
+    .select2-results__option[aria-selected=true] .wrap:before {
+        content: "\f14a";
+    }
+
+    /* not required css */
+
+    .row {
+        padding: 10px;
+    }
+
+    .select2-multiple, .select2-multiple2 {
+        width: 50%
+    }
+
+    .select2-selection__rendered {
+        margin-top: -10px;
+    }
+</style>
+
+
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Clinical Summary Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Documents
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add Clinical Summary
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddClinicalSummary", "ClinicalSummary", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.ClinicalSummary.Id)
+
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.ClinicalSummary.Id != 0)
+                            {
+
+                                @Html.Raw("Update Clinical Summary")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create Clinical Summary")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        @Html.ValidationSummary(true)
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                @Html.HiddenFor(x => x.ClinicalSummary.Id)
+                                @Html.LabelFor(x => x.ClinicalSummary.PatientId, "Patient")
+                                @Html.DropDownListFor(x => x.ClinicalSummary.PatientId, patientList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.StaffId, "Staff")
+                                @Html.DropDownListFor(x => x.ClinicalSummary.StaffId, staffList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.CC)
+                                @Html.TextBoxFor(x => x.ClinicalSummary.CC, new { @class = "form-control", placeholder = "CC", Value = Model.ClinicalSummary.CC })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.CC)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.HPI)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.HPI, new { @class = "form-control", placeholder = "HPI", Value = Model.ClinicalSummary.HPI })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.HPI)
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.PMH)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.PMH, new { @class = "form-control", placeholder = "PMH", Value = Model.ClinicalSummary.PMH })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.PMH)
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.PSH)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.PSH, new { @class = "form-control", placeholder = "PSH", Value = Model.ClinicalSummary.PSH })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.PSH)
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.OBPregHx, "Ob Preg Hx")
+                                @Html.TextAreaFor(x => x.ClinicalSummary.OBPregHx, new { @class = "form-control", placeholder = "Ob Preg Hx", Value = Model.ClinicalSummary.OBPregHx })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.OBPregHx)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.SocialHistory, "Social History")
+                                @Html.TextAreaFor(x => x.ClinicalSummary.SocialHistory, new { @class = "form-control", placeholder = "Social History", Value = Model.ClinicalSummary.SocialHistory })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.SocialHistory)
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.FamilyMedicalHistory, "Family Medical history")
+                                @Html.TextAreaFor(x => x.ClinicalSummary.FamilyMedicalHistory, new { @class = "form-control", placeholder = "Family Medical History", Value = Model.ClinicalSummary.FamilyMedicalHistory })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.FamilyMedicalHistory)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.JobHistory, "Job History")
+                                @Html.TextAreaFor(x => x.ClinicalSummary.JobHistory, new { @class = "form-control", placeholder = "Job history", Value = Model.ClinicalSummary.JobHistory })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.JobHistory)
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.MSE)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.MSE, new { @class = "form-control", placeholder = "MSE", Value = Model.ClinicalSummary.MSE })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.MSE)
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10" id="MedicineList">
+                            @foreach (var item in Model.ClinicalSummary.Medicines)
+                            {
+                                <div class="row mainRow">
+                                    @*<input type="hidden" value="@item.Id" />*@
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="ClinicalSummary.Medicines[@i].MedicationId">
+                                            @foreach (var medicine in Model.Medicines)
+                                            {
+                                                <option @(item.MedicationId == medicine.Id ? "selected" : "") value="@medicine.Id">@medicine.Name</option>
+                                            }
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="ClinicalSummary.Medicines[@i].Detail" value="@item.Detail" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger RemoveRow"><i class="fa fa-remove"></i></button>
+                                    </div>
+                                </div>
+                                i++;
+                            }
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <button id="AddRow" type="button" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.Allergies, "Allergies")
+                                @Html.TextAreaFor(x => x.ClinicalSummary.Allergies, new { @class = "form-control", placeholder = "Allergies", Value = Model.ClinicalSummary.Allergies })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.Allergies)
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.PsychImpression)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.PsychImpression, new { @class = "form-control", placeholder = "Psych Impression", Value = Model.ClinicalSummary.PsychImpression })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.PsychImpression)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.Assessment)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.Assessment, new { @class = "form-control", placeholder = "Assessment", Value = Model.ClinicalSummary.Assessment })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.Assessment)
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.ClinicalSummary.Plan)
+                                @Html.TextAreaFor(x => x.ClinicalSummary.Plan, new { @class = "form-control", placeholder = "Plan", Value = Model.ClinicalSummary.Plan })
+                                @Html.ValidationMessageFor(x => x.ClinicalSummary.Plan)
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="float-right">
+                            <a href="@Url.Action("AddClinicalSummary", "ClinicalSummary")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                Back
+                            </a>
+
+                            <div class="btn-group ml-2">
+                                <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                    @if (Model.ClinicalSummary.Id == 0)
+                                    {
+                                        @Html.Raw("Add ClinicalSummary")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Save Changes")
+                                    }
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script src="@Url.Content("~/Scripts/select2.multi-checkboxes.js")"></script>
+    <script src="https://cdn.tiny.cloud/1/bvop19e8cyzwod147lpbd1e77sd2gfgu7e2quc2jq80tl0lc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        jQuery(function ($) {
+            $('.select2-multiple').select2MultiCheckboxes({
+                placeholder: "Choose multiple elements",
+                width: "auto",
+                closeOnSelect: false
+            });
+            $(".select2-multiple").select2("open");
+        });
+    </script>
+
+
+    <script>
+
+
+        $(function() {
+            var i = @i;
+            $("#AddRow").click(function() {
+                var html = `<div class="row mainRow">
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="ClinicalSummary.Medicines[${i}].MedicationId">
+                                            @foreach (var medicine in Model.Medicines)
+                                            {
+                                                <option value="@medicine.Id">@medicine.Name</option>
+                                            }
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="ClinicalSummary.Medicines[${i}].Detail"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger RemoveRow"><i class="fa fa-remove"></i></button>
+                                    </div>
+                                </div>
+
+    `;
+                $("#MedicineList").append(html);
+                i++;
+            });
+
+            $("#MedicineList").on("click",  ".RemoveRow",
+                function() {
+                    var inputs = $(this).parents(".mainRow").find("input");
+                    $.each(inputs, function(i, v) {
+                        $(v).val("");
+                    });
+                    var selects = $(this).parents(".mainRow").find("select");
+                    $.each(selects, function(i, v) {
+                        $(v).val("");
+                    });
+
+                    $(this).parents(".mainRow").hide();
+                });
+        });
+
+        function initMCEexact(e, initialValue) {
+            console.log(initialValue);
+            tinymce.init({
+                initialValue: initialValue,
+                directionality: 'ltr',
+                selector: e,
+                toolbar_mode: 'floating',
+                height: 900,
+                images_upload_url: "@Url.Action("AddMedia", "Content")",
+                image_list: "@Url.Action("GetMedia", "Content")",
+                paste_data_images: true,
+                automatic_uploads: true,
+                branding: false,
+                image_advtab: true,
+                images_upload_handler: function(blobInfo, success, failure, progress) {
+                    var formData;
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', `@Url.Action("AddMedia", "Content")`);
+                    xhr.upload.onprogress = function(e) {
+                        progress(e.loaded / e.total * 100);
+                    };
+
+                    xhr.onload = function() {
+                        var json;
+
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            failure('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+
+                        json = JSON.parse(xhr.responseText);
+
+                        if (!json || typeof json.MediaUrl != 'string') {
+                            failure('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        success(json.MediaUrl);
+                    };
+
+                    xhr.onerror = function() {
+                        failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    xhr.send(formData);
+                },
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace visualblocks code fullscreen',
+                    'image code',
+                    'image imagetools',
+                    'insertdatetime media table paste code help wordcount',
+                ],
+                toolbar:
+                    'undo redo | image code | formatselect | bold italic backcolor | \
+                                                                alignleft aligncenter alignright alignjustify | \
+                                                                bullist numlist outdent indent | removeformat',
+                menu: {
+                    file: { title: 'File', items: ' preview | print ' }
+                },
+                menubar: 'file edit view insert format tools table',
+                apply_source_formatting: true
+
+            });
+        }
+
+
+
+        initMCEexact("#ClinicalSummary_MSE", `@Html.Raw(Model.ClinicalSummary.MSE)`);
+        initMCEexact("#ClinicalSummary_FamilyMedicalHistory", `@Html.Raw(Model.ClinicalSummary.FamilyMedicalHistory)`);
+        initMCEexact("#ClinicalSummary_SocialHistory", `@Html.Raw(Model.ClinicalSummary.SocialHistory)`);
+        initMCEexact("#ClinicalSummary_JobHistory", `@Html.Raw(Model.ClinicalSummary.JobHistory)`);
+
+    </script>
+
+}

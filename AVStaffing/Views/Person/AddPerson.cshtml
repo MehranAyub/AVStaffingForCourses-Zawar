@@ -1,0 +1,234 @@
+﻿@model AVStaffing.Models.Entities.Person
+@{
+    ViewBag.Title = "AddPerson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Job Seeker Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add Person
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddPerson", "Person", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.Id != 0)
+                            {
+
+                                @Html.Raw("Update Person")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create Person")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-7 my-2">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.LabelFor(x => x.FirstName)
+                                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                                @Html.ValidationMessageFor(x => x.FirstName)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.LastName)
+                                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                @Html.ValidationMessageFor(x => x.LastName)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.SIN)
+                                @Html.TextBoxFor(x => x.SIN, new { @class = "form-control", placeholder = "SIN" })
+                                @Html.ValidationMessageFor(x => x.SIN)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.DateOfBirth)
+                                @Html.TextBoxFor(x => x.DateOfBirth, new { @type="date", @class = "form-control", placeholder = "Date of Birth", Value=(Model.DateOfBirth != null ? ((DateTime)Model.DateOfBirth).ToString("yyyy-MM-dd"): "") })
+                                @Html.ValidationMessageFor(x => x.DateOfBirth)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Email)
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email" })
+                                @Html.ValidationMessageFor(x => x.Email)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Address)
+                                @Html.TextBoxFor(x => x.Address, new { @class = "form-control", placeholder = "Address" })
+                                @Html.ValidationMessageFor(x => x.Address)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.City)
+                                @Html.TextBoxFor(x => x.City, new { @class = "form-control", placeholder = "City" })
+                                @Html.ValidationMessageFor(x => x.City)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.PostalCode)
+                                @Html.TextBoxFor(x => x.PostalCode, new { @class = "form-control", placeholder = "Postal Code" })
+                                @Html.ValidationMessageFor(x => x.PostalCode)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.HomePhone)
+                                @Html.TextBoxFor(x => x.HomePhone, new { @class = "form-control", placeholder = "Home Phone" })
+                                @Html.ValidationMessageFor(x => x.HomePhone)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Gender)
+                                @Html.DropDownListFor(x => x.Gender, new List<SelectListItem> {
+                                    new SelectListItem { Text = "Male", Value = "Male" },
+                                    new SelectListItem { Text = "Female", Value = "Female" } },
+                                    new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Gender)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.CellPhone)
+                                @Html.TextBoxFor(x => x.CellPhone, new { @class = "form-control", placeholder = "Cell Phone" })
+                                @Html.ValidationMessageFor(x => x.CellPhone)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.FullTimeStudent)
+                                @Html.DropDownListFor(x => x.FullTimeStudent, new List<SelectListItem> {
+                                    new SelectListItem { Text = "Yes", Value = "Yes" },
+                                    new SelectListItem { Text = "No", Value = "No" } },
+                                    new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.FullTimeStudent)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.HasWorkPermit)
+                                @Html.DropDownListFor(x => x.HasWorkPermit, new List<SelectListItem> {
+                                  new SelectListItem { Text = "Yes", Value = "Yes" },
+                                  new SelectListItem { Text = "No", Value = "No" } },
+                                  new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.HasWorkPermit)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.DriverLicence)
+                                @Html.TextBoxFor(x => x.DriverLicence, new { @class = "form-control", placeholder = "Driver Licence" })
+                                @Html.ValidationMessageFor(x => x.DriverLicence)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.PermanentResidence)
+                                @Html.TextBoxFor(x => x.PermanentResidence, new { @class = "form-control", placeholder = "Permanent Residence" })
+                                @Html.ValidationMessageFor(x => x.PermanentResidence)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.CANCitizen)
+                                @Html.TextBoxFor(x => x.CANCitizen, new { @class = "form-control", placeholder = "CAN Citizen" })
+                                @Html.ValidationMessageFor(x => x.CANCitizen)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.CriminalOffense)
+                                @Html.TextBoxFor(x => x.CriminalOffense, new { @class = "form-control", placeholder = "Criminal Offense" })
+                                @Html.ValidationMessageFor(x => x.CriminalOffense)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.PositionType)
+                                @Html.TextBoxFor(x => x.PositionType, new { @class = "form-control", placeholder = "Position Type" })
+                                @Html.ValidationMessageFor(x => x.PositionType)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.EmploymentStatus)
+                                @Html.TextBoxFor(x => x.EmploymentStatus, new { @class = "form-control", placeholder = "Employment Status" })
+                                @Html.ValidationMessageFor(x => x.EmploymentStatus)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.AvailableDate)
+                                @Html.TextBoxFor(x => x.AvailableDate, new { @type = "date", @class = "form-control", placeholder = "Available Date", Value = (Model.DateOfBirth != null ? ((DateTime)Model.DateOfBirth).ToString("yyyy-MM-dd") : "") })
+                                @Html.ValidationMessageFor(x => x.AvailableDate)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.JobType)
+                                @Html.TextBoxFor(x => x.JobType, new { @class = "form-control", placeholder = "Job Type" })
+                                @Html.ValidationMessageFor(x => x.JobType)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Education)
+                                @Html.TextBoxFor(x => x.Education, new { @class = "form-control", placeholder = "Education" })
+                                @Html.ValidationMessageFor(x => x.Education)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.IsLegallyAllowedInCanada)
+                                @Html.TextBoxFor(x => x.IsLegallyAllowedInCanada, new { @class = "form-control", placeholder = "Is Legally Allowed In Canada" })
+                                @Html.ValidationMessageFor(x => x.IsLegallyAllowedInCanada)
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="float-right">
+                                <a href="@Url.Action("AddPerson", "Person")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                    Back
+                                </a>
+
+                                <div class="btn-group ml-2">
+                                    <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                        @if (Model.Id == 0)
+                                        {
+                                            @Html.Raw("Add Person")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Save Changes")
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+
+
+}

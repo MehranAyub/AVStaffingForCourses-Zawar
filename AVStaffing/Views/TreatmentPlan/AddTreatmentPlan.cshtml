@@ -1,0 +1,317 @@
+﻿@using System
+@using System.Security.Policy
+@model AVStaffing.Controllers.TreatmentPlan_VM
+@{
+    ViewBag.Title = "AddTreatmentPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var patientList = Model.Patients.Select(x => new SelectListItem
+    {
+        Text = $"{x.FirstName +" "+ x.LastName} ({x.PhoneNumber})",
+        Value = x.Id.ToString()
+    }).ToList();
+
+    var staffList = Model.Staff.Select(x => new SelectListItem
+    {
+        Text = $"{x.FirstName} ({x.Initials})",
+        Value = x.Id.ToString()
+    }).ToList();
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+
+    .select2-results__option .wrap:before {
+        font-family: fontAwesome;
+        color: #999;
+        content: "\f096";
+        width: 25px;
+        height: 25px;
+        padding-right: 10px;
+    }
+
+    .select2-results__option[aria-selected=true] .wrap:before {
+        content: "\f14a";
+    }
+
+    /* not required css */
+
+    .row {
+        padding: 10px;
+    }
+
+    .select2-multiple, .select2-multiple2 {
+        width: 50%
+    }
+
+    .select2-selection__rendered {
+        margin-top: -10px;
+    }
+</style>
+
+
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Treatment Plan Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Documents
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add Treatment Plan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddTreatmentPlan", "TreatmentPlan", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.TreatmentPlan.Id)
+
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.TreatmentPlan.Id != 0)
+                            {
+
+                                @Html.Raw("Update Treatment Plan")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create Treatment Plan")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.HiddenFor(x => x.TreatmentPlan.Id)
+                                @Html.LabelFor(x => x.TreatmentPlan.PatientId, "Patient")
+                                @Html.DropDownListFor(x => x.TreatmentPlan.PatientId, patientList, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.TreatmentPlan.StaffId, "Staff")
+                                @Html.DropDownListFor(x => x.TreatmentPlan.StaffId, staffList, new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.TreatmentPlan.Date)
+                                @Html.TextBoxFor(x => x.TreatmentPlan.Date, new { @class = "form-control datepicker", placeholder = "Date", Value = Model.TreatmentPlan.Date == new DateTime() ? DateTime.Now.ToString("yyyy-MM-dd") : Model.TreatmentPlan.Date.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(x => x.TreatmentPlan.Date)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.TreatmentPlan.FaceToFace, "Face To Face")
+                                <label>
+                                    @Html.RadioButtonFor(x => x.TreatmentPlan.FaceToFace, "True") Yes &nbsp;
+                                    @Html.RadioButtonFor(x => x.TreatmentPlan.FaceToFace, "False") No
+                                </label>
+                                @Html.ValidationMessageFor(x => x.TreatmentPlan.FaceToFace)
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Shift</label>
+                                <label>@Html.CheckBoxFor(x => x.TreatmentPlan.FirstShift) 1st </label> &nbsp;
+                                <label>@Html.CheckBoxFor(x => x.TreatmentPlan.SecondShift)2nd </label> &nbsp;
+                                <label>@Html.CheckBoxFor(x => x.TreatmentPlan.ThirdShift) 3rd </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Location</label>
+                                <label>@Html.RadioButtonFor(x => x.TreatmentPlan.Location, "Office") Office</label>
+                                <label>@Html.RadioButtonFor(x => x.TreatmentPlan.Location, "Work") Work</label>
+                                <label>@Html.RadioButtonFor(x => x.TreatmentPlan.Location, "Community") Community</label>
+                                <label>@Html.RadioButtonFor(x => x.TreatmentPlan.Location, "Crisis Stabilization") Crisis Stabilization</label>
+                                <label>@Html.RadioButtonFor(x => x.TreatmentPlan.Location, "Other (Specify)") Other (Specify)</label>
+                                @Html.TextBoxFor(x => x.TreatmentPlan.Location, new { @class = "form-control" })
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Effectiveness of Intervention/Activity</label>
+                                @Html.TextBoxFor(x => x.TreatmentPlan.Effectiveness)
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Intervention/Activity</label>
+                                @Html.TextBoxFor(x => x.TreatmentPlan.Intervention)
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Service</label>
+                                @Html.TextBoxFor(x => x.TreatmentPlan.Service)
+                            </div>
+                            <div class="form-group" style="margin-top:250px">
+                                <label>Purpose Of Contact (Goal)</label>
+                                <select multiple="multiple" class="select2-multiple" name="GoalIds" id="GoalIds" style="width: 100%">
+                                    @foreach (var item in Model.GoalList)
+                                    {
+                                        <option value="@item.Id" @(Model.GoalIds.Contains(item.Id) ? "selected" : "")>@item.GoalName</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.GoalIds)
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="float-right">
+                            <a href="@Url.Action("AddTreatmentPlan", "TreatmentPlan")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                Back
+                            </a>
+
+                            <div class="btn-group ml-2">
+                                <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                    @if (Model.TreatmentPlan.Id == 0)
+                                    {
+                                        @Html.Raw("Add TreatmentPlan")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Save Changes")
+                                    }
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/select2.multi-checkboxes.js")"></script>
+    <script src="https://cdn.tiny.cloud/1/bvop19e8cyzwod147lpbd1e77sd2gfgu7e2quc2jq80tl0lc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        jQuery(function($) {
+            $('.select2-multiple').select2MultiCheckboxes({
+                placeholder: "Choose multiple elements",
+                width: "auto",
+                closeOnSelect: false
+            });
+            $(".select2-multiple").select2("open");
+        });
+    </script>
+
+
+    <script>
+        $(function() {
+            function initMCEexact(e, initialValue) {
+            tinymce.init({
+                initialValue: initialValue,
+                directionality: 'ltr',
+                selector: e,
+                toolbar_mode: 'floating',
+                height: 900,
+                images_upload_url: "@Url.Action("AddMedia", "Content")",
+                image_list: "@Url.Action("GetMedia", "Content")",
+                paste_data_images: true,
+                automatic_uploads: true,
+                branding: false,
+                image_advtab: true,
+                images_upload_handler: function(blobInfo, success, failure, progress) {
+                    var formData;
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', `@Url.Action("AddMedia", "Content")`);
+                    xhr.upload.onprogress = function(e) {
+                        progress(e.loaded / e.total * 100);
+                    };
+
+                    xhr.onload = function() {
+                        var json;
+
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            failure('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+
+                        json = JSON.parse(xhr.responseText);
+
+                        if (!json || typeof json.MediaUrl != 'string') {
+                            failure('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        success(json.MediaUrl);
+                    };
+
+                    xhr.onerror = function() {
+                        failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    xhr.send(formData);
+                },
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace visualblocks code fullscreen',
+                    'image code',
+                    'image imagetools',
+                    'insertdatetime media table paste code help wordcount',
+                ],
+                toolbar:
+                    'undo redo | image code | formatselect | bold italic backcolor | \
+                                                                alignleft aligncenter alignright alignjustify | \
+                                                                bullist numlist outdent indent | removeformat',
+                menu: {
+                    file: { title: 'File', items: ' preview | print ' }
+                },
+                menubar: 'file edit view insert format tools table',
+                apply_source_formatting: true
+
+            });
+        }
+
+
+        initMCEexact("#TreatmentPlan_Effectiveness", `@Html.Raw(Model.TreatmentPlan.Effectiveness)`);
+        initMCEexact("#TreatmentPlan_Service", `@Html.Raw(Model.TreatmentPlan.Service)`);
+        initMCEexact("#TreatmentPlan_Intervention", `@Html.Raw(Model.TreatmentPlan.Intervention)`);
+
+        });
+
+
+    </script>
+
+
+}

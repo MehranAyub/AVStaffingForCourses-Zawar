@@ -1,0 +1,157 @@
+﻿@model AVStaffing.Controllers.Appointment_VM
+
+@{
+    ViewBag.Title = "AddAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Appointment Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add Appointment
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddAppointment", "Appointment", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.Appointment.Id)
+
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.Appointment.Id != 0)
+                            {
+
+                                @Html.Raw("Update Appointment")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create Appointment")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.HiddenFor(x => x.Appointment.Id)
+                                        @Html.LabelFor(x => x.Appointment.Name)
+                                        @Html.TextBoxFor(x => x.Appointment.Name, new { @class = "form-control", placeholder = "Name" })
+                                        @Html.ValidationMessageFor(x => x.Appointment.Name)
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.Appointment.StartDate, "Start Date")
+                                        @Html.TextBoxFor(x => x.Appointment.StartDate, new { @class = "form-control datetimepicker", placeholder = "Start Date", Value=Model.Appointment.StartDate.ToString("yyyy-MM-dd hh:mm:ss") })
+                                        @Html.ValidationMessageFor(x => x.Appointment.StartDate)
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.Appointment.EndDate, "End Date")
+                                        @Html.TextBoxFor(x => x.Appointment.EndDate, new { @class = "form-control datetimepicker", placeholder = "End Date", Value = Model.Appointment.EndDate.ToString("yyyy-MM-dd hh:mm:ss") })
+                                        @Html.ValidationMessageFor(x => x.Appointment.EndDate)
+                                    </div>
+
+                                </div>
+                            </div>
+                           
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SelectedUsers, "SelectedUsers", new { @class = "control-label" })
+                                <select multiple="multiple" class="select2-multiple" name="SelectedUsers" id="SelectedUsers" style="width: 100%">
+                                    @foreach (var item in Model.Users)
+                                    {
+                                        <option value="@item.Id" @(Model.SelectedUsers.Contains(item.Id) ? "selected" : "")>@item.FirstName @item.LastName @item.Initials (@item.PhoneNumber)</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.SelectedUsers)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="float-right">
+                                <a href="@Url.Action("AddAppointment", "Appointment")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                    Back
+                                </a>
+
+                                <div class="btn-group ml-2">
+                                    <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                        @if (Model.Appointment.Id == 0)
+                                        {
+                                            @Html.Raw("Add Appointment")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Save Changes")
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="@Url.Content("~/Scripts/select2.multi-checkboxes.js")"></script>
+    <script>
+        jQuery(function ($) {
+            $('.select2-multiple').select2();
+
+            //$('.select2-multiple').select2MultiCheckboxes({
+               
+            //    placeholder: "Choose multiple elements",
+            //    width: "auto",
+            //    closeOnSelect: false
+            //});
+            //$(".select2-multiple").select2("open");
+        });
+    </script>
+}

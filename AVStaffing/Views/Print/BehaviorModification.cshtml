@@ -1,0 +1,689 @@
+﻿@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+    var BehaModi = new
+    {
+        Name = "Garden,Rose",
+        HomePhone = "919-351-4065",
+        Date = "07/00/2016",
+        Dob = "09/19/2002",
+        HomeAddress = "562 Old Dam Road Selma, NC  27576",
+        ClientNo = "331630",
+        Age = "14",
+        Gender = "Female",
+        Grade = "8th",
+        Ethnicity = "Black",
+        PrimaryLang = "English",
+        HomeLang = "English",
+        Guardian = "Durham County DSS",
+        HomePh2 = "919-212-7000",
+        Address2 = "325 N Salisbury St Raleigh NC 27603",
+        Address3 = "Raleigh NC ",
+        Emergency = "919-212-7000",
+        TeamMembers = "An individual behavior plan is a clearly stated working document which incorporates" +
+                      " information from a functional behavior assessment and describes the goals and methods" +
+                      " intended to modify a students negative behavior. A separate plan may be required for each" +
+                      " targeted behavior. A successful behavior plan eliminates the negative behavior and allows" +
+                      " the Client to fulfill the function of the negative behavior through the development of" +
+                      " new, positive behaviors. " +
+                      "(Note: Behavioral consequences should protect the health and self - esteem of the " +
+                      "Client and be consistent with local guidelines regarding the use of aversives.)",
+        Client = "Rose Smith",
+        Parent = "Mary Jane c/o Durham County DSS",
+        CaseManager = "Robin Saunders, QP Case Manager ",
+        Therapist = "KeVin Graham, MSW, LCAS, CCS-I",
+        Target1offTask = "includes not visually or physically engaged with appropriate instructional stimuli, not in assigned area, which functions to escape group home demands and access preferred stimuli and zero episodes of Physical/Verbal aggression… ",
+        T1RB = "Stay in assigned areas actively working on assignments, chores, socialization skills or engaged in" +
+        "instruction, includes looking at staff, peers of residents, etc. Rose will not engage in inappropriate/non-consensual sexual behaviors." +
+        "Rose will not make verbal threats to others. Rose will not engage others in physical altercations, etc.",
+        T1PR = "Explore with Rose possible stressors or frustrations (e.g., separation from her mother/ potential feelings of abandonment, negative peer / sibling interactions, etc.) that might cause negative behaviors to reappear in the future; help her and family member identify how to manage stressors or frustrations. Connect with therapist to explore the dynamics that contribute to the emergence of Rose’s disruptive and negative attentions - seeking behavior." +
+        "Teach Rose meditational and self-control strategies (e.g., “stop, think, listen, and act”) to delay the need for instant gratification and inhibit impulses to achieve more meaningful, longer-term goals.Teach Rose to learn how to delay gratification for longer - term goals(e.g., completing homework or assigned chores before playing or working on other projects).",
+        T1ES_Strategy = "Assist Rose with guidance, redirection, psycho-educational rewards and consequences for behaviors in order to facilitate the development of socially appropriate behaviors on a daily basis. Group Home staff will provide a safe and stable environment for Rose; provide supervision and structure, utilize behavior management techniques, and create and implement corrective interventions to facilitate Rose improvement in demonstration of respect, management of anger, and effective coping skills. Rose will receive an individualized education based on needs, instruction in core curriculum, and independent living skills education and training,",
+        T1ES_Frequency = "When Rose is off-task, staff should gesture/point to the visual cue to prompt her back to the task or expected behavior",
+        T1ES_PersonResponsible = new string[5] { "Rose", "Guardian(s)/Parents", "Savin Grace Group staff/personnel/ primary care physical, therapist, psychiatrist or medication management personnel", "Care Coordinator, MCO", "Durham County Department of Social Services, Teachers and School Personnel " },
+        T1IS_Strategy = "",
+        T1IS_Frequency = "Daily 24 hours 7 days per week with the exception therapuetic trial home visits ",
+        T1IS_PersonResposible = new string[5] { "Rose", "Guardian(s)/Parents", "Savin Grace Group staff/personnel/ primary care physical, therapist, psychiatrist or medication management personnel", "Care Coordinator, MCO", "Durham County Department of Social Services, Teachers and School Personnel " },
+        T1_ClientEarn = "A positive reward/points will be used, with tokens delivered by the group-home staff or instructional assistant following one minute of on-task behavior without occurrence of any target behavior, with time increments increased following each week of success at current rate.  Positive reward/points to be traded for back-up reinforcement based on menu developed from PCP.",
+        T1_StaffResponse = "Gesture/point prompt to relevant redirecting and consequences. Provide 24 hour monitoring and supervision Provide transportation to appointments, See Crisis Plan of Rose’s Person Centered Profile.",
+        T1_VII_MaterialNeeded = "A token board, point system, visual cues to prompt specific behaviors (i.e. quiet body, quiet mouth, sit in seat, room time, telephone, dairy for journaling, radio, pencil & paper, snacks, expected vs. unexpected, etc.)",
+        T1_VII_PRForObtaining = "Savin Grace Group staff/personnel, therapist, Qualified Professional, Case Manager, parents, legal guardian, school personnel",
+        Target2 = "Verbal protests and task refusals with task completion, includes saying “No”, negotiating terms, etc. which function to communicate dislike, avoid task demands, and gain adult attention. Inappropriate Sexual Behavior,",
+        T2RB = "Begin task without protest or negotiation, say “Ok”, or ask for assistance. Understanding and adhering to the household/agency rules on a daily basis. Engaging in pro-social activities to encourage positive social supports. Communicating my needs and embracing supports from others to avoid unwarranted behaviors.Provide 24 hour monitoring and supervision",
+        T2PR = "Listening to music during Rose’s leisure time, allowed time to converse on the phone, allowed therapeutic home visits and allowed snacks outside of the regularly scheduled menu, allowed to watch movie outside the regular daily schedule ",
+        T2ES = "Instructional assistant will point or gesture to picture or text cues to prompt desired response (i.e. “OK”, or “I need help”). Monitor and document the status of the consumer’s progress and the effectiveness of the strategies and interventions outlined in the PCP, assessment, planning, linkage and referral to paid and natural support, and monitor and follow up Arrange for psychological and psychiatric evaluations Provide crisis management, participate in the person centered planning process, Assist with implementing a home based behavioral support plan with the consumer and caregivers as indicated in the PCP, provide psycho - education groups, monitoring and evaluating the effectiveness of interventions, as evidenced by symptom reduction and progress toward goals, Assist with crisis interventions, provide cognitive restructuring techniques to consumer through use of CBT strategies to ensure that consumer is properly supported towards rehabilitation, Ensure linkage to community services and resources",
+        T2_ClientEarn = "Point System will be used, with points delivered by the Group Home Staff to assistant following one minute of on-task behavior without occurrence of any target behavior, with time increments increased following each week of success at current rate",
+        T2_StaffREsponse = "Behavior will be monitored on a daily basis. Tally charts using the chart form will be recorded by the child and collected each day and discussed.Behavioral interventions will be monitored through checklists and observations and anecdotal notes.Information will be summarized on a weekly basis or as needed",
+        T2_MaterialNeeded = "A point system, visual cues to prompt specific behaviors (i.e. quiet body, quiet mouth, sit in seat, room time, telephone, dairy for journaling, radio, pencil & paper, snacks, expected vs. unexpected, etc.)",
+        T2_PersonResponsible = "Savin Grace Group staff/personnel, therapist, Qualified Professional, Case Manager, parents, legal guardian, school personnel  ",
+        Target3 = " Complete task refusal with functions to avoid Risky Behavior",
+        T3RB = "Complete modified writing assignments, gradually increasing response requirements to be more similar to un-modified assignments",
+        T3PR = "Design and implement a token economy (or other type of reward / incentive plan) to increase Rose’s positive social behaviors and deter disruptive and negative attention-seeking behaviors. Assist Rose’s in adjusting and developing a routine schedule to increase Rose’s compliance with school, household chores, and other assigned responsibilities. Firmly confront Rose’s disruptive behaviors, pointing out the consequences for herself and others; confront statements in with Rose blames others for her disruptive behaviors and fails to accept responsibility for her actions.",
+        T3ES = "Appropriate touch/interaction: Staff/ Members will model examples of okay touch. Hugs will be asked for and opportunity to accept or reject given, side hugs only. Inappropriate touch/interaction: No having individuals over to the home without her parents’ consent. No sexual comments or gestures to include phone conversations and text messages or letters. Rose will not leave the school without her parents’ permission. Rose will use her anger management skills avoiding threatening or intimidating behavior.Property of others: Rose will stay in designated areas to house, rooms of other family members is off limits. Rose will ask permission to use belongings of others to include not taking medication not prescribed to her. Rose will ask and obtain permission to use the phone. Rose will disclose who she is calling before calling.Implement consequences for Rose’s disruptive, antagonistic, and negative attention-seeking behaviors.Encourage Rose to use self - monitoring checklists at group home, school and in the community to improve impulse control and social skills",
+        T3_ClientEarn = "A point system will be used, calculated by the Group Home staff or instructional assistant following one minute of on-task behavior without occurrence of any target behavior, with time increments increased following each week of success at current rate.  Reward for back-up reinforcement based on the accomplishing goals from Rose’s PCP.",
+        T3_StaffResponse = "Not allow access to any preferred stimuli until task is complete. Group Home Staff will build a history of reinforcement for compliance with directives by asking Rose to do a simple high-probability task at least 5 times per day (i.e. making her bed, conducting proper hygiene, cleaning her room, taking her medications, conducting positive leisure activities, etc.).",
+        T3_MaterialNeeded = "A point system, point system, visual cues to prompt specific behaviors (i.e. quiet body, quiet mouth, sit in seat, room time, telephone, dairy for journaling, radio, pencil & paper, snacks, expected vs. unexpected, etc.)",
+        T3_PersonResponsible = "Savin Grace Group staff/personnel, therapist, Qualified Professional, Case Manager, parents, legal guardian, school personnel  Savin Grace Group staff/personnel, therapist, Qualified Professional, Case Manager, parents, legal guardian, school personnel ",
+        DateofBIP = "07/00/2016",
+    };
+
+
+}
+
+
+<div class="container" style="margin-top: 60px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 mt-5">
+            <h1 style="text-align: center; font-weight: 600; font-size: 34px"><u>Rose’s </u> Behavioral <br />Modification Plan</h1>
+        </div>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="row col-4 ml-5">
+        <div style="font-size: 16px; font-weight: 500">Student Name :</div> &ensp;
+        <input style="width: 250px" value=@BehaModi.Name />
+    </div>
+    <div class="row col-4">
+        <div style="font-size: 16px; font-weight: 500">Home Phone :</div> &ensp;
+        <input style="width: 250px" value="@BehaModi.HomePhone" />
+    </div>
+    <div class="row col-4">
+        <div style="font-size: 16px; font-weight: 500">Date :</div> &ensp;
+        <input style="width: 250px" value="@BehaModi.Date" />
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="row col-4 ml-5">
+        <div style="font-size: 16px; font-weight: 500">Date of Birth :</div> &emsp;&emsp;
+        <input style="width: 250px" value="@BehaModi.Dob" />
+    </div>
+    <div class="row col-8">
+        <div style="font-size: 16px; font-weight: 500">Home Address :</div> &ensp;
+        <input style="width: 600px" value="@BehaModi.HomeAddress" />
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="row col-4 ml-5">
+        <div style="font-size: 16px; font-weight: 500">Client No :</div> &emsp;&emsp;&emsp;&emsp;
+        <input style="width: 250px" value="@BehaModi.ClientNo" />
+    </div>
+
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-1 p-2"><b>Age</b></div>
+        <div class="col-2 p-2"><b>Gender</b></div>
+        <div class="col-1 p-2"><b>Grade</b></div>
+        <div class="col-4 p-2"><b>Home School</b></div>
+        <div class="col-4 p-2"><b>Attending School</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-1 p-2" style="border: 1px solid black"><b>@BehaModi.Age</b></div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b>@BehaModi.Gender</b></div>
+        <div class="col-1 p-2" style="border: 1px solid black"><b>@BehaModi.Grade</b></div>
+        <div class="col-4 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-4 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-2 p-2"><b>Ethnicity</b></div>
+        <div class="col-2 p-2"><b>Primary Language/Date <br /> Determined</b></div>
+        <div class="col-4 p-2"><b></b></div>
+        <div class="col-4 p-2"><b>Home Language/Date Determined</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-2 p-2" style="border: 1px solid black">@BehaModi.Ethnicity</div>
+        <div class="col-2 p-2" style="border: 1px solid black">@BehaModi.PrimaryLang</div>
+        <div class="col-4 p-2"><b></b></div>
+        <div class="col-4 p-2" style="border: 1px solid black">@BehaModi.HomeLang</div>
+    </div>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2"><b>Parent/Guardian Name</b></div>
+        <div class="col-2 p-2"><b>Home Phone</b></div>
+        <div class="col-3 p-2"><b>Parent/Guardian Name</b></div>
+        <div class="col-2 p-2"><b>Home Phone</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-3 p-2" style="border: 1px solid black">@BehaModi.Guardian</div>
+        <div class="col-2 p-2" style="border: 1px solid black">@BehaModi.HomePh2</div>
+        <div class="col-3 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2"><b>Address</b></div>
+        <div class="col-2 p-2"><b>Work Phone</b></div>
+        <div class="col-3 p-2"><b>Address</b></div>
+        <div class="col-2 p-2"><b>Work Phone</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-3 p-2" style="border: 1px solid black">@BehaModi.Address2</div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-3 p-2" style="border: 1px solid black">@BehaModi.Address3</div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-3 p-2"><b></b></div>
+        <div class="col-2 p-2"><b>Emergency Phone</b></div>
+        <div class="col-3 p-2"><b></b></div>
+        <div class="col-2 p-2"><b>Emergency Phone</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-3 p-2"><b></b></div>
+        <div class="col-2 p-2" style="border: 1px solid black">@BehaModi.Emergency</div>
+        <div class="col-3 p-2"><b></b></div>
+        <div class="col-2 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 20px">
+    <h4><u>Team Members</u></h4> <br />
+    <div style="font-size: 20px">
+        @BehaModi.TeamMembers
+
+    </div>
+</div>
+<div class="container" style="margin-top: 340px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 mt-5">
+            <h3 style="text-align: center"> Team members who participated in developing the plan</h3>
+        </div>
+    </div>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px; border-bottom: 1px solid black">
+        <div class="col-6 p-2">Positions</div>
+        <div class="col-6 p-2">Names</div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">CLient</div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black">@BehaModi.Client</div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Parent/Guardian</div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black">@BehaModi.Parent</div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Case Manager</div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black">@BehaModi.CaseManager</div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Therapist </div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black"></div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">General Education Teacher</div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black"></div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Other: Coordinator of Behavioral Services</div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black"></div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Other: Pediatric Care Coordinator</div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black"></div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Psychologist </div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black"></div>
+    </div>
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Therapist  </div>
+        <div class="col-6 p-2" style="border-bottom: 1px solid black">@BehaModi.Therapist</div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; border-bottom: 1px solid black; margin-top: 200px">
+
+    </div>
+</div>
+<div class="container" style="margin-top: 10px">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 mt-5">
+            <h1 style="text-align: center; font-size: 16px; color: lightgray"> Savin Grace, LLC</h1>
+        </div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 120px">
+    <h3><u>l.Target Behavior 1</u></h3>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  80px">
+        <div class="col-12 p-2" style="border: 1px solid black"><b>Off-Task – </b>@BehaModi.Target1offTask</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>II. Replacement Behavior</b> <br />
+    <i style="color: black; font-size: 14px">(What the Client should do in place of the problem behavior to get his/her need(s) [gain, avoid, protest] in an<br /> acceptable way?)</i>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T1RB</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>III. Identified Positive Reinforcers</b> <br />
+    &emsp; &emsp; &emsp;<i style="color: black; font-size: 14px">(Based upon administration of a positive reinforcer survey, parent input, Client interview, etc.)</i>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black"><b>See Person Centered Profile --- </b>@BehaModi.T1PR</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>IV. Environmental Strategies/Supports to be Implemented </b>
+    <i style="color: black; font-size: 14px">(considerations but not exclusive nor exhaustive)</i>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-4 p-2"><b>Strategy/Support</b></div>
+        <div class="col-4 p-2"><b>Frequency</b></div>
+        <div class="col-4 p-2"><b>Person Responsible</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-4 p-2" style="border: 1px solid black">@BehaModi.T1ES_Strategy</div>
+        <div class="col-4 p-2" style="border: 1px solid black">@BehaModi.T1ES_Frequency</div>
+        <div class="col-4 p-2" style="border: 1px solid black">
+            <ul style="list-style-type: none">
+                <li>@BehaModi.T1ES_PersonResponsible[0]</li>
+                <li>@BehaModi.T1ES_PersonResponsible[1]</li>
+                <li>@BehaModi.T1ES_PersonResponsible[2]</li>
+                <li>@BehaModi.T1ES_PersonResponsible[3]</li>
+                <li>@BehaModi.T1ES_PersonResponsible[4]</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>V. Instructional Strategies to be Implemented </b>
+    <i style="color: black; font-size: 14px">(considerations but not exclusive nor exhaustive)</i>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-4 p-2"><b>Strategy</b></div>
+        <div class="col-4 p-2"><b>Frequency</b></div>
+        <div class="col-4 p-2"><b>Person Responsible</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px;">
+        <div class="col-4 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-4 p-2" style="border: 1px solid black">@BehaModi.T1IS_Frequency</div>
+        <div class="col-4 p-2" style="border: 1px solid black">
+            <ul style="list-style-type: none">
+                <li>@BehaModi.T1IS_PersonResposible[0]</li>
+                <li>@BehaModi.T1IS_PersonResposible[1]</li>
+                <li>@BehaModi.T1IS_PersonResposible[2]</li>
+                <li>@BehaModi.T1IS_PersonResposible[3]</li>
+                <li>@BehaModi.T1IS_PersonResposible[4]</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2"><b>When Client Does…</b></div>
+        <div class="col-6 p-2"><b>Client will Earn…</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T1_ClientEarn</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>VI. Staff Response to Undesirable Behavior(s)</b> <br />
+    <i style="color: black; font-size: 14px">(Outline the team’s plan/steps to be taken [in increasing order of consequence, less to most restrictive] if the Client<br /> does not show desired progress on the implementation plan.)</i>
+    <div class="row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T1_StaffResponse</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>VII. Materials Needed to Implement Plan, If Applicable</b> <br />
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2"><b>Materials Needed</b></div>
+        <div class="col-6 p-2"><b>Person Responsible for Obtaining/Creating</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2" style="border: 1px solid black">@BehaModi.T1_VII_MaterialNeeded</div>
+        <div class="col-6 p-2" style="border: 1px solid black">@BehaModi.T1_VII_PRForObtaining</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <h3><u>l.Target Behavior 2</u></h3>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  80px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.Target2</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px; border-bottom: 1px solid black">
+    <b>II. Replacement Behavior</b> <br />
+    <i style="color: black; font-size: 14px">(What the Client should do in place of the problem behavior to get his/her need(s) [gain, avoid, protest] in an<br /> acceptable way?)</i>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  50px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T2RB</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>III. Identified Positive Reinforcers</b> <br />
+    &emsp; &emsp; &emsp;<i style="color: black; font-size: 14px">(Based upon administration of a positive reinforcer survey, parent input, Client interview, etc.)</i>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T2PR</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>IV. Environmental Strategies/Supports to be Implemented </b>
+    <i style="color: black; font-size: 14px">(considerations but not exclusive nor exhaustive)</i>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2"><b>Strategy/Support</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T2ES</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>V. Instructional Strategies to be Implemented </b>
+    <i style="color: black; font-size: 14px">(considerations but not exclusive nor exhaustive)</i>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2"><b>When Client Does…</b></div>
+        <div class="col-6 p-2"><b>Client will Earn…</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T2_ClientEarn</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>VI. Staff Response to Undesirable Behavior(s)</b> <br />
+    <i style="color: black; font-size: 14px">(Outline the team’s plan/steps to be taken [in increasing order of consequence, less to most restrictive] if the Client<br /> does not show desired progress on the implementation plan.)</i>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  80px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T2_StaffREsponse</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>VII. Materials Needed to Implement Plan, If Applicable</b> <br />
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2"><b>Materials Needed</b></div>
+        <div class="col-6 p-2"><b>Person Responsible for Obtaining/Creating</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2" style="border: 1px solid black">@BehaModi.T2_MaterialNeeded</div>
+        <div class="col-6 p-2" style="border: 1px solid black">@BehaModi.T2_PersonResponsible</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 120px">
+    <h3><u>l.Target Behavior 3</u></h3>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black"></div>
+    </div>
+</div>
+<div class="column">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  80px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.Target3</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>II. Replacement Behavior</b> <br />
+    <i style="color: black; font-size: 14px">(What the Client should do in place of the problem behavior to get his/her need(s) [gain, avoid, protest] in an<br /> acceptable way?)</i>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T3RB</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>III. Identified Positive Reinforcers</b> <br />
+    &emsp; &emsp; &emsp;<i style="color: black; font-size: 14px">(Based upon administration of a positive reinforcer survey, parent input, Client interview, etc.)</i>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T3PR</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>IV. Environmental Strategies/Supports to be Implemented </b>
+    <i style="color: black; font-size: 14px">(considerations but not exclusive nor exhaustive)</i>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2"><b>Strategy/Support</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T3ES</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>V. Implementation Plan </b>
+    <i style="color: black; font-size: 14px">(considerations but not exclusive nor exhaustive)</i>
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2"><b>When Client Does…</b></div>
+        <div class="col-6 p-2"><b>Client will Earn…</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T3_ClientEarn</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>VI. Staff Response to Undesirable Behavior(s)</b> <br />
+    <i style="color: black; font-size: 14px">(Outline the team’s plan/steps to be taken [in increasing order of consequence, less to most restrictive] if the Client<br /> does not show desired progress on the implementation plan.)</i>
+</div>
+<div class="column" style="margin-top: 10px">
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-12 p-2" style="border: 1px solid black">@BehaModi.T3_StaffResponse</div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 150px">
+    <b>VII. Materials Needed to Implement Plan, If Applicable</b> <br />
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2"><b>Materials Needed</b></div>
+        <div class="col-6 p-2"><b>Person Responsible for Obtaining/Creating</b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2" style="border: 1px solid black">@BehaModi.T3_MaterialNeeded</div>
+        <div class="col-6 p-2" style="border: 1px solid black">@BehaModi.T3_PersonResponsible</div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-6 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-6 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>VIII. Monitoring </b> <br />
+</div>
+<div class="column">
+    <div class="mt-5 ml-1 row justify-content-around" style="text-align: start; width: 1400px">
+        <div class="col-6 p-2">Person to manage BIP and collect data</div>
+        <div class="col-6 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  120px">
+        <div class="col-2 p-2" style="border: 1px solid black">Data will be Collected</div>
+        <div class="col-4 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-1 p-2" style="border: 1px solid black">and Reviewed : </div>
+        <div class="col-5 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row" style="text-align: start; width: 1400px; height:  20px">
+        <div class="col-2 p-2">Date of BIP Inititation</div>
+        <div class="col-3 p-2" style="border: 1px solid black"><b>@BehaModi.DateofBIP</b></div>
+        <div class="col-7 p-2"></div>
+    </div>
+</div>
+<div class="column" style="margin-top: 50px">
+    <div class="ml-1 row" style="text-align: start; width: 1400px; height:  40px">
+        <input class="ml-3" type="checkbox" /> &ensp;
+        <p>IEP amended and PWN completed and attached to IEP</p>
+        <b style="margin-left: 80px">Date :</b> &ensp;
+        <input style="height: 20px;" />
+    </div>
+</div>
+<div class="ml-5" style="margin-top: 50px">
+    <b>X. Review of BIP Effectiveness</b> <br />
+    <i style="color: black; font-size: 14px">(Behavior plan should be reviewed 4-6 weeks after date of initiation. Discuss student’s progress/performance since <br />the plan was initiated and any modifications proposed, if applicable.  If BIP is being terminated, please indicate date<br /> of termination)</i>
+</div>
+<div class="column" style="margin-top: 1350px">
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-3 p-2" style="border: 1px solid black">Date of 1st BIP Review Meeting:</div>
+        <div class="col-1 p-2" style="border: 1px solid black"><b></b></div>
+        <div class="col-8 p-2"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  80px">
+        <div class="col-3 p-2" style="border: 1px solid black">
+            Team Members <br />
+            [and position] Attending:
+        </div>
+        <div class="col-9 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            Discussion of Client Progress and Recommendations :
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  140px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  40px">
+        <div class="col-5 p-2" style="border: 1px solid black">Projected Date of Next Review, if applicable:</div>
+        <div class="col-3 p-2" style="border: 1px solid black"></div>
+        <div class="col-4 p-2" style="border: 1px solid black"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black; background-color: black"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  80px">
+        <div class="col-3 p-2" style="border: 1px solid black">Date of 2nd BIP Review Meeting :</div>
+        <div class="col-2 p-2" style="border: 1px solid black"></div>
+        <div class="col-7 p-2" style="border: 1px solid black"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  80px">
+        <div class="col-3 p-2" style="border: 1px solid black">
+            Team Members <br />
+            [and position] Attending:
+        </div>
+        <div class="col-9 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            Discussion of Client Progress and Recommendations :
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  140px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-5 p-2" style="border: 1px solid black">Projected Date of Next Review, if applicable :</div>
+        <div class="col-3 p-2" style="border: 1px solid black"></div>
+        <div class="col-4 p-2" style="border: 1px solid black"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black; background-color: black"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  80px">
+        <div class="col-3 p-2" style="border: 1px solid black">Date of 3rd BIP Review Meeting :</div>
+        <div class="col-2 p-2" style="border: 1px solid black"></div>
+        <div class="col-7 p-2" style="border: 1px solid black"></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  80px">
+        <div class="col-3 p-2" style="border: 1px solid black">
+            Team Members <br />
+            [and position] Attending:
+        </div>
+        <div class="col-9 p-2" style="border: 1px solid black"><b></b></div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: start; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+            Discussion of Client Progress and Recommendations :
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  140px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-12 p-2" style="border: 1px solid black">
+        </div>
+    </div>
+    <div class="ml-1 row justify-content-around" style="text-align: center; width: 1400px; height:  40px">
+        <div class="col-5 p-2" style="border: 1px solid black">Projected Date of Next Review, if applicable :</div>
+        <div class="col-3 p-2" style="border: 1px solid black"></div>
+        <div class="col-4 p-2" style="border: 1px solid black"></div>
+    </div>
+</div>
+<div style="margin-top:  700px">
+    <div class="p-3" style="border: 1px solid black; background-color: darkgray; text-align: center"><h1>Signatures</h1></div>
+    <div class="mt-5">
+        <b style="font-size: 24px">By signing, I attest that I actively participated in the development of this treatment plan. Further, I agree to engage in treatment and updates to this treatment plan as necessary.</b>
+    </div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 150px">
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-2" style="border-bottom: 1px solid black"></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 10px">
+    <div class="col-4"><h3>Client Name – print</h3></div>
+    <div class="col-4"><h3>Client Signature</h3></div>
+    <div class="col-2"><h3>Date</h3></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 100px">
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-2" style="border-bottom: 1px solid black"></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 10px">
+    <div class="col-4"><h3>Legal Guardian Name –print</h3></div>
+    <div class="col-4"><h3>Legal Guardian Signature</h3></div>
+    <div class="col-2"><h3>Date</h3></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 100px">
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-2" style="border-bottom: 1px solid black"></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 10px">
+    <div class="col-4"><h3>Therapist Name – print </h3></div>
+    <div class="col-4"><h3>Therapist Signature</h3></div>
+    <div class="col-2"><h3>Date</h3></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 100px">
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-4" style="border-bottom: 1px solid black"></div>
+    <div class="col-2" style="border-bottom: 1px solid black"></div>
+</div>
+<div class=" row justify-content-between" style="margin-top: 10px">
+    <div class="col-4"><h3>Case Manager – print</h3></div>
+    <div class="col-4"><h3>Case Manager Signature</h3></div>
+    <div class="col-2"><h3>Date</h3></div>
+</div>

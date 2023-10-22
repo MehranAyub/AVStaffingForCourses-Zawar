@@ -1,0 +1,114 @@
+﻿@model AVStaffing.Models.Entities.Medication
+@{
+    ViewBag.Title = "AddMedication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Medication Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Add Medication
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddMedication", "Medication", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.Id != 0)
+                            {
+
+                                @Html.Raw("Update Medication")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create Medication")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-7 my-2">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.LabelFor(x => x.Name)
+                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(x => x.Name)
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="float-right">
+                                <a href="@Url.Action("AddMedication", "Medication")" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                    Back
+                                </a>
+
+                                <div class="btn-group ml-2">
+                                    <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                        @if (Model.Id == 0)
+                                        {
+                                            @Html.Raw("Add Medication")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Save Changes")
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+
+    
+}

@@ -1,0 +1,112 @@
+﻿@model IEnumerable<AVStaffing.Models.Entities.Medication>
+@{
+    ViewBag.Title = "Proxies";
+
+    var editMedicationPermission = User.HasPermission("Medication-AddMedication");
+    var deleteMedicationPermission = User.HasPermission("Medication-DeleteMedication");
+}
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Medicine Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Account
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Proxies
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                    <h3 class="card-label">Medicine List</h3>
+                </div>
+                <div class="card-toolbar">
+                    @if (editMedicationPermission)
+                    {
+                        <a href="@Url.Action("AddMedication", "Medication")" class="btn btn-primary font-weight-bolder">
+                            <i class="la la-plus"></i>
+                            Create new Medicine
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <table  class="table table-separate table-head-custom collapsed dataTable">
+                    <thead>
+                        <tr>
+                            <th>Medicine Name</th>
+                            <th>Action</th>
+                        </tr>
+                    <thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    @if (editMedicationPermission)
+                                    {
+                                        <a style="cursor: pointer !important" href="@Url.Action("AddMedication", "Medication", new {id = item.Id})" id=@item.Id>
+                                            <i class="fas fa-pencil-alt text-primary"></i>
+                                        </a>
+                                    }
+                                    @if (deleteMedicationPermission)
+                                    {
+                                        <a style="cursor: pointer !important" href="#/" class="deleteMedication" data-id="@item.Id">
+                                            <i class="fas fa-trash text-danger"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+     
+
+        $(".deleteMedication").click(function() {
+            var id = $(this).data("id");
+            var row = $(this).parents("tr");
+            bootbox.confirm("Are you sure you want to delete this medicine ?",
+                function(r) {
+                    if (r) {
+                        $.post("@Url.Action("DeleteMedication", "Medication")",
+                                {
+                                    MedicationId: id
+                                })
+                            .done(function() {
+                                $(row).remove();
+                            })
+                            .fail(function() {
+
+                            });
+                    }
+                });
+        });
+
+    </script>
+}
+
