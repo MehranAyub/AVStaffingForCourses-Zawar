@@ -33,7 +33,11 @@ namespace AVStaffing
                 url: "Contact",
                 defaults: new { controller = "Home", action = "Contact" }
             );
-
+            routes.MapRoute(
+                name: "Course",
+                url: "Course",
+                defaults: new { controller = "Course", action = "Index" }
+            );
             //routes.MapRoute(
             //    name: "HowItWorks",
             //    url: "how-it-works",

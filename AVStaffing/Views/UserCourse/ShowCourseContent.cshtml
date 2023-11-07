@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "ShowCourseContent";
+    Layout = "~/Views/Shared/_UserCourseLayout.cshtml";
+    int CourseId = ViewBag.CourseId;
+    var Course = new AVStaffing.Models.Entities.ApplicationDbContext().Course.Where(x => x.Id == CourseId).FirstOrDefault();
+    var lst = new AVStaffing.Models.Entities.ApplicationDbContext().CourseContent.Where(x => x.CourseId == CourseId).ToList();
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+
+    .content-box {
+        margin-top: 100px;
+        width: 100%;
+        border-radius: 6px;
+        background-color: #ffffff;
+        overflow: hidden;
+        box-shadow: 0px 6px 34px rgba(215, 216, 222, 0.41);
+        padding: 30px;
+    }
+
+    .list-box {
+        height: 70vh;
+        background-color: #e7e2dc;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow: auto;
+        padding: 15px;
+    }
+
+    .row-box {
+        border-radius: 6px;
+        width: 100%;
+        display: flex;
+        box-shadow: 0px 6px 34px rgba(215, 216, 222, 0.41);
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        padding: 14px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .video-box {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 15px;
+    }
+</style>
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Offered Courses
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="@Url.Action("Index", "UserCourse")" class="text-muted">
+                            Courses
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            Course Detail
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @Html.Raw(Course.PageContent)
+        <!--<div class="row">
+            <div class="col-sm-12">
+                <h5>About Course:-</h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud enim ad minim veniam, quis nostrud exercitation ullamco laboris  Many desktop publishing packages and web  typesetting, remaining essentially unchanged.</p>
+            </div>
+        </div>-->
+        <!-- /. row -->
+        <!--<div class="row py-4">
+            <div class="col-sm-12">
+                <h5>You'll Learn</h5>
+                <p class="mt-3">
+                    <i class="fa fa-check text-secondary" aria-hidden="true"></i>
+                    Lorem Ipsum is simple dummy text of the printing and typesetting industry.
+                </p>
+                <p>
+                    <i class="fa fa-check text-secondary" aria-hidden="true"></i>
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                </p>
+                <p>
+                    <i class="fa fa-check text-secondary" aria-hidden="true"></i>
+                    It has survived not only five centuries, but also the leap into electronic typesetting.
+                </p>
+                <p>
+                    <i class="fa fa-check text-secondary" aria-hidden="true"></i>
+                    It has survived not only five centuries, but also the leap into electronic typesetting.
+                </p>
+                <p>
+                    <i class="fa fa-check text-secondary" aria-hidden="true"></i>
+                    When an unknown printer took a galley of type and scrambled it to make a type specimen.
+                </p>
+            </div>
+        </div>-->
+        <!-- /. row -->
+        <div class="row content-box">
+            <div class="col-md-6 list-box list-box-radius">
+                @foreach (var item in lst)
+                {
+                    <div class="row-box" data-id="@item.Id">
+                        <p><i class="fa fa-play-circle text-secondary mr-3" aria-hidden="true"></i>@item.VideoTitle</p>
+                        <p>@item.WatchTime min</p>
+                    </div>
+                }
+              
+            </div>
+            <div class="col-md-6">
+                <div class="video-box" id="video-box">
+                    <div id="video-box-content">
+
+                    </div>
+                    <div>
+                        <video id="video" style="width:100%" controls src="~"></video>
+                    </div>
+                    <div id="video-error" style="display:none">
+                        <div style="display: flex; align-items: center; background-color: #6c1919; color: white; width: 100%; height: 4vh; font-size: 20px; border: 2px solid black; border-radius: 4px; margin-top: 20px; ">Please complete previous video to see next.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+       $(document).ready(function () {
+    var jsonList = @Html.Raw(Json.Encode(lst));
+    var video = document.getElementById("video");
+    var videoId = 1; 
+    var watchedTime = 0; 
+    var videoTime = 0;
+    var isPaused = true;
+
+           // Set the first default video on load
+           var firstItemId = jsonList[0].Id;
+           loadVideo(firstItemId);
+    video.addEventListener("pause", function () {
+        isPaused = true;
+    });
+
+    video.addEventListener("play", function () {
+        isPaused = false;
+    });
+
+           setInterval(function () {
+               if (!isPaused) {
+                   watchedTime++; 
+
+                   // Check if 20 seconds have been completed
+                   if (watchedTime % 20 === 0) {
+                       saveWatchTime(videoId, videoTime, watchedTime);
+                   }
+               }
+           }, 1000);
+
+    // Event listener for selecting videos
+           $('.row-box').on('click', async function () {
+        var itemId = $(this).data('id');
+        var selectedIndex = jsonList.findIndex(function (item) {
+            return item.Id === itemId;
+        });
+               if (selectedIndex > 0) {
+                   var previousItem = jsonList[selectedIndex - 1].Id;
+                   var data = await CheckVideoStatus(previousItem);
+
+                   if (data.success == true) {
+                       loadVideo(itemId);
+                       document.getElementById('video-error').style.display = 'none';
+
+                   }
+                   else {
+                       document.getElementById('video-error').style.display = 'block';
+                   }
+               }
+               else if (selectedIndex == 0) {
+                   loadVideo(itemId);
+               }
+           });
+           function loadVideo(id) {
+               var selectedItem = jsonList.find(function (item) {
+                   return item.Id === id;
+               });
+
+               videoId = selectedItem.Id;
+               videoTime = selectedItem.WatchTime;
+               watchedTime = 0;
+               $('#video-box-content').html(selectedItem.Content);
+               $('#video-box video').attr('src', selectedItem.VideoUrl);
+           }
+    // Function to save watched time via API call
+           function saveWatchTime(videoId,videoTime ,watchedTime) {
+        $.ajax({
+            url: '/UserCourse/UpdateWatchTime',
+            type: 'POST',
+            data: {
+                videoId: videoId,
+                videoTime: videoTime,
+                watchedTime: watchedTime,
+            },
+            success: function (data) {
+                console.log("Response of update watch time API", data);
+            },
+            error: function (error) {
+                console.log("Error of update watch time API", error);
+            }
+        });
+    }
+
+           function CheckVideoStatus(videoId) {
+               return new Promise((resolve, reject) => {
+                   $.ajax({
+                       url: '/UserCourse/VerifyWatchTimeStatus',
+                       type: 'POST',
+                       data: {
+                           videoId: videoId,
+                       },
+                       success: function (data) {
+                           resolve(data); 
+                       },
+                       error: function (error) {
+                           reject(error);
+                       }
+                   });
+               });
+           }
+
+
+
+});
+
+    </script>
+}

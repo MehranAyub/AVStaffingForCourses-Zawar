@@ -1,0 +1,219 @@
+﻿@model AVStaffing.Models.Entities.CourseContent
+@{
+    ViewBag.Title = "AddCourseContent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .field-validation-error {
+        color: red
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Course Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="@Url.Action("Index", "Course")" class="text-muted">
+                            Course
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="#/" class="text-muted">
+                            @if (Model.Id != 0)
+                            {
+
+                                @Html.Raw("Update Course Content")
+                            }
+                            else
+                            {
+                                @Html.Raw("Add Course Content")
+                            }
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        @using (Html.BeginForm("AddCourseContent", "CourseContent", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.CourseId)
+            @Html.HiddenFor(x => x.VideoUrl)
+            <div class="card card-custom justify-content-center">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon"><i class="fa fa-user text-primary"></i></span>
+                        <h3 class="card-label">
+                            @if (Model.Id != 0)
+                            {
+
+                                @Html.Raw("Update Course Content")
+                            }
+                            else
+                            {
+                                @Html.Raw("Create Course Content")
+                            }
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-7 my-2">
+                            <div class="form-group row">
+                                @Html.ValidationSummary(true)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Content)
+                                @Html.TextAreaFor(x => x.Content, new { @class = "form-control", placeholder = "Content" })
+                                @Html.ValidationMessageFor(x => x.Content)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.VideoTitle, "Title")
+                                @Html.TextBoxFor(x => x.VideoTitle, new { @class = "form-control", placeholder = "Title" })
+                                @Html.ValidationMessageFor(x => x.VideoTitle)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.WatchTime, "Watch Time (Minutes)")
+                                @Html.TextBoxFor(x => x.WatchTime, new { @class = "form-control", placeholder = "Watch Time" })
+                                @Html.ValidationMessageFor(x => x.WatchTime)
+                            </div>
+
+                            <div class="form-group">
+                                <label for="videoFile">Choose Video File:</label>
+                                <input type="file" name="videoFile" class="form-control" />
+                            </div>
+                            @*<div class="form-group">
+            @Html.LabelFor(x => x.VideoUrl)
+            @Html.TextBoxFor(x => x.VideoUrl, new { @class = "form-control", placeholder = "URL" })
+            @Html.ValidationMessageFor(x => x.VideoUrl)
+        </div>*@
+
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="float-right">
+                                <a href="@Url.Action("Index", "CourseContent",new {id=Model.CourseId})" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                                    Back
+                                </a>
+
+                                <div class="btn-group ml-2">
+                                    <button type="submit" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+                                        @if (Model.Id == 0)
+                                        {
+                                            @Html.Raw("Add Course Content")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Save Changes")
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://cdn.tiny.cloud/1/bvop19e8cyzwod147lpbd1e77sd2gfgu7e2quc2jq80tl0lc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+
+        function initMCEexact(e, initialValue) {
+            tinymce.init({
+                content_css: "@Url.Content("~/Theme/assets/css/bootstrap.min.css"),@Url.Content("~/Theme/assets/css/owl.carousel.min.css"),@Url.Content("~/Theme/assets/css/flaticon.css"),@Url.Content("~/Theme/assets/css/price_rangs.css"),@Url.Content("~/Theme/assets/css/slicknav.css"),@Url.Content("~/Theme/assets/css/animate.min.css"),@Url.Content("~/Theme/assets/css/magnific-popup.css"),@Url.Content("~/Theme/assets/css/fontawesome-all.min.css"),@Url.Content("~/Theme/assets/css/themify-icons.css"),@Url.Content("~/Theme/assets/css/slick.css"),@Url.Content("~/Theme/assets/css/nice-select.css"),@Url.Content("~/Theme/assets/css/style.css")",
+                initialValue: initialValue,
+                //language: "ar", (function(){})(),
+                directionality: 'ltr',
+                selector: e,
+                toolbar_mode: 'floating',
+                height: 900,
+                images_upload_url: "@Url.Action("AddMedia", "Content")",
+                image_list: "@Url.Action("GetMedia", "Content")",
+                paste_data_images: true,
+                automatic_uploads: true,
+                branding: false,
+                image_advtab: true,
+                apply_source_formatting: true,
+                images_upload_handler: function(blobInfo, success, failure, progress) {
+                    var formData;
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', `@Url.Action("AddMedia", "Content")`);
+                    xhr.upload.onprogress = function(e) {
+                        progress(e.loaded / e.total * 100);
+                    };
+                    xhr.onload = function() {
+                        var json;
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            failure('HTTP Error: ' + xhr.status);
+                            return; }
+
+                        json = JSON.parse(xhr.responseText);
+
+                        if (!json || typeof json.MediaUrl != 'string') {
+                            failure('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        success(json.MediaUrl);
+                    };
+
+                    xhr.onerror = function() {
+                        failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    xhr.send(formData);
+                },
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace visualblocks code fullscreen',
+                    'image code',
+                    'image imagetools',
+                    'insertdatetime media table paste code help wordcount',
+                ],
+                toolbar:
+                    'undo redo | image code | formatselect | bold italic backcolor | \
+                                                                alignleft aligncenter alignright alignjustify | \
+                                                                bullist numlist outdent indent | removeformat',
+                menu: {
+                    file: { title: 'File', items: ' preview | print ' }
+                },
+                menubar: 'file edit view insert format tools table',
+                apply_source_formatting: true
+
+            });
+            var scriptLoader = new tinymce.dom.ScriptLoader();
+            scriptLoader.add('@Url.Content("~/Frontend/assets/js/jquery.min.js")');
+            scriptLoader.add("@Url.Content("~/Frontend/assets/js/flickity.pkgd.min.js")");
+
+        }
+
+        initMCEexact("#Content", `@Html.Raw(Model.Content)`);
+
+    </script>
+}

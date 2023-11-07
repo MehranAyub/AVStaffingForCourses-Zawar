@@ -315,6 +315,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\UserCourseController.cs" />
+    <Compile Include="Controllers\CourseContentController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ContentPageController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -858,6 +861,13 @@
     <Content Include="Views\Medication\AddMedication.cshtml" />
     <Content Include="Views\Medication\MedicationList.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Course\AddCourse.cshtml" />
+    <Content Include="Views\CourseContent\AddCourseContent.cshtml" />
+    <Content Include="Views\CourseContent\Index.cshtml" />
+    <Content Include="Views\UserCourse\ShowCourseContent.cshtml" />
+    <Content Include="Views\UserCourse\Index.cshtml" />
+    <Content Include="Views\Shared\_UserCourseLayout.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -870,6 +880,7 @@
     <Folder Include="Assets\Images\" />
     <Folder Include="LocalResource\Error\" />
     <Folder Include="Migrations\" />
+    <Folder Include="www\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

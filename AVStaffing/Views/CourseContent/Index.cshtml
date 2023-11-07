@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int CourseId = ViewBag.CourseId;
+    var lst = new AVStaffing.Models.Entities.ApplicationDbContext().CourseContent.Where(x=>x.CourseId==CourseId).ToList();
+}
+
+
+<div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                    Course Management
+                </h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="@Url.Action("Index", "Dashboard")" class="text-muted">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="@Url.Action("Index", "Course")" class="text-muted">
+                            Course
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#" class="text-muted">
+                            Course Content
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column-fluid">
+    <div class="container">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon"><i class="fa fa-book text-primary"></i></span>
+                    <h3 class="card-label">Course Content of @ViewBag.Name</h3>
+                </div>
+                <div class="card-toolbar">
+                        <a href="@Url.Action("AddCourseContent", "CourseContent",new {courseId = ViewBag.CourseId})"  class="btn btn-primary font-weight-bolder">
+                            <i class="la la-plus"></i>
+                            Add Course Content
+                        </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-separate table-head-custom collapsed dataTable">
+
+                    <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>Title</td>
+                            <th>WatchTime (Minutes)</th>
+                            <th>VideoUrl</th>
+                            <th>Action</th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        @foreach (var item in lst)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.VideoTitle</td>
+                                <td>@item.WatchTime </td>
+                                <td>@item.VideoUrl </td>
+                                <td>
+                                    <a style="cursor: pointer !important" href="@Url.Action("AddCourseContent", "CourseContent", new {courseId =item.CourseId,id = item.Id})" id=@item.Id>
+                                        <i class="fas fa-pencil-alt text-primary"></i>
+                                    </a>
+                                    |
+                                    <a style="cursor: pointer !important" href="#/" class="deleteCourse" data-id="@item.Id">
+                                        <i class="fas fa-trash text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(".deleteCourse").click(function() {
+            var id = $(this).data("id");
+            var row = $(this).parents("tr");
+            bootbox.confirm("Are you sure you want to delete this Content ?",
+                function(r) {
+                    if (r) {
+                        $.post("@Url.Action("DeleteCourseContent", "CourseContent")",
+                                {
+                                    courseId: id
+                                })
+                            .done(function() {
+                                $(row).remove();
+                            })
+                            .fail(function() {
+
+                            });
+                    }
+                });
+        });
+    </script>
+}

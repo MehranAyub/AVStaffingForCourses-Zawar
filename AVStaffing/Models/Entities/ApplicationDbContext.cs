@@ -208,6 +208,10 @@ namespace AVStaffing.Models.Entities
 
         public DbSet<AdministeredMedicine> AdministeredMedicines { get; set; }
         public DbSet<MedicalRecordStaff> MedicalRecordStaff { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<CourseContent> CourseContent { get; set; }
+        public DbSet<UserVideoProgress> UserVideoProgress { get; set; }
+
 
 
     }
@@ -602,6 +606,46 @@ namespace AVStaffing.Models.Entities
         public ApplicationUser Staff { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+    }
+
+    [Table("Course")]
+    public class Course
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        [AllowHtml]
+        public string PageContent { get; set; }
+        
+    }
+    [Table("CourseContent")]
+    public class CourseContent
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string VideoTitle { get; set; }
+        [AllowHtml]
+        public string Content { get; set; }
+        public double? WatchTime { get; set; }
+        public string VideoUrl { get; set; }
+        public int CourseId { get; set; }
+        [ForeignKey(nameof(CourseId))]
+        public Course Course { get; set; }
+    }
+    [Table("UserVideoProgress")]
+    public class UserVideoProgress
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int VideoId { get; set; }
+        public double? WatchedTime { get; set; }
+        public bool CompletionStatus { get; set; }
+        [ForeignKey(nameof(VideoId))]
+        public CourseContent CourseContent { get; set; }
     }
 
 }

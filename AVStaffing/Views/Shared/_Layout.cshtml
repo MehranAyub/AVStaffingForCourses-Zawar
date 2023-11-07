@@ -109,6 +109,13 @@
                                             </a>
                                         </li>
                                     }
+                                    
+                                    <li class="nav-item mr-2">
+                                        <a href="#" class="nav-link btn btn-clean @(controller == "Course" ? "active" : "")" data-toggle="tab" data-target="#kt_header_course_tab" role="tab">
+                                            Courses
+                                        </a>
+                                    </li>
+                                    
                                     @*@if (User.HasPermission("Appointment-AppointmentList"))
         {
 
@@ -783,7 +790,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    } 
+                                    }
                                     @if (User.HasPermission("Person-PersonList"))
                                     {
                                         <div class="tab-pane p-5 p-lg-0 show @(controller == "Person" ? "active" : "")" id="kt_header_person_tab">
@@ -879,8 +886,30 @@
                                             </div>
                                         </div>
                                     }
-
-
+                                    @if (User.HasPermission("Course-Index"))
+                                    {
+                                        <div class="tab-pane p-5 p-lg-0 show @(controller == "Course" ? "active" : "")" id="kt_header_course_tab">
+                                            <div class="header-menu header-menu-mobile  header-menu-layout-default ">
+                                                <ul class="menu-nav ">
+                                                    <li class="menu-item  menu-item @((controller == "Contact" && action == "ContactList") ? "menu-item-active" : "")" aria-haspopup="true">
+                                                        <a href="@Url.Action("Index", "Course")" class="menu-link "><span class="menu-text">Courses</span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (User.HasPermission("UserCourse-Index"))
+                                    {
+                                        <div class="tab-pane p-5 p-lg-0 show @(controller == "UserCourse" ? "active" : "")" id="kt_header_course_tab">
+                                            <div class="header-menu header-menu-mobile  header-menu-layout-default ">
+                                                <ul class="menu-nav ">
+                                                    <li class="menu-item  menu-item @((controller == "Contact" && action == "ContactList") ? "menu-item-active" : "")" aria-haspopup="true">
+                                                        <a href="@Url.Action("Index", "UserCourse")" class="menu-link "><span class="menu-text">Courses</span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
 
 
                                 </div>
